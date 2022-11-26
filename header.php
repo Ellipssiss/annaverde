@@ -7,7 +7,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
- * @package My_theme
+ * @package annaverde
  */
 $args = array(
   'theme_location' => 'header_menu',
@@ -60,6 +60,7 @@ $langUrl = '?' . http_build_query($output);
 
 <head>
   <meta charset="UTF-8" />
+<<<<<<< HEAD
   <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/css/owl.carousel.css" />
   <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/css/owl.theme.default.css" />
   <link rel="stylesheet" href="<?php echo get_template_directory_uri(); ?>/assets/css/style.css" />
@@ -71,6 +72,18 @@ $langUrl = '?' . http_build_query($output);
   <script src="<?php echo get_template_directory_uri(); ?>/assets/js/script.js"></script>
   <script src="<?php echo get_template_directory_uri(); ?>/assets/js/easy-toggler.min.js"></script>
 
+=======
+  <link rel="stylesheet" href="/wp-content/themes/annaverde/assets/css/owl.carousel.css" />
+  <link rel="stylesheet" href="/wp-content/themes/annaverde/assets/css/owl.theme.default.css" />
+  <link rel="stylesheet" href="/wp-content/themes/annaverde/assets/css/style.css" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><? echo $title; ?></title>
+  <script src="/wp-content/themes/annaverde/assets/js/jquery-3.6.0.min.js"></script>
+  <script src="/wp-content/themes/annaverde/assets/js/owl.carousel.js"></script>
+  <script src="/wp-content/themes/annaverde/assets/js/script.js"></script>
+  <script src="/wp-content/themes/annaverde/assets/js/easy-toggler.min.js"></script>
+>>>>>>> afisha
   <?php wp_head(); ?>
 </head>
 
@@ -81,15 +94,22 @@ $langUrl = '?' . http_build_query($output);
     <div class="item_bg_player"></div>
     <div class="player_and_interface">
       <div class="owl-nav">
+<<<<<<< HEAD
         <img class="prev_video_btn big owl-prev" src="<?php echo get_template_directory_uri(); ?>/assets/img/prev_video_btn_big.svg" alt="" />
         <img class="prev_video_btn average owl-prev" src="<?php echo get_template_directory_uri(); ?>/assets/img/prev_video_btn_average.svg" alt="" />
         <img class="prev_video_btn small owl-prev" src="<?php echo get_template_directory_uri(); ?>/assets/img/prev_video_btn_small.svg" alt="" />
+=======
+        <img class="prev_video_btn big owl-prev" src="/wp-content/themes/annaverde/assets/img/prev_video_btn_big.svg" alt="" />
+        <img class="prev_video_btn average owl-prev" src="/wp-content/themes/annaverde/assets/img/prev_video_btn_average.svg" alt="" />
+        <img class="prev_video_btn small owl-prev" src="/wp-content/themes/annaverde/assets/img/prev_video_btn_small.svg" alt="" />
+>>>>>>> afisha
       </div>
       <div class="owl-carousel owl-theme">
         <div class="item">
           <iframe width="560" height="315" src="https://www.youtube.com/embed/007o-XFS8PA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
         <div class="item">
+<<<<<<< HEAD
           <img alt="" src="<?php echo get_template_directory_uri(); ?>/assets/img/main_project_img.jpg" />
         </div>
         <div class="item">
@@ -116,6 +136,34 @@ $langUrl = '?' . http_build_query($output);
         <img class="next_video_btn average" src="<?php echo get_template_directory_uri(); ?>/assets/img/next_video_btn_average.svg" alt="" />
         <img class="next_video_btn small" src="<?php echo get_template_directory_uri(); ?>/assets/img/next_video_btn_small.svg" alt="" />
         <img class="exit_video_btn" src="<?php echo get_template_directory_uri(); ?>/assets/img/exit_video_btn.svg" alt="" />
+=======
+          <img alt="" src="/wp-content/themes/annaverde/assets/img/main_project_img.jpg" />
+        </div>
+        <div class="item">
+          <img src="/wp-content/themes/annaverde/assets/img/gallery_project/toreodor.jpg" alt="" />
+        </div>
+        <div class="item">
+          <img src="/wp-content/themes/annaverde/assets/img/gallery_project/khokhlova.jpg" alt="" />
+        </div>
+        <div class="item">
+          <img src="/wp-content/themes/annaverde/assets/img/gallery_project/propellers.jpg" alt="" />
+        </div>
+        <div class="item">
+          <img src="/wp-content/themes/annaverde/assets/img/gallery_project/girl_gimnast.jpg" alt="" />
+        </div>
+        <div class="item">
+          <img src="/wp-content/themes/annaverde/assets/img/gallery_project/alter_ego.jpg" alt="" />
+        </div>
+        <div class="item">
+          <img src="/wp-content/themes/annaverde/assets/img/gallery_project/girls.jpg" alt="" />
+        </div>
+      </div>
+      <div class="next_and_exit_btn">
+        <img class="next_video_btn big" src="/wp-content/themes/annaverde/assets/img/next_video_btn_big.svg" alt="" />
+        <img class="next_video_btn average" src="/wp-content/themes/annaverde/assets/img/next_video_btn_average.svg" alt="" />
+        <img class="next_video_btn small" src="/wp-content/themes/annaverde/assets/img/next_video_btn_small.svg" alt="" />
+        <img class="exit_video_btn" src="/wp-content/themes/annaverde/assets/img/exit_video_btn.svg" alt="" />
+>>>>>>> afisha
       </div>
     </div>
   </div>
@@ -127,9 +175,15 @@ $langUrl = '?' . http_build_query($output);
         <div class="lang_and_exit_btns">
           <!-- <a class="language_btn burger_menu">ENG</a> -->
           <a class="language_btn burger_menu" href="<? echo $langUrl ?>"><? echo $switchLang ?></a>
+<<<<<<< HEAD
           <img class="exit_burger_menu_btn small" src="<?php echo get_template_directory_uri(); ?>/assets/img/Burger_menu_exit_btn_small.svg" alt="" />
           <img class="exit_burger_menu_btn average" src="<?php echo get_template_directory_uri(); ?>/assets/img/Burger_menu_exit_btn_average.svg" alt="" />
           <img class="exit_burger_menu_btn big" src="<?php echo get_template_directory_uri(); ?>/assets/img/Burger_menu_exit_btn_big.svg" alt="" />
+=======
+          <img class="exit_burger_menu_btn small" src="/wp-content/themes/annaverde/assets/img/Burger_menu_exit_btn_small.svg" alt="" />
+          <img class="exit_burger_menu_btn average" src="/wp-content/themes/annaverde/assets/img/Burger_menu_exit_btn_average.svg" alt="" />
+          <img class="exit_burger_menu_btn big" src="/wp-content/themes/annaverde/assets/img/Burger_menu_exit_btn_big.svg" alt="" />
+>>>>>>> afisha
         </div>
         <? wp_nav_menu($args_b) ?>
         <!-- <nav class="header_nav burger_menu">
@@ -158,8 +212,13 @@ $langUrl = '?' . http_build_query($output);
         <div class="header_container">
           <div class="header_inner">
             <a href="my-website.com/main">
+<<<<<<< HEAD
               <img class="logo" src="<?php echo get_template_directory_uri(); ?>/assets/img/logo_on_black.png" alt="" />
               <img class="logo" src="<?php echo get_template_directory_uri(); ?>/assets/img/logo_on_white.png" alt="" />
+=======
+              <img class="logo" src="/wp-content/themes/annaverde/assets/img/logo_on_black.png" alt="" />
+              <img class="logo" src="/wp-content/themes/annaverde/assets/img/logo_on_white.png" alt="" />
+>>>>>>> afisha
             </a>
             <div class="menu_and_language">
               <? wp_nav_menu($args) ?>
@@ -180,8 +239,13 @@ $langUrl = '?' . http_build_query($output);
 
               <a class="language_btn" href="<? echo $langUrl ?>"><? echo $switchLang ?></a>
             </div>
+<<<<<<< HEAD
             <img class="burger_btn" src="<?php echo get_template_directory_uri(); ?>/assets/img/burger_btn_white.svg" alt="burger" style="vertical-align: middle" />
             <img class="burger_btn" src="<?php echo get_template_directory_uri(); ?>/assets/img/burger_btn_black.svg" alt="burger" style="vertical-align: middle" />
+=======
+            <img class="burger_btn" src="/wp-content/themes/annaverde/assets/img/burger_btn_white.svg" alt="burger" style="vertical-align: middle" />
+            <img class="burger_btn" src="/wp-content/themes/annaverde/assets/img/burger_btn_black.svg" alt="burger" style="vertical-align: middle" />
+>>>>>>> afisha
           </div>
           <div class="name_and_about_on_main_photo">
             <p class="name_on_main_photo">Анна Верде</p>
@@ -195,6 +259,10 @@ $langUrl = '?' . http_build_query($output);
           </blockquote>
         </div>
         <!-- /.header_container -->
+<<<<<<< HEAD
         <img class="main_photo" src="<?php echo get_template_directory_uri(); ?>/assets/img/kluchitsi.png" align="top" alt="" />
+=======
+        <img class="main_photo" src="/wp-content/themes/annaverde/assets/img/kluchitsi.png" align="top" alt="" />
+>>>>>>> afisha
         <!-- NEW -->
       </header>

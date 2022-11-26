@@ -2,7 +2,8 @@
 
 // based on original work from the PHP Laravel framework
 if (!function_exists('str_contains')) {
-    function str_contains($haystack, $needle) {
+    function str_contains($haystack, $needle)
+    {
         return $needle !== '' && mb_strpos($haystack, $needle) !== false;
     }
 }
@@ -330,7 +331,7 @@ function true_register_post_type_init()
         'has_archive' => true,
         'menu_icon' => 'dashicons-tickets', // иконка в меню
         'menu_position' => 20, // порядок в меню
-        'supports' => array('title', 'editor', 'comments', 'author', 'thumbnail', 'custom-fields')
+        'supports' => array('title',  'thumbnail')  //'custom-fields', 'comments', 'author', 'editor',
     );
 
     // Добавляем новый тип постов (Пресса - статьи)
@@ -373,11 +374,43 @@ function add_media_metabox()
     add_meta_box('premiere', 'Премьера', 'create_premiere_layout', 'projects', 'normal', 'low');
     add_meta_box('short_description', 'Кртакое описание', 'create_short_description_layout', 'projects', 'normal', 'low');
     add_meta_box('duration', 'Продолжительность', 'create_duration_layout', 'projects', 'normal', 'low');
-
     add_meta_box('proj_media', 'Изображения', 'func_proj_mediabox', 'projects', 'normal', 'low');
+
+    add_meta_box('afisha_project_selector', 'Выбор проекта', 'create_selector_of_project_layout', 'afisha_perfomance', 'normal', 'low');
+
+
 
     // add_meta_box('proj_media', 'Изображения', 'func_proj_mediabox', 'projects', 'normal', 'low');
 }
+
+// Создание верстки метабокса для заполнения информации о времени проведения выступления
+function create_selector_of_project_layout($post)
+{
+    // $value = get_post_meta($post->ID, 'proj_type', true);
+    // $creator_en = json_decode(get_post_meta($post->ID, 'creator_en', true), JSON_UNESCAPED_UNICODE);
+    // $creator_ru = json_decode(get_post_meta($post->ID, 'creator_ru', true), JSON_UNESCAPED_UNICODE);
+    // $value = get_post_meta($post->ID, 'proj_type', true);
+    $projectsList = getProjectPosts('all');
+    $selectedProjects = array();
+?>
+    <select class="project_selector" name="selectedProjects">
+        <? foreach ($projectsList['posts'] as $key => $value) { ?>
+            <? $projectId = $projectsList['posts'][$key]->ID; ?>
+            <option value="<? echo $projectId; ?>"><? echo get_post_title($projectId) ?></option>
+
+        <? } ?>
+    </select>
+
+    <div class="button_wrapper">
+        <button type="button" name="add_perfomance" id="add_perfomance" class="button button-primary button-large flex_button">Добавить Выступление</button>
+        <button type="button" name="del_perfomance" id="del_perfomance" class="red_button flex_button">Удалить Выступление</button>
+    </div>
+
+<?
+}
+
+
+
 
 // Создание верстки метабокса для заполнения информации о создателях проекта
 function create_creators_layout($post)
@@ -674,18 +707,6 @@ function create_duration_layout($post)
 }
 
 
-
-// function func_add_musician_ru()
-// {
-// };
-// function func_add_musician_en()
-// {
-// };
-// function func_add_musician()
-// {
-//     echo 'кнопка работает';
-// };
-
 function func_proj_mediabox($post)
 {
     $postId = $post->ID;
@@ -693,11 +714,11 @@ function func_proj_mediabox($post)
     $projCoverImgId = get_post_meta($postId, 'proj_label', true);
     $projImageAttr = wp_get_attachment_image_src($projCoverImgId, array(115, 90));
     $projImageSrc = $projImageAttr[0];
-    
+
     $allProjCoverImgId = get_post_meta($postId, 'all_proj_label', true);
     $allProjImageAttr = wp_get_attachment_image_src($allProjCoverImgId, array(115, 90));
     $allProjImageSrc = $allProjImageAttr[0];
-    
+
     $projImagesJSON = get_post_meta($postId, 'proj_images', true);
     $projImagesArr = json_decode($projImagesJSON);
 
@@ -877,9 +898,9 @@ function func_admin_scripts()
         get_template_directory_uri() . '/assets/js/admin_script.js'
     );
 
-    $translation_array = array( 'templateUrl' => get_stylesheet_directory_uri() );
-    
-    wp_localize_script( 'customadminscript', 'FromBackend', $translation_array );
-    }
+    $translation_array = array('templateUrl' => get_stylesheet_directory_uri());
+
+    wp_localize_script('customadminscript', 'FromBackend', $translation_array);
+}
 
 ?>
