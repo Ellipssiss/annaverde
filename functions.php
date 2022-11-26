@@ -399,14 +399,14 @@ function create_creators_layout($post)
     </div>
 
     <?
-    if ($creator_ru == 'NULL') {
+    if ($creator_ru == null) {
         $creator_ru = array();
         $creator_ru[0] = array(
             'role' => 'пожалуйста введите роль',
             'name' => 'пожалуйста введите имя',
         );
     };
-    if ($creator_en == 'NULL') {
+    if ($creator_en == null) {
         $creator_en = array();
         $creator_en[0] = array(
             'role' => 'Please insert role',
@@ -480,14 +480,14 @@ function create_artists_layout($post)
     </div>
 
     <?
-    if ($artist_ru == 'NULL') {
+    if ($artist_ru == null) {
         $artist_ru = array();
         $artist_ru[0] = array(
             'role' => 'пожалуйста введите роль',
             'name' => 'пожалуйста введите имя',
         );
     };
-    if ($artist_en == 'NULL') {
+    if ($artist_en == null) {
         $artist_en = array();
         $artist_en[0] = array(
             'role' => 'Please insert role',
@@ -552,14 +552,14 @@ function create_musicians_layout($post)
     </div>
 
     <?
-    if ($musician_ru == 'NULL') {
+    if ($musician_ru == null) {
         $musician_ru = array();
         $musician_ru[0] = array(
             'role' => 'пожалуйста введите роль',
             'name' => 'пожалуйста введите имя',
         );
     };
-    if ($musician_en == 'NULL') {
+    if ($musician_en == null) {
         $musician_en = array();
         $musician_en[0] = array(
             'role' => 'Please insert role',
