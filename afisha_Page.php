@@ -11,6 +11,7 @@ $posts = $arResult['posts'];
 $postCount = $arResult['count'];
 
 // Afisha test content
+// Afisha step1
 ?>
 
 
