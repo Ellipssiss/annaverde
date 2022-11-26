@@ -70,6 +70,7 @@ $langUrl = '?' . http_build_query($output);
   <script src="<?php echo get_template_directory_uri(); ?>/assets/js/owl.carousel.js"></script>
   <script src="<?php echo get_template_directory_uri(); ?>/assets/js/script.js"></script>
   <script src="<?php echo get_template_directory_uri(); ?>/assets/js/easy-toggler.min.js"></script>
+
   <?php wp_head(); ?>
 </head>
 

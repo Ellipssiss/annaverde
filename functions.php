@@ -374,7 +374,6 @@ function add_media_metabox()
     add_meta_box('short_description', 'Кртакое описание', 'create_short_description_layout', 'projects', 'normal', 'low');
     add_meta_box('duration', 'Продолжительность', 'create_duration_layout', 'projects', 'normal', 'low');
 
-    add_meta_box('proj_type', 'Тип проекта', 'func_proj_type', 'projects', 'normal', 'low');
     add_meta_box('proj_media', 'Изображения', 'func_proj_mediabox', 'projects', 'normal', 'low');
 
     // add_meta_box('proj_media', 'Изображения', 'func_proj_mediabox', 'projects', 'normal', 'low');
@@ -687,47 +686,58 @@ function create_duration_layout($post)
 //     echo 'кнопка работает';
 // };
 
-
-
-
 function func_proj_mediabox($post)
 {
     $postId = $post->ID;
-    $coverImgId = get_post_meta($postId, 'proj_label', true);
+
+    $projCoverImgId = get_post_meta($postId, 'proj_label', true);
+    $projImageAttr = wp_get_attachment_image_src($projCoverImgId, array(115, 90));
+    $projImageSrc = $projImageAttr[0];
+    
+    $allProjCoverImgId = get_post_meta($postId, 'all_proj_label', true);
+    $allProjImageAttr = wp_get_attachment_image_src($allProjCoverImgId, array(115, 90));
+    $allProjImageSrc = $allProjImageAttr[0];
+    
     $projImagesJSON = get_post_meta($postId, 'proj_images', true);
     $projImagesArr = json_decode($projImagesJSON);
-    $imageAttr = wp_get_attachment_image_src($coverImgId, array(115, 90));
-    $imageSrc = $imageAttr[0];
 
+    if ($projImagesJSON === '') $projImagesJSON = '[]';
     if (empty($projImagesArr)) $projImagesArr = [];
 ?>
     <div class="proj_labelbox">
-        <h3>Добавить обложку</h3>
-        <p>Обложка должна быть размером 625х174 пикселя</p>
-        <img class="proj_labelimg" alt="" src="<? echo $imageSrc; ?>" />
-        <input class="proj_labelinput" type="hidden" name="proj_label" value="<? echo $coverImgId; ?>" />
+        <h4>Добавить обложку на страницу одного проекта</h4>
+        <p>Обложка должна быть размером 1920х1015 пикселя</p>
+        <img class="proj_labelimg" alt="" src="<? echo $projImageSrc; ?>" />
+        <input class="proj_labelinput" type="hidden" name="proj_label" value="<? echo $projCoverImgId; ?>" />
         <div class="proj_button_box">
             <button class="proj_add_cover">Добавить обложку</button>
             <button class="proj_clear_cover">Очистить обложку</button>
         </div>
 
-        <h3>Добавить картинки в проект</h3>
-        <p>Картинки должны быть размером 1166х789 пикселей</p>
+        <h4>Добавить обложку на страницу всех проектов</h4>
+        <p>Обложка должна быть размером 180x120 пикселя</p>
+        <img class="all_proj_labelimg" alt="" src="<? echo $allProjImageSrc; ?>" />
+        <input class="all_proj_labelinput" type="hidden" name="all_proj_label" value="<? echo $allProjCoverImgId; ?>" />
+        <div class="all_proj_button_box">
+            <button class="all_proj_add_cover">Добавить обложку</button>
+            <button class="all_proj_clear_cover">Очистить обложку</button>
+        </div>
+
+        <h4>Добавить картинки в проект</h4>
+        <p>Картинки должны быть размером 1920х1015 пикселей</p>
         <input class="proj_images_input" type="hidden" name="proj_images" autocomplete="off" value="<? echo $projImagesJSON; ?>" />
         <div class="proj_images_box">
-
             <? foreach ($projImagesArr as $item) {
-                $itemImage = wp_get_attachment_image_src($item, array(115, 90));
+                $itemImage = wp_get_attachment_image_src($item, array(150, 150));
             ?>
                 <span class="proj_images_item" data-id="<? echo $item ?>">
-                    <span class="close"><img alt="" src="<? echo get_stylesheet_directory_uri(); ?>/images/admin_close.svg" /></span>
+                    <span class="close proj_images_item_close"><img alt="" src="<? echo get_template_directory_uri(); ?>/assets/img/admin_close.svg" /></span>
                     <img alt="" src="<? echo $itemImage[0]; ?>" />
                 </span>
             <? } ?>
-            <div class="proj_images_addbutton">
-                <span class="v"></span>
-                <span class="h"></span>
-            </div>
+        </div>
+        <div class="proj_images_buttons">
+            <button class="proj_images_buttons_add_button">Добавить картинку</button>
         </div>
     </div>
 <?
@@ -739,6 +749,7 @@ function func_save_proj_post($post_id)
 {
 
     update_post_meta($post_id, 'proj_label', $_POST['proj_label']);
+    update_post_meta($post_id, 'all_proj_label', $_POST['all_proj_label']);
     update_post_meta($post_id, 'proj_images', $_POST['proj_images']);
     update_post_meta($post_id, 'en_proj_type', $_POST['proj_type']);
 
@@ -865,41 +876,10 @@ function func_admin_scripts()
         'customadminscript',
         get_template_directory_uri() . '/assets/js/admin_script.js'
     );
-}
 
-// add_action('wp_enqueue_scripts', 'enqueue_script_jquery');
-// function enqueue_script_jquery()
-// {
-//     wp_deregister_script('jquery');
-//     wp_enqueue_script('jquery', 'https://code.jquery.com/jquery-3.3.1.js', array(), null, true);
-// }
-
-// function my_enqueue($hook)
-// {
-//     wp_enqueue_script('my_custom_script',  get_template_directory_uri() . '/assets/js/testpath.js', ['jquery'], 1, true);
-// }
-
-// add_action('admin_enqueue_scripts', 'my_enqueue');
-
-// Добавляем новый метабокс для подлючения картинок,
-// в тип постов "projects"
-
-
-function func_proj_type($post)
-{
-    $value = get_post_meta($post->ID, 'proj_type', true);
-
-?>
-    <select class="proj_type" name="proj_type">
-        <option value="arh" <? echo $value === 'arh' ? 'selected' : '' ?>>Архитектура</option>
-        <option value="int" <? echo $value === 'int' ? 'selected' : '' ?>>Интерьеры</option>
-    </select>
-<?
-}
-
-
-
-
-
+    $translation_array = array( 'templateUrl' => get_stylesheet_directory_uri() );
+    
+    wp_localize_script( 'customadminscript', 'FromBackend', $translation_array );
+    }
 
 ?>

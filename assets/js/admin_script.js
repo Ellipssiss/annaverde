@@ -56,14 +56,9 @@ $(document).ready(function () {
 
     //     alert('add');
     // });
-
-    const jsonInput = $('.proj_images_input');
     
     $('.proj_add_cover').click(function (event) {
-        event.preventDefault();
- 
-		const button = $(this);
- 
+        event.preventDefault(); 
 		const customUploader = wp.media({
 			title: 'Выберите изображение плз',
 			library : {
@@ -93,6 +88,94 @@ $(document).ready(function () {
 
         $('.proj_labelimg').attr('src', '');
 		$('.proj_labelinput').val('');
+    });
+
+    
+    
+    $('.all_proj_add_cover').click(function (event) {
+        event.preventDefault(); 
+		const customUploader = wp.media({
+			title: 'Выберите изображение плз',
+			library : {
+				// uploadedTo : wp.media.view.settings.post.id, // если для метобокса и хотим прилепить к текущему посту
+				type : 'image'
+			},
+			button: {
+				text: 'Выбрать изображение' // текст кнопки, по умолчанию "Вставить в запись"
+			},
+			multiple: false
+		});
+ 
+		// добавляем событие выбора изображения
+		customUploader.on('select', function() {
+			const image = customUploader.state().get('selection').first().toJSON();
+
+            $('.all_proj_labelimg').attr('src', image.sizes.thumbnail.url);
+			$('.all_proj_labelinput').val(image.id);
+		});
+ 
+		// и открываем модальное окно с выбором изображения
+		customUploader.open();
+    });
+
+    $('.all_proj_clear_cover').click(function(event) {
+        event.preventDefault();
+
+        $('.all_proj_labelimg').attr('src', '');
+		$('.all_proj_labelinput').val('');
+    });
+
+    $('.proj_images_buttons_add_button').click(function(event){
+        event.preventDefault(); 
+		const customUploader = wp.media({
+			title: 'Выберите изображение плз',
+			library : {
+				// uploadedTo : wp.media.view.settings.post.id, // если для метобокса и хотим прилепить к текущему посту
+				type : 'image'
+			},
+			button: {
+				text: 'Выбрать изображение' // текст кнопки, по умолчанию "Вставить в запись"
+			},
+			multiple: false
+		});
+ 
+		// добавляем событие выбора изображения
+		customUploader.on('select', function() {
+			const image = customUploader.state().get('selection').first().toJSON();
+            const imageId = image.id;
+
+            $('.proj_images_box').append(`
+                <span class="proj_images_item" data-id="${imageId}">
+                    <span class="close proj_images_item_close"><img alt="" src="${FromBackend.templateUrl}/assets/img/admin_close.svg" /></span>
+                    <img alt="" src="${image.sizes.thumbnail.url}" />
+                </span>
+            `);
+
+            const imagesJSON = $('.proj_images_input').val();
+            let imagesIdsArr = JSON.parse(imagesJSON);
+
+            const imageHasInArr = imagesIdsArr.some((id) => id === imageId);
+
+            if(!imageHasInArr) imagesIdsArr.push(imageId);
+
+            $('.proj_images_input').val(JSON.stringify(imagesIdsArr));
+		});
+ 
+		// и открываем модальное окно с выбором изображения
+		customUploader.open();
+    });
+
+    $('.proj_images_box').on('click', function(event) {
+        pictureId = $(event.target).parent().parent().data('id');
+
+        const imagesJSON = $('.proj_images_input').val();
+        let imagesIdsArr = JSON.parse(imagesJSON);
+
+        const clearImagesIdsArr = imagesIdsArr.filter((id) => id !== pictureId);
+
+        $('.proj_images_input').val(JSON.stringify(clearImagesIdsArr));
+
+        $(this).find('span[data-id=' + pictureId + ']').remove();
     });
 
 });

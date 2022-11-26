@@ -1,4 +1,4 @@
-h3 {
+h4 {
     line-height: 1;
     margin: 0;
     padding-bottom: 4px;
@@ -10,11 +10,41 @@ p {
     padding-bottom: 2px;
 }
 
-.proj_labelbox img {
+.proj_labelbox img,
+.all_proj_labelbox img {
     display: block;
     padding-bottom: 4px;
 }
 
-.proj_button_box {
+.proj_button_box,
+.all_proj_button_box {
     padding-bottom: 20px;
+}
+
+.proj_images_box {
+    display: flex;
+}
+
+.proj_images_item {
+    padding-right: 4px;
+    position: relative;
+}
+
+.proj_images_item span.close {
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    margin-top: -25px;
+    margin-left: -25px;
+}
+
+.proj_images_item:hover span.close {
+    display: block;
+}
+
+.proj_images_item span.close img {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
 }
