@@ -12,6 +12,7 @@ $postCount = $arResult['count'];
 
 // Afisha test content
 // Afisha step1
+// Afisha test branch check
 ?>
 
 
