@@ -9,6 +9,8 @@ get_header();
 $arResult = getProjectPosts();
 $posts = $arResult['posts'];
 $postCount = $arResult['count'];
+
+// Afisha test content
 ?>
 
 
