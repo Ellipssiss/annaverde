@@ -386,24 +386,50 @@ function add_media_metabox()
 // Создание верстки метабокса для заполнения информации о времени проведения выступления
 function create_selector_of_project_layout($post)
 {
-    // $value = get_post_meta($post->ID, 'proj_type', true);
-    // $creator_en = json_decode(get_post_meta($post->ID, 'creator_en', true), JSON_UNESCAPED_UNICODE);
-    // $creator_ru = json_decode(get_post_meta($post->ID, 'creator_ru', true), JSON_UNESCAPED_UNICODE);
-    // $value = get_post_meta($post->ID, 'proj_type', true);
+    $value = get_post_meta($post->ID, 'filed_day_events', true);
+    $arValue = json_decode($value, JSON_UNESCAPED_UNICODE);
     $projectsList = getProjectPosts('all');
-    $selectedProjects = array();
+
+    if ($value === '') $value = '[]';
+    if ($arValue === null) $arValue = [];
 ?>
-    <select class="project_selector" name="selectedProjects">
-        <? foreach ($projectsList['posts'] as $key => $value) { ?>
-            <? $projectId = $projectsList['posts'][$key]->ID; ?>
-            <option value="<? echo $projectId; ?>"><? echo get_post_title($projectId) ?></option>
+    <script>
+        const fieldDayEvents = JSON.parse('<? echo $value; ?>')
+    </script>
+    <input class="filed_day_events" type="hidden" name="filed_day_events" value="<? echo $value; ?>" />
+    <table class="day_events" border="1">
+        <thead>
+            <tr>
+                <th>Спектакль</th>
+                <th>Время</th>
+                <th>Место</th>
+            </tr>
+        </thead>
+        <tbody>
+            <? foreach ($arValue as $key => $val) { ?>
+                <tr>
+                    <td><? echo $arValue[$key]['name']; ?></td>
+                    <td><? echo $arValue[$key]['time']; ?></td>
+                    <td><? echo $arValue[$key]['place']; ?></td>
+                </tr>
+            <? } ?>
+        </tbody>
+    </table>
 
-        <? } ?>
-    </select>
+    <div>
+        <p>Проект:</p>
+        <select class="event_projects" name="event_projects">
+            <? foreach ($projectsList['posts'] as $key => $value) { ?>
+                <? $projectId = $projectsList['posts'][$key]->ID; ?>
+                <option value="<? echo $projectId; ?>"><? echo get_post_title($projectId) ?></option>
 
-    <div class="button_wrapper">
-        <button type="button" name="add_perfomance" id="add_perfomance" class="button button-primary button-large flex_button">Добавить Выступление</button>
-        <button type="button" name="del_perfomance" id="del_perfomance" class="red_button flex_button">Удалить Выступление</button>
+            <? } ?>
+        </select>
+        <p>Время:</p>
+        <input class="event_time" type="text" name="event_time" />
+        <p>Место:</p>
+        <input class="event_place" type="text" name="event_place" /><br /><br />
+        <button type="button" name="add_perfomance" id="add_perfomance" class="button button-primary button-large flex_button">Добавить выступление</button>
     </div>
 
 <?
@@ -768,6 +794,7 @@ function func_proj_mediabox($post)
 add_action('save_post', 'func_save_proj_post');
 function func_save_proj_post($post_id)
 {
+    update_post_meta($post_id, 'filed_day_events', $_POST['filed_day_events']);
 
     update_post_meta($post_id, 'proj_label', $_POST['proj_label']);
     update_post_meta($post_id, 'all_proj_label', $_POST['all_proj_label']);
@@ -898,7 +925,12 @@ function func_admin_scripts()
         get_template_directory_uri() . '/assets/js/admin_script.js'
     );
 
-    $translation_array = array('templateUrl' => get_stylesheet_directory_uri());
+    $projectPosts = getProjectPosts('all');
+
+    $translation_array = array(
+        'templateUrl' => get_stylesheet_directory_uri(),
+        'projectPosts' => $projectPosts['posts'],
+    );
 
     wp_localize_script('customadminscript', 'FromBackend', $translation_array);
 }

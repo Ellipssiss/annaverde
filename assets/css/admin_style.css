@@ -1,50 +1,61 @@
 h4 {
-    line-height: 1;
-    margin: 0;
-    padding-bottom: 4px;
+  line-height: 1;
+  margin: 0;
+  padding-bottom: 4px;
 }
 
 p {
-    line-height: 1;
-    margin: 0;
-    padding-bottom: 2px;
+  line-height: 1;
+  margin: 0;
+  padding-bottom: 2px;
 }
 
 .proj_labelbox img,
 .all_proj_labelbox img {
-    display: block;
-    padding-bottom: 4px;
+  display: block;
+  padding-bottom: 4px;
 }
 
 .proj_button_box,
 .all_proj_button_box {
-    padding-bottom: 20px;
+  padding-bottom: 20px;
 }
 
 .proj_images_box {
-    display: flex;
+  display: flex;
 }
 
 .proj_images_item {
-    padding-right: 4px;
-    position: relative;
+  padding-right: 4px;
+  position: relative;
 }
 
 .proj_images_item span.close {
-    display: none;
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    margin-top: -25px;
-    margin-left: -25px;
+  display: none;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-top: -25px;
+  margin-left: -25px;
 }
 
 .proj_images_item:hover span.close {
-    display: block;
+  display: block;
 }
 
 .proj_images_item span.close img {
-    width: 50px;
-    height: 50px;
-    cursor: pointer;
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+}
+
+.day_events {
+  text-align: left;
+  border: 1px #000000 solid;
+  margin-bottom: 12px;
+}
+
+.day_events td,
+.day_events th {
+  padding: 4px 12px;
 }

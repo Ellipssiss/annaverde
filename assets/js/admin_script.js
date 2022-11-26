@@ -178,4 +178,39 @@ $(document).ready(function () {
         $(this).find('span[data-id=' + pictureId + ']').remove();
     });
 
+    $('#add_perfomance').click(function (event) {
+        event.preventDefault();
+
+        const perfomanceId = $('.event_projects').val();
+        const time = $('.event_time').val();
+        const place = $('.event_place').val();
+
+        const projectPosts = FromBackend.projectPosts;
+        const perfomancePost = projectPosts.filter((post) => post.ID === parseInt(perfomanceId, 10));
+
+        const addItem = {
+            id: perfomanceId,
+            name: perfomancePost[0].post_title,
+            time: time,
+            place: place,
+        }
+
+        
+        const fieldArr = fieldDayEvents;
+        const hasElementInArr = fieldArr.some((item) => item.id === perfomanceId);
+
+        if (!hasElementInArr) {
+            fieldArr.push(addItem);            
+            $('.day_events').find('tbody').append(`
+                <tr>
+                    <td>${perfomancePost[0].post_title}</td>
+                    <td>${time}</td>
+                    <td>${place}</td>
+                </tr>
+            `);
+        }
+
+        $('.filed_day_events').val(JSON.stringify(fieldArr));        
+    });
+
 });
