@@ -1,5 +1,12 @@
 <?
 
+// based on original work from the PHP Laravel framework
+if (!function_exists('str_contains')) {
+    function str_contains($haystack, $needle) {
+        return $needle !== '' && mb_strpos($haystack, $needle) !== false;
+    }
+}
+
 // функция возвращает заголовок поста по заданному post id
 function get_post_title($post_id)
 {
@@ -697,10 +704,9 @@ function func_proj_mediabox($post)
     <div class="proj_labelbox">
         <h3>Добавить обложку</h3>
         <p>Обложка должна быть размером 625х174 пикселя</p>
-
         <img class="proj_labelimg" alt="" src="<? echo $imageSrc; ?>" />
         <input class="proj_labelinput" type="hidden" name="proj_label" value="<? echo $coverImgId; ?>" />
-        <div>
+        <div class="proj_button_box">
             <button class="proj_add_cover">Добавить обложку</button>
             <button class="proj_clear_cover">Очистить обложку</button>
         </div>
@@ -837,7 +843,8 @@ register_nav_menus(
 add_action('admin_head', 'func_admin_style');
 function func_admin_style()
 {
-    wp_enqueue_style('style-admin', get_stylesheet_directory_uri() . '/assets/css/style.css');
+    wp_enqueue_style('style-main', get_stylesheet_directory_uri() . '/assets/css/style.css');
+    wp_enqueue_style('style-admin', get_stylesheet_directory_uri() . '/assets/css/admin_style.css');
 }
 
 // Подключаем скрипты в админке

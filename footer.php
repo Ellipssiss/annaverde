@@ -58,16 +58,16 @@ $args = array(
           <p class="copy">© Anna Verde 2022</p>
           <div class="socialLinks">
             <a href="">
-              <img class="social_icon_footer" src="img/youtb.svg" alt="" />
+              <img class="social_icon_footer" src="<?php echo get_template_directory_uri(); ?>/assets/img/youtb.svg" alt="" />
             </a>
             <a href="">
-              <img class="social_icon_footer" src="img/inst.svg" alt="" />
+              <img class="social_icon_footer" src="<?php echo get_template_directory_uri(); ?>/assets/img/inst.svg" alt="" />
             </a>
             <a href="">
-              <img class="social_icon_footer" src="img/fb.svg" alt="" />
+              <img class="social_icon_footer" src="<?php echo get_template_directory_uri(); ?>/assets/img/fb.svg" alt="" />
             </a>
             <a href="">
-              <img class="social_icon_footer" src="img/vk.svg" alt="" />
+              <img class="social_icon_footer" src="<?php echo get_template_directory_uri(); ?>/assets/img/vk.svg" alt="" />
             </a>
           </div>
         </div>

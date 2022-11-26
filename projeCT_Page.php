@@ -1,7 +1,7 @@
 <?php
 /*
 Template Name: Шаблон Проекта
-Template Post Type: post, page, product
+Template Post Type: post, page, product, projects
 */
 set_query_var('title', 'Project page');
 get_header();
@@ -50,7 +50,7 @@ $postType = get_post_meta($postId, 'proj_type', true);
   </div>
 </div>
 
-<img class="project_main_img" src="/wp-content/themes/my_theme/assets/img/main_project_img.jpg" alt="" />
+<img class="project_main_img" src="<?php echo get_template_directory_uri(); ?>/assets/img/main_project_img.jpg" alt="" />
 
 <div class="description_and_authors_container">
   <div class="description_and_authors">
@@ -224,8 +224,8 @@ $postType = get_post_meta($postId, 'proj_type', true);
             }
             ?>
           </p>
-          <img class="sign_img minus" src="/wp-content/themes/my_theme/assets/img/sign_minus.svg" alt="" />
-          <img class="sign_img plus" src="/wp-content/themes/my_theme/assets/img/sign_plus.svg" alt="" />
+          <img class="sign_img minus" src="<?php echo get_template_directory_uri(); ?>/assets/img/sign_minus.svg" alt="" />
+          <img class="sign_img plus" src="<?php echo get_template_directory_uri(); ?>/assets/img/sign_plus.svg" alt="" />
         </div>
         <div class="item_content">
           <?
@@ -269,8 +269,8 @@ $postType = get_post_meta($postId, 'proj_type', true);
             }
             ?>
           </p>
-          <img class="sign_img minus" src="/wp-content/themes/my_theme/assets/img/sign_minus.svg" alt="" />
-          <img class="sign_img plus" src="/wp-content/themes/my_theme/assets/img/sign_plus.svg" alt="" />
+          <img class="sign_img minus" src="<?php echo get_template_directory_uri(); ?>/assets/img/sign_minus.svg" alt="" />
+          <img class="sign_img plus" src="<?php echo get_template_directory_uri(); ?>/assets/img/sign_plus.svg" alt="" />
         </div>
         <div class="item_content">
 
@@ -314,8 +314,8 @@ $postType = get_post_meta($postId, 'proj_type', true);
             }
             ?>
           </p>
-          <img class="sign_img minus" src="/wp-content/themes/my_theme/assets/img/sign_minus.svg" alt="" />
-          <img class="sign_img plus" src="/wp-content/themes/my_theme/assets/img/sign_plus.svg" alt="" />
+          <img class="sign_img minus" src="<?php echo get_template_directory_uri(); ?>/assets/img/sign_minus.svg" alt="" />
+          <img class="sign_img plus" src="<?php echo get_template_directory_uri(); ?>/assets/img/sign_plus.svg" alt="" />
         </div>
         <div class="item_content">
           <?
@@ -418,20 +418,20 @@ $postType = get_post_meta($postId, 'proj_type', true);
   <div class="gallery_container">
     <div class="gallery">
       <div class="gallery_video">
-        <img class="focused_preview_img" src="/wp-content/themes/my_theme/assets/img/gallery_project/toreodor.jpg" alt="" />
+        <img class="focused_preview_img" src="<?php echo get_template_directory_uri(); ?>/assets/img/gallery_project/toreodor.jpg" alt="" />
         <div class="play_button">
-          <img class="play_simbol" src="/wp-content/themes/my_theme/assets/img/gallery_project/play_button.svg" alt="" />
-          <img class="play_simbol_white" src="/wp-content/themes/my_theme/assets/img/gallery_project/play_button_white.svg" alt="" />
+          <img class="play_simbol" src="<?php echo get_template_directory_uri(); ?>/assets/img/gallery_project/play_button.svg" alt="" />
+          <img class="play_simbol_white" src="<?php echo get_template_directory_uri(); ?>/assets/img/gallery_project/play_button_white.svg" alt="" />
           <p class="watch_teaser_text">Смотреть тизер</p>
         </div>
         <div class="item_bg"></div>
       </div>
-      <img src="/wp-content/themes/my_theme/assets/img/gallery_project/toreodor.jpg" alt="" />
-      <img src="/wp-content/themes/my_theme/assets/img/gallery_project/khokhlova.jpg" alt="" />
-      <img src="/wp-content/themes/my_theme/assets/img/gallery_project/propellers.jpg" alt="" />
-      <img src="/wp-content/themes/my_theme/assets/img/gallery_project/girl_gimnast.jpg" alt="" />
-      <img src="/wp-content/themes/my_theme/assets/img/gallery_project/alter_ego.jpg" alt="" />
-      <img src="/wp-content/themes/my_theme/assets/img/gallery_project/girls.jpg" alt="" />
+      <img src="<?php echo get_template_directory_uri(); ?>/assets/img/gallery_project/toreodor.jpg" alt="" />
+      <img src="<?php echo get_template_directory_uri(); ?>/assets/img/gallery_project/khokhlova.jpg" alt="" />
+      <img src="<?php echo get_template_directory_uri(); ?>/assets/img/gallery_project/propellers.jpg" alt="" />
+      <img src="<?php echo get_template_directory_uri(); ?>/assets/img/gallery_project/girl_gimnast.jpg" alt="" />
+      <img src="<?php echo get_template_directory_uri(); ?>/assets/img/gallery_project/alter_ego.jpg" alt="" />
+      <img src="<?php echo get_template_directory_uri(); ?>/assets/img/gallery_project/girls.jpg" alt="" />
     </div>
   </div>
 </div>
@@ -452,9 +452,9 @@ $postType = get_post_meta($postId, 'proj_type', true);
         ?>
       </h3>
       <div class="project_partners">
-        <img class="partner_img first_partner" src="/wp-content/themes/my_theme/assets/img/partners/snob.svg" alt="" />
-        <img class="partner_img second_partner" src="/wp-content/themes/my_theme/assets/img/partners/balzi_rossi.svg" alt="" />
-        <img class="partner_img third_partner" src="/wp-content/themes/my_theme/assets/img/partners/molecule.svg" alt="" />
+        <img class="partner_img first_partner" src="<?php echo get_template_directory_uri(); ?>/assets/img/partners/snob.svg" alt="" />
+        <img class="partner_img second_partner" src="<?php echo get_template_directory_uri(); ?>/assets/img/partners/balzi_rossi.svg" alt="" />
+        <img class="partner_img third_partner" src="<?php echo get_template_directory_uri(); ?>/assets/img/partners/molecule.svg" alt="" />
       </div>
     </div>
   </div>
@@ -475,7 +475,7 @@ $postType = get_post_meta($postId, 'proj_type', true);
     <div class="articles_container project_page">
       <div class="article_wraper project_page">
         <div class="article project_page">
-          <img class="press_img project_page" src="/wp-content/themes/my_theme/assets/img/press_photo.png" alt="" />
+          <img class="press_img project_page" src="<?php echo get_template_directory_uri(); ?>/assets/img/press_photo.png" alt="" />
           <div class="article_name_and_pointer project_page">
             <p class="article_name project_page">
               Пластический спектакль «В объятиях минотавра
@@ -484,7 +484,7 @@ $postType = get_post_meta($postId, 'proj_type', true);
               Пикассо
             </p>
             <div class="press_pointer show">
-              <img src="/wp-content/themes/my_theme/assets/img/pointer.svg" alt="" />
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
             </div>
           </div>
           <div class="article_date_and_source project_page">
@@ -495,7 +495,7 @@ $postType = get_post_meta($postId, 'proj_type', true);
       </div>
       <div class="article_wraper project_page">
         <div class="article project_page">
-          <img class="press_img project_page" src="/wp-content/themes/my_theme/assets/img/press_photo.png" alt="" />
+          <img class="press_img project_page" src="<?php echo get_template_directory_uri(); ?>/assets/img/press_photo.png" alt="" />
           <div class="article_name_and_pointer project_page">
             <p class="article_name project_page">
               Пластический спектакль «В объятиях минотавра
@@ -504,7 +504,7 @@ $postType = get_post_meta($postId, 'proj_type', true);
               Пикассо
             </p>
             <div class="press_pointer show">
-              <img src="/wp-content/themes/my_theme/assets/img/pointer.svg" alt="" />
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
             </div>
           </div>
           <div class="article_date_and_source project_page">
@@ -515,7 +515,7 @@ $postType = get_post_meta($postId, 'proj_type', true);
       </div>
       <div class="article_wraper project_page">
         <div class="article project_page">
-          <img class="press_img project_page" src="/wp-content/themes/my_theme/assets/img/press_photo.png" alt="" />
+          <img class="press_img project_page" src="<?php echo get_template_directory_uri(); ?>/assets/img/press_photo.png" alt="" />
           <div class="article_name_and_pointer project_page">
             <p class="article_name project_page">
               Пластический спектакль «В объятиях минотавра
@@ -524,28 +524,7 @@ $postType = get_post_meta($postId, 'proj_type', true);
               Пикассо
             </p>
             <div class="press_pointer show">
-              <img src="/wp-content/themes/my_theme/assets/img/pointer.svg" alt="" />
-            </div>
-          </div>
-          <div class="article_date_and_source project_page">
-            <p class="article_source project_page">Культура. РФ</p>
-            <p class="article_date project_page">01.02.21</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="article_wraper project_page">
-        <div class="article project_page">
-          <img class="press_img project_page" src="/wp-content/themes/my_theme/assets/img/press_photo.png" alt="" />
-          <div class="article_name_and_pointer project_page">
-            <p class="article_name project_page">
-              Пластический спектакль «В объятиях минотавра
-              ПикассоПластический спектакль «В объятиях минотавра
-              ПикассоПластический спектакль «В объятиях минотавра
-              Пикассо
-            </p>
-            <div class="press_pointer show">
-              <img src="/wp-content/themes/my_theme/assets/img/pointer.svg" alt="" />
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
             </div>
           </div>
           <div class="article_date_and_source project_page">
@@ -557,7 +536,7 @@ $postType = get_post_meta($postId, 'proj_type', true);
 
       <div class="article_wraper project_page">
         <div class="article project_page">
-          <img class="press_img project_page" src="/wp-content/themes/my_theme/assets/img/press_photo.png" alt="" />
+          <img class="press_img project_page" src="<?php echo get_template_directory_uri(); ?>/assets/img/press_photo.png" alt="" />
           <div class="article_name_and_pointer project_page">
             <p class="article_name project_page">
               Пластический спектакль «В объятиях минотавра
@@ -566,7 +545,7 @@ $postType = get_post_meta($postId, 'proj_type', true);
               Пикассо
             </p>
             <div class="press_pointer show">
-              <img src="/wp-content/themes/my_theme/assets/img/pointer.svg" alt="" />
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
             </div>
           </div>
           <div class="article_date_and_source project_page">
@@ -578,7 +557,7 @@ $postType = get_post_meta($postId, 'proj_type', true);
 
       <div class="article_wraper project_page">
         <div class="article project_page">
-          <img class="press_img project_page" src="/wp-content/themes/my_theme/assets/img/press_photo.png" alt="" />
+          <img class="press_img project_page" src="<?php echo get_template_directory_uri(); ?>/assets/img/press_photo.png" alt="" />
           <div class="article_name_and_pointer project_page">
             <p class="article_name project_page">
               Пластический спектакль «В объятиях минотавра
@@ -587,7 +566,28 @@ $postType = get_post_meta($postId, 'proj_type', true);
               Пикассо
             </p>
             <div class="press_pointer show">
-              <img src="/wp-content/themes/my_theme/assets/img/pointer.svg" alt="" />
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
+            </div>
+          </div>
+          <div class="article_date_and_source project_page">
+            <p class="article_source project_page">Культура. РФ</p>
+            <p class="article_date project_page">01.02.21</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="article_wraper project_page">
+        <div class="article project_page">
+          <img class="press_img project_page" src="<?php echo get_template_directory_uri(); ?>/assets/img/press_photo.png" alt="" />
+          <div class="article_name_and_pointer project_page">
+            <p class="article_name project_page">
+              Пластический спектакль «В объятиях минотавра
+              ПикассоПластический спектакль «В объятиях минотавра
+              ПикассоПластический спектакль «В объятиях минотавра
+              Пикассо
+            </p>
+            <div class="press_pointer show">
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
             </div>
           </div>
           <div class="article_date_and_source project_page">
@@ -610,7 +610,7 @@ $postType = get_post_meta($postId, 'proj_type', true);
         }
         ?>
       </a>
-      <img class="go_to_pointer" src="/wp-content/themes/my_theme/assets/img/go_to_pointer.svg" alt="" />
+      <img class="go_to_pointer" src="<?php echo get_template_directory_uri(); ?>/assets/img/go_to_pointer.svg" alt="" />
     </div>
     <!-- /.press_container -->
   </div>

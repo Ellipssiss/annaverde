@@ -78,48 +78,21 @@ $(document).ready(function () {
  
 		// добавляем событие выбора изображения
 		customUploader.on('select', function() {
+			const image = customUploader.state().get('selection').first().toJSON();
 
-// 			const image = customUploader.state().get('selection').first().toJSON();
-//
-// 			button.parent().prev().attr( 'src', image.url );
-// 			button.prev().val( image.id );
-            
-            console.log('select');
-//  
+            $('.proj_labelimg').attr('src', image.sizes.thumbnail.url);
+			$('.proj_labelinput').val(image.id);
 		});
  
 		// и открываем модальное окно с выбором изображения
 		customUploader.open();
     });
 
-    // jQuery('.proj_add_cover').click(function(){
-    //     var send_attachment_bkp = wp.media.editor.send.attachment;
-    //     var button = jQuery(this);
-    //     var arrInput = [];
-        
-    //     if(jsonInput.val() === '') jsonInput.val('[]');
-        
-    //     wp.media.editor.send.attachment = function (props, attachment) {
-    //         console.log('attachment', attachment);
+    $('.proj_clear_cover').click(function(event) {
+        event.preventDefault();
 
-    //         arrInput = JSON.parse(jsonInput.val());
-
-    //         if(!arrInput.includes(attachment.id)){    
-    //             arrInput.push(attachment.id);
-    //             button.before(
-    //                 '<span class="proj_images_item" data-id="' + attachment.id + '">' +
-    //                     '<span class="close"><img alt="" src="/wp-content/themes/kisina/images/admin_close.svg" /></span>' +
-    //                     '<img alt="" src="' + attachment.sizes.thumbnail.url + '" />' +
-    //                 '</span>'
-    //             );
-    //             jsonInput.val(JSON.stringify(arrInput));
-    //         }
-            
-	// 		wp.media.editor.send.attachment = send_attachment_bkp;
-	// 	}
-	// 	wp.media.editor.open(button);
-	// 	return false;
-    // });
-
+        $('.proj_labelimg').attr('src', '');
+		$('.proj_labelinput').val('');
+    });
 
 });

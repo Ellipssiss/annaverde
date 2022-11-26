@@ -1,6 +1,6 @@
 <?php
 /*
-Template Name: Шаблон афиши
+Template Name: Шаблон Афиши
 Template Post Type: post, page, product
 */
 set_query_var('title', 'Afisha page');
