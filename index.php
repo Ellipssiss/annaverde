@@ -12,7 +12,7 @@
  *
  * @package My_theme
  */
-set_query_var('title', 'Index.php');
+set_query_var('title', 'Главная страница');
 
 get_header();
 ?>
@@ -34,8 +34,8 @@ get_header();
         </div>
         <div class="afisha_events_list">
           <div class="afisha_perfomance_event">
-            <img class="event_photo_mobile" src="img/afishaInMain.png" alt="" />
-            <img class="event_photo_desktop" src="img/afishaInMain.png" alt="" />
+            <img class="event_photo_mobile" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
+            <img class="event_photo_desktop" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
             <div class="name_date_location_wrapper">
               <div class="name_date_location">
                 <p class="performance_name">
@@ -70,8 +70,8 @@ get_header();
         <div class="afisha_events_list">
           <div class="afisha_perfomance_event">
             <!-- Начало первого эвента второго дня -->
-            <img class="event_photo_mobile" src="img/afishaInMain.png" alt="" />
-            <img class="event_photo_desktop" src="img/afishaInMain.png" alt="" />
+            <img class="event_photo_mobile" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
+            <img class="event_photo_desktop" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
             <div class="name_date_location_wrapper">
               <div class="name_date_location">
                 <p class="performance_name">
@@ -92,8 +92,8 @@ get_header();
           <!-- конец первого эвента второго дня -->
 
           <div class="afisha_perfomance_event">
-            <img class="event_photo_mobile" src="img/afishaInMain.png" alt="" />
-            <img class="event_photo_desktop" src="img/afishaInMain.png" alt="" />
+            <img class="event_photo_mobile" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
+            <img class="event_photo_desktop" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
             <div class="name_date_location_wrapper">
               <div class="name_date_location">
                 <p class="performance_name">
@@ -118,7 +118,7 @@ get_header();
       <!-- Перейти в афишу -> -->
       <a class="go_to_block" href="afisha.html">
         <span class="go_to_text">Перейти в афишу</span>
-        <img class="go_to_pointer" src="img/go_to_pointer.svg" alt="" />
+        <img class="go_to_pointer" src="<?php echo get_template_directory_uri(); ?>/assets/img/go_to_pointer.svg" alt="" />
       </a>
       <!-- /.afisha-column -->
     </div>
@@ -134,8 +134,8 @@ get_header();
       <h2 class="projects_block_title">Проекты</h2>
       <div class="projects_list">
         <a class="project" href="projeCT.html">
-          <img class="project_photo_desktop" src="img/afishaInMain.png" alt="" />
-          <img class="project_photo_mobile" src="img/afishaInMain.png" alt="" />
+          <img class="project_photo_desktop" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
+          <img class="project_photo_mobile" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
           <div class="project_info">
             <p class="project_premiere">
               Премьера 29 апреля 2022 года в Москве
@@ -152,8 +152,8 @@ get_header();
         </a>
 
         <a class="project" href="projeCT.html">
-          <img class="project_photo_desktop" src="img/afishaInMain.png" alt="" />
-          <img class="project_photo_mobile" src="img/afishaInMain.png" alt="" />
+          <img class="project_photo_desktop" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
+          <img class="project_photo_mobile" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
           <div class="project_info">
             <p class="project_premiere">
               Премьера 29 апреля 2022 года в Москве
@@ -164,13 +164,13 @@ get_header();
             </p>
           </div>
           <div class="project_pointer">
-            <img src="img/pointer.svg" alt="" />
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
           </div>
         </a>
 
         <a class="project" href="projeCT.html">
-          <img class="project_photo_desktop" src="img/afishaInMain.png" alt="" />
-          <img class="project_photo_mobile" src="img/afishaInMain.png" alt="" />
+          <img class="project_photo_desktop" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
+          <img class="project_photo_mobile" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
           <div class="project_info">
             <p class="project_premiere">
               Премьера 29 апреля 2022 года в Москве
@@ -181,13 +181,13 @@ get_header();
             </p>
           </div>
           <div class="project_pointer">
-            <img src="img/pointer.svg" alt="" />
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
           </div>
         </a>
 
         <a class="project" href="projeCT.html">
-          <img class="project_photo_desktop" src="img/afishaInMain.png" alt="" />
-          <img class="project_photo_mobile" src="img/afishaInMain.png" alt="" />
+          <img class="project_photo_desktop" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
+          <img class="project_photo_mobile" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
           <div class="project_info">
             <p class="project_premiere">
               Премьера 29 апреля 2022 года в Москве
@@ -199,7 +199,7 @@ get_header();
           </div>
 
           <div class="project_pointer">
-            <img src="img/pointer.svg" alt="" />
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
           </div>
         </a>
         <!-- ./projects-list -->
@@ -208,7 +208,7 @@ get_header();
       <!-- Перейти в проекты -> -->
       <div class="go_to_block">
         <a class="go_to_text" href="projects.html">Перейти в проекты</a>
-        <img class="go_to_pointer" src="img/go_to_pointer.svg" alt="" />
+        <img class="go_to_pointer" src="<?php echo get_template_directory_uri(); ?>/assets/img/go_to_pointer.svg" alt="" />
         <!-- ./go_to_block -->
       </div>
 
@@ -225,7 +225,7 @@ get_header();
     <div class="articles_container">
       <div class="article_wraper">
         <div class="article">
-          <img class="press_img" src="img/press_photo.png" alt="" />
+          <img class="press_img" src="<?php echo get_template_directory_uri(); ?>/assets/img/press_photo.png" alt="" />
           <div class="article_name_and_pointer">
             <p class="article_name">
               Пластический спектакль «В объятиях минотавра
@@ -234,7 +234,7 @@ get_header();
               Пикассо
             </p>
             <div class="press_pointer">
-              <img src="img/pointer.svg" alt="" />
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
             </div>
           </div>
           <div class="article_date_and_source">
@@ -245,7 +245,7 @@ get_header();
       </div>
       <div class="article_wraper">
         <div class="article">
-          <img class="press_img" src="img/press_photo.png" alt="" />
+          <img class="press_img" src="<?php echo get_template_directory_uri(); ?>/assets/img/press_photo.png" alt="" />
           <div class="article_name_and_pointer">
             <p class="article_name">
               Пластический спектакль «В объятиях минотавра
@@ -254,7 +254,7 @@ get_header();
               Пикассо
             </p>
             <div class="press_pointer">
-              <img src="img/pointer.svg" alt="" />
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
             </div>
           </div>
           <div class="article_date_and_source">
@@ -265,7 +265,7 @@ get_header();
       </div>
       <div class="article_wraper">
         <div class="article">
-          <img class="press_img" src="img/press_photo.png" alt="" />
+          <img class="press_img" src="<?php echo get_template_directory_uri(); ?>/assets/img/press_photo.png" alt="" />
           <div class="article_name_and_pointer">
             <p class="article_name">
               Пластический спектакль «В объятиях минотавра
@@ -274,28 +274,7 @@ get_header();
               Пикассо
             </p>
             <div class="press_pointer">
-              <img src="img/pointer.svg" alt="" />
-            </div>
-          </div>
-          <div class="article_date_and_source">
-            <p class="article_source">Культура. РФ</p>
-            <p class="article_date">01.02.21</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="article_wraper">
-        <div class="article">
-          <img class="press_img" src="img/press_photo.png" alt="" />
-          <div class="article_name_and_pointer">
-            <p class="article_name">
-              Пластический спектакль «В объятиях минотавра
-              ПикассоПластический спектакль «В объятиях минотавра
-              ПикассоПластический спектакль «В объятиях минотавра
-              Пикассо
-            </p>
-            <div class="press_pointer">
-              <img src="img/pointer.svg" alt="" />
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
             </div>
           </div>
           <div class="article_date_and_source">
@@ -307,7 +286,7 @@ get_header();
 
       <div class="article_wraper">
         <div class="article">
-          <img class="press_img" src="img/press_photo.png" alt="" />
+          <img class="press_img" src="<?php echo get_template_directory_uri(); ?>/assets/img/press_photo.png" alt="" />
           <div class="article_name_and_pointer">
             <p class="article_name">
               Пластический спектакль «В объятиях минотавра
@@ -316,7 +295,7 @@ get_header();
               Пикассо
             </p>
             <div class="press_pointer">
-              <img src="img/pointer.svg" alt="" />
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
             </div>
           </div>
           <div class="article_date_and_source">
@@ -328,7 +307,7 @@ get_header();
 
       <div class="article_wraper">
         <div class="article">
-          <img class="press_img" src="img/press_photo.png" alt="" />
+          <img class="press_img" src="<?php echo get_template_directory_uri(); ?>/assets/img/press_photo.png" alt="" />
           <div class="article_name_and_pointer">
             <p class="article_name">
               Пластический спектакль «В объятиях минотавра
@@ -337,7 +316,28 @@ get_header();
               Пикассо
             </p>
             <div class="press_pointer">
-              <img src="img/pointer.svg" alt="" />
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
+            </div>
+          </div>
+          <div class="article_date_and_source">
+            <p class="article_source">Культура. РФ</p>
+            <p class="article_date">01.02.21</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="article_wraper">
+        <div class="article">
+          <img class="press_img" src="<?php echo get_template_directory_uri(); ?>/assets/img/press_photo.png" alt="" />
+          <div class="article_name_and_pointer">
+            <p class="article_name">
+              Пластический спектакль «В объятиях минотавра
+              ПикассоПластический спектакль «В объятиях минотавра
+              ПикассоПластический спектакль «В объятиях минотавра
+              Пикассо
+            </p>
+            <div class="press_pointer">
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
             </div>
           </div>
           <div class="article_date_and_source">
@@ -352,7 +352,7 @@ get_header();
     <!-- Перейти в прессу -> -->
     <div class="go_to_press">
       <a class="go_to_text" href="press.html">Перейти в прессу</a>
-      <img class="go_to_pointer" src="img/go_to_pointer.svg" alt="" />
+      <img class="go_to_pointer" src="<?php echo get_template_directory_uri(); ?>/assets/img/go_to_pointer.svg" alt="" />
     </div>
     <!-- /.press_container -->
   </div>
