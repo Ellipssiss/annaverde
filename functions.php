@@ -253,20 +253,17 @@ class True_Walker_Nav_Menu extends Walker_Nav_Menu
 }
 
 // функция определения модификитора класса для хэдера
-// add_action( 'init', 'get_modificator_header_class' ); 
 function get_modificator_header_class()
 {
     $url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+    $urlMainPage = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
 
     $url = explode('?', $url);
 
     $url = $url[0];
     $output .= null;
-    // if str_contains(string $url, 'main')
-    // if str_contains(string $url, '404')
-    // str_contains(string $haystack, string $needle): bool
 
-    if (str_contains($url, 'main')) {
+    if (str_contains($url, $urlMainPage)) {
         $output .= 'header_main';
     } elseif (str_contains($url, '404')) {
         $output .= 'black_header';

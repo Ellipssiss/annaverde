@@ -47,12 +47,6 @@ if (!array_key_exists('lang', $output)) {
 }
 $langUrl = '?' . http_build_query($output);
 
-
-// if($isMenuWhite) {
-//   $headerClasses .= ' white_header';
-// } 
-// $header_modificator .= get_modificator_header_class();
-
 ?>
 
 <!doctype html>
@@ -125,27 +119,12 @@ $langUrl = '?' . http_build_query($output);
     <div class="burger_menu_container">
       <div class="burger_menu_wrapper">
         <div class="lang_and_exit_btns">
-          <!-- <a class="language_btn burger_menu">ENG</a> -->
           <a class="language_btn burger_menu" href="<? echo $langUrl ?>"><? echo $switchLang ?></a>
           <img class="exit_burger_menu_btn small" src="<?php echo get_template_directory_uri(); ?>/assets/img/Burger_menu_exit_btn_small.svg" alt="" />
           <img class="exit_burger_menu_btn average" src="<?php echo get_template_directory_uri(); ?>/assets/img/Burger_menu_exit_btn_average.svg" alt="" />
           <img class="exit_burger_menu_btn big" src="<?php echo get_template_directory_uri(); ?>/assets/img/Burger_menu_exit_btn_big.svg" alt="" />
         </div>
         <? wp_nav_menu($args_b) ?>
-        <!-- <nav class="header_nav burger_menu">
-            <a class="burger_menu_link main" href="my-website.com/main">Главная</a>
-            <a class="burger_menu_link bio" href="my-website.com/bio">Биография</a>
-            <a class="burger_menu_link afisha" href="my-website.com/afisha">Афиша</a>
-            <a class="burger_menu_link projects" href="my-website.com/projects"
-              >Проекты</a
-            >
-            <a class="burger_menu_link press" href="my-website.com/press">Пресса</a>
-            <a class="burger_menu_link contacts" href="my-website.com/contacts"
-              >Контакты</a
-            >
-            <a class="burger_menu_link support_us" href="my-website.com/support-us"
-              >Поддержать нас</a
-            > -->
         </nav>
       </div>
     </div>
@@ -163,21 +142,6 @@ $langUrl = '?' . http_build_query($output);
             </a>
             <div class="menu_and_language">
               <? wp_nav_menu($args) ?>
-              <!-- <nav class="header_nav">
-                  <a class="header_nav_link bio" href="my-website.com/bio">Биография</a>
-                  <a class="header_nav_link afisha" href="my-website.com/afisha">Афиша</a>
-                  <a class="header_nav_link projects" href="my-website.com/projects"
-                    >Проекты</a
-                  >
-                  <a class="header_nav_link press" href="my-website.com/press">Пресса</a>
-                  <a class="header_nav_link contacts" href="my-website.com/contacts"
-                    >Контакты</a
-                  >
-                  <a class="header_nav_link support_us" href="my-website.com/support_us"
-                    >Поддержать нас</a
-                  >
-                </nav> -->
-
               <a class="language_btn" href="<? echo $langUrl ?>"><? echo $switchLang ?></a>
             </div>
             <img class="burger_btn" src="<?php echo get_template_directory_uri(); ?>/assets/img/burger_btn_white.svg" alt="burger" style="vertical-align: middle" />
