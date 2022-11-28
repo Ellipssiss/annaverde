@@ -328,7 +328,7 @@ function true_register_post_type_init()
         'has_archive' => true,
         'menu_icon' => 'dashicons-tickets', // иконка в меню
         'menu_position' => 20, // порядок в меню
-        'supports' => array('title',  'thumbnail')  //'custom-fields', 'comments', 'author', 'editor',
+        'supports' => array('title', 'comments', 'author', 'editor', 'thumbnail')  //'custom-fields', ,
     );
 
     // Добавляем новый тип постов (Пресса - статьи)
@@ -383,23 +383,21 @@ function add_media_metabox()
 // Создание верстки метабокса для заполнения информации о времени проведения выступления
 function create_selector_of_project_layout($post)
 {
-    $value = get_post_meta($post->ID, 'filed_day_events', true);
+    $value = get_post_meta($post->ID, 'field_day_events', true);
     $arValue = json_decode($value, JSON_UNESCAPED_UNICODE);
     $projectsList = getProjectPosts('all');
 
     if ($value === '') $value = '[]';
     if ($arValue === null) $arValue = [];
 ?>
-    <script>
-        const fieldDayEvents = JSON.parse('<? echo $value; ?>')
-    </script>
-    <input class="filed_day_events" type="hidden" name="filed_day_events" value="<? echo $value; ?>" />
+    <input class="field_day_events" type="hidden" name="field_day_events" value='<? echo $value; ?>' />
     <table class="day_events" border="1">
         <thead>
             <tr>
                 <th>Спектакль</th>
                 <th>Время</th>
                 <th>Место</th>
+                <th>Действия</th>
             </tr>
         </thead>
         <tbody>
@@ -408,6 +406,7 @@ function create_selector_of_project_layout($post)
                     <td><? echo $arValue[$key]['name']; ?></td>
                     <td><? echo $arValue[$key]['time']; ?></td>
                     <td><? echo $arValue[$key]['place']; ?></td>
+                    <td><a class="day_events_delete" href="javascript:void(0)" data-id="<? echo $arValue[$key]['id']; ?>">Удалить</a></td>
                 </tr>
             <? } ?>
         </tbody>
@@ -791,7 +790,7 @@ function func_proj_mediabox($post)
 add_action('save_post', 'func_save_proj_post');
 function func_save_proj_post($post_id)
 {
-    update_post_meta($post_id, 'filed_day_events', $_POST['filed_day_events']);
+    update_post_meta($post_id, 'field_day_events', $_POST['field_day_events']);
 
     update_post_meta($post_id, 'proj_label', $_POST['proj_label']);
     update_post_meta($post_id, 'all_proj_label', $_POST['all_proj_label']);

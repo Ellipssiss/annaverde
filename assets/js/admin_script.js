@@ -194,9 +194,8 @@ $(document).ready(function () {
             time: time,
             place: place,
         }
-
         
-        const fieldArr = fieldDayEvents;
+        const fieldArr = JSON.parse($('.field_day_events').val()); 
         const hasElementInArr = fieldArr.some((item) => item.id === perfomanceId);
 
         if (!hasElementInArr) {
@@ -206,11 +205,26 @@ $(document).ready(function () {
                     <td>${perfomancePost[0].post_title}</td>
                     <td>${time}</td>
                     <td>${place}</td>
+                    <td><a class="day_events_delete" href="javascript:void(0)" data-id="${perfomanceId}">Удалить</a></td>
                 </tr>
             `);
         }
 
-        $('.filed_day_events').val(JSON.stringify(fieldArr));        
+        $('.field_day_events').val(JSON.stringify(fieldArr));        
+    });
+
+    $('.day_events').on('click', '.day_events_delete', function(){
+        const thisElem = $(this);
+        const itemId = thisElem.data('id');
+
+        thisElem.parent().parent().remove();
+
+        const fieldDayJSON = $('.field_day_events').val();
+        const fieldDayArr = JSON.parse(fieldDayJSON);
+
+        const fieldResult = fieldDayArr.filter((item) => parseInt(item.id, 10) !== parseInt(itemId, 10));
+
+        $('.field_day_events').val(JSON.stringify(fieldResult));
     });
 
 });
