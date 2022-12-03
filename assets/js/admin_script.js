@@ -227,4 +227,46 @@ $(document).ready(function () {
         $('.field_day_events').val(JSON.stringify(fieldResult));
     });
 
+    $('#add_video').click(function (event) {
+        event.preventDefault();
+
+        const videoName = $('.proj_video_name').val();
+        const videoUrl = $('.proj_video_url').val();
+
+        const addItem = {
+            name: videoName,
+            url: videoUrl,
+        }
+        
+        const fieldArr = JSON.parse($('.proj_video_input').val()); 
+        const hasElementInArr = fieldArr.some((item) => item.url === videoUrl);
+        console.log(1);
+        if (!hasElementInArr) {
+            fieldArr.push(addItem);            
+            $('.proj_video_list').find('tbody').append(`
+                <tr>
+                    <td>${videoName}</td>
+                    <td>${videoUrl}</td>
+                    <td><a class="proj_video_delete" href="javascript:void(0)" data-id="${videoUrl}">Удалить</a></td>
+                </tr>
+            `);
+        }
+
+        $('.proj_video_input').val(JSON.stringify(fieldArr));        
+    });
+
+    $('.proj_video_list').on('click', '.proj_video_delete', function(){
+        const thisElem = $(this);
+        const itemUrl = thisElem.data('url');
+
+        thisElem.parent().parent().remove();
+
+        const fieldDayJSON = $('.proj_video_input').val();
+        const fieldDayArr = JSON.parse(fieldDayJSON);
+
+        const fieldResult = fieldDayArr.filter((item) => item.url !== itemUrl);
+
+        $('.proj_video_input').val(JSON.stringify(fieldResult));
+    });
+
 });

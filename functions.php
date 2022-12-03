@@ -1,11 +1,51 @@
 <?
-
 // based on original work from the PHP Laravel framework
 if (!function_exists('str_contains')) {
     function str_contains($haystack, $needle)
     {
         return $needle !== '' && mb_strpos($haystack, $needle) !== false;
     }
+}
+
+function getYoutubeVideoId($url){
+    $arUrl = parse_url($url);
+    $queryString = $arUrl['query'];
+    parse_str($queryString, $arParams);
+
+    return $arParams['v'];
+}
+
+function get_project_gallery($post_id) {
+    $videos = get_post_meta($post_id, 'proj_video', true);
+    $arVideos = json_decode($videos, JSON_UNESCAPED_UNICODE);
+
+    $projImagesJSON = get_post_meta($post_id, 'proj_images', true);
+    $projImagesArr = json_decode($projImagesJSON);
+    
+    if(!empty($arVideos)) {
+        foreach($arVideos as $key => $value){
+            $arResult[] = [
+                'type' => 'video',
+                'id' => getYoutubeVideoId($value['url']),
+                'url' => $value['url'],
+                'name' => $value['name'],
+            ];
+        }
+    }
+
+    if(!empty($projImagesArr)) {
+        foreach($projImagesArr as $key => $value){
+            $projImageAr = wp_get_attachment_image_src($value, 'full');
+            $projImageSrc = $projImageAr[0];
+
+            $arResult[] = [
+                'type' => 'image',
+                'url' => $projImageSrc,
+            ];
+        }
+    }
+
+    return $arResult;
 }
 
 // функция возвращает заголовок поста по заданному post id
@@ -366,11 +406,10 @@ function add_media_metabox()
     add_meta_box('premiere', 'Премьера', 'create_premiere_layout', 'projects', 'normal', 'low');
     add_meta_box('short_description', 'Кртакое описание', 'create_short_description_layout', 'projects', 'normal', 'low');
     add_meta_box('duration', 'Продолжительность', 'create_duration_layout', 'projects', 'normal', 'low');
+    add_meta_box('proj_video', 'Видеозаписи', 'create_video_layout', 'projects', 'normal', 'low');
     add_meta_box('proj_media', 'Изображения', 'func_proj_mediabox', 'projects', 'normal', 'low');
 
     add_meta_box('afisha_project_selector', 'Выбор проекта', 'create_selector_of_project_layout', 'afisha_perfomance', 'normal', 'low');
-
-
 
     // add_meta_box('proj_media', 'Изображения', 'func_proj_mediabox', 'projects', 'normal', 'low');
 }
@@ -722,6 +761,47 @@ function create_duration_layout($post)
 <?
 }
 
+// Создание верстки метабокса для заполнения информации о видеозаписях проекта
+function create_video_layout($post)
+{
+    $value = get_post_meta($post->ID, 'proj_video', true);
+    $arValue = json_decode($value, JSON_UNESCAPED_UNICODE);
+
+    if ($value === '') $value = '[]';
+    if ($arValue === null) $arValue = [];
+?>
+    <input class="proj_video_input" type="hidden" name="proj_video" value='<? echo $value; ?>' />
+    <table class="proj_video_list" border="1">
+        <thead>
+            <tr>
+                <th>Название видеозаписи</th>
+                <th>URL</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            <? foreach ($arValue as $key => $val) { ?>
+                <tr>
+                    <td><? echo $arValue[$key]['name']; ?></td>
+                    <td><? echo $arValue[$key]['url']; ?></td>
+                    <td><a class="proj_video_delete" href="javascript:void(0)" data-url="<? echo $arValue[$key]['url']; ?>">Удалить</a></td>
+                </tr>
+            <? } ?>
+        </tbody>
+    </table>
+
+    <div>
+        <p>Название видеозаписи:</p>
+        <input class="proj_video_name" type="text" name="proj_video_name" />
+        <p>URL:</p>
+        <input class="proj_video_url" type="text" name="proj_video_url" /><br /><br />
+        <button id="add_video" type="button" name="add_video" class="button button-primary button-large flex_button">Добавить выступление</button>
+    </div>
+
+<?
+}
+
+
 
 function func_proj_mediabox($post)
 {
@@ -810,6 +890,8 @@ function func_save_proj_post($post_id)
     update_post_meta($post_id, 'ru_duration', $_POST['ru_duration']);
     update_post_meta($post_id, 'en_duration', $_POST['en_duration']);
 
+    update_post_meta($post_id, 'proj_video', $_POST['proj_video']);
+
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
         return $post_id;
     }
@@ -820,11 +902,6 @@ function func_save_proj_post($post_id)
         update_post_meta($post_id, 'proj_images', $_POST['proj_images']);
         update_post_meta($post_id, 'proj_type', $_POST['proj_type']);
     }
-
-
-    // echo "<pre>";
-    // print_r(json_encode($_POST['creator_en']));
-    // echo "</pre>";
 
     return $post_id;
 }
@@ -837,43 +914,12 @@ function getProjectPosts()
         'paged' => (get_query_var('paged') ? get_query_var('paged') : 1),
     ];
 
-    if ($_GET['filter'] === 'int') {
-        $args['meta_query'] = [[
-            'key' => 'proj_type',
-            'value' => 'int',
-        ]];
-    }
-
-    if ($_GET['filter'] === 'arh') {
-        $args['meta_query'] = [[
-            'key' => 'proj_type',
-            'value' => 'arh',
-        ]];
-    }
-
-    if ($_GET['filter'] === 'all') {
-        $args['meta_query'] = [];
-    }
-
     $wp_query = new WP_Query($args);
 
     return [
         'posts' => get_posts($args),
         'count' => $wp_query->found_posts
     ];
-}
-
-// Функция для получения названия типа проекта
-function getProjectTypeValue($type)
-{
-    if ($type === 'int') {
-        $result = 'Интерьеры';
-    }
-    if ($type === 'arh') {
-        $result = 'Архитектура';
-    }
-
-    return $result;
 }
 
 // Добавление поддержки кастомного меню в текущую тему

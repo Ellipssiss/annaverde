@@ -39,7 +39,9 @@ $(document).ready(function () {
 		$('.pretty_loader_wrapper').addClass('show');
 	})
 	
-	$('.gallery_video').click(function () {
+	$('.gallery_video, .image_regular').click(function () {
+		const itemIndex = $(this).index();
+
 		$('.player_interface_bg').addClass('show');
 
 		owl.owlCarousel({
@@ -49,6 +51,7 @@ $(document).ready(function () {
 			nav: true,
 			autoWidth: true,
 			margin: 500,
+			startPosition: itemIndex,
 		});
 	});
 
@@ -62,6 +65,7 @@ $(document).ready(function () {
 
 	$('.exit_video_btn').click(function () {
 		$('.player_interface_bg').removeClass('show');
+		owl.trigger('destroy.owl.carousel');
 	})
 
 	$('.go_to_in_middle_afisha').click(function () {

@@ -9,24 +9,12 @@ get_header();
 $arResult = getProjectPosts();
 $posts = $arResult['posts'];
 $postCount = $arResult['count'];
+$postId = ($_GET['p']);
 
-// $postid = url_to_postid( $url );
-// $postId = get_query_var('postId');
-
-$postId = ($_GET['postId']);
+$arGallery = get_project_gallery($postId);;
 
 $isEnglish = $_GET['lang'] === 'en';
 
-
-// die;
-
-// global $cur_post_id;
-// $cp_id = $cur_post_id;
-// echo $cp_id;
-
-// global $global_test_var;
-// echo $global_test_var;
-// echo $postId;
 ?>
 
 
@@ -34,7 +22,48 @@ $isEnglish = $_GET['lang'] === 'en';
 <?
 $postTitle = $post->post_title;
 $postType = get_post_meta($postId, 'proj_type', true);
+
+$projCoverImgId = get_post_meta($postId, 'proj_label', true);
+$projImageAttr = wp_get_attachment_image_src($projCoverImgId, 'full');
+$projImageSrc = $projImageAttr[0];
+
 ?>
+
+
+<!----------------------------- VIDEO PLAYER --------------------------------------------------->
+
+<? if (!empty($arGallery)) { ?>
+  <div class="player_interface_bg">
+    <div class="item_bg_player"></div>
+    <div class="player_and_interface">
+      <div class="owl-nav">
+        <img class="prev_video_btn big owl-prev" src="<?php echo get_template_directory_uri(); ?>/assets/img/prev_video_btn_big.svg" alt="" />
+        <img class="prev_video_btn average owl-prev" src="<?php echo get_template_directory_uri(); ?>/assets/img/prev_video_btn_average.svg" alt="" />
+        <img class="prev_video_btn small owl-prev" src="<?php echo get_template_directory_uri(); ?>/assets/img/prev_video_btn_small.svg" alt="" />
+      </div>
+      <div class="owl-carousel owl-theme">
+      <? foreach($arGallery as $key => $value) { 
+          if($value['type'] == 'video'){ ?>          
+            <div class="item">
+              <iframe width="560" height="315" src="https://www.youtube.com/embed/<? echo $value['id']; ?>" title="<? echo $value['name']; ?>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          <? } elseif ($value['type'] == 'image') { ?>
+            <div class="item">
+              <img alt="" src="<? echo $value['url']; ?>" />
+            </div>
+          <? } ?>
+        <? } ?>
+      </div>
+      <div class="next_and_exit_btn">
+        <img class="next_video_btn big" src="<?php echo get_template_directory_uri(); ?>/assets/img/next_video_btn_big.svg" alt="" />
+        <img class="next_video_btn average" src="<?php echo get_template_directory_uri(); ?>/assets/img/next_video_btn_average.svg" alt="" />
+        <img class="next_video_btn small" src="<?php echo get_template_directory_uri(); ?>/assets/img/next_video_btn_small.svg" alt="" />
+        <img class="exit_video_btn" src="<?php echo get_template_directory_uri(); ?>/assets/img/exit_video_btn.svg" alt="" />
+      </div>
+    </div>
+  </div>
+<?}?>
+
 
 <div class="title_subtitle_container">
   <div class="project_title_and_subtitle">
@@ -50,7 +79,7 @@ $postType = get_post_meta($postId, 'proj_type', true);
   </div>
 </div>
 
-<img class="project_main_img" src="<?php echo get_template_directory_uri(); ?>/assets/img/main_project_img.jpg" alt="" />
+<img class="project_main_img" src="<? echo $projImageSrc; ?>" alt="" />
 
 <div class="description_and_authors_container">
   <div class="description_and_authors">
@@ -400,27 +429,30 @@ $postType = get_post_meta($postId, 'proj_type', true);
 <!-- /.nearest_performances_in_project -->
 
 <!------------------------------------ Gallery ---------------------------------------------->
-<div class="gallery_wrapper">
-  <div class="gallery_container">
-    <div class="gallery">
-      <div class="gallery_video">
-        <img class="focused_preview_img" src="<?php echo get_template_directory_uri(); ?>/assets/img/gallery_project/toreodor.jpg" alt="" />
-        <div class="play_button">
-          <img class="play_simbol" src="<?php echo get_template_directory_uri(); ?>/assets/img/gallery_project/play_button.svg" alt="" />
-          <img class="play_simbol_white" src="<?php echo get_template_directory_uri(); ?>/assets/img/gallery_project/play_button_white.svg" alt="" />
-          <p class="watch_teaser_text">Смотреть тизер</p>
-        </div>
-        <div class="item_bg"></div>
+
+<? if (!empty($arGallery)) { ?>
+  <div class="gallery_wrapper">
+    <div class="gallery_container">
+      <div class="gallery">
+        <? foreach($arGallery as $key => $value) { 
+          if($value['type'] == 'video'){ ?>
+            <div class="gallery_video">
+              <img class="focused_preview_img" src="https://img.youtube.com/vi/<? echo $value['id']; ?>/mqdefault.jpg" alt="" />
+              <div class="play_button">
+                <img class="play_simbol" src="<?php echo get_template_directory_uri(); ?>/assets/img/gallery_project/play_button.svg" alt="" />
+                <img class="play_simbol_white" src="<?php echo get_template_directory_uri(); ?>/assets/img/gallery_project/play_button_white.svg" alt="" />
+                <p class="watch_teaser_text">Смотреть тизер</p>
+              </div>
+              <div class="item_bg"></div>
+            </div>
+          <? } elseif ($value['type'] == 'image') { ?>
+            <img class="image_regular" src="<? echo $value['url']; ?>" alt="" />
+          <? } ?>
+        <? } ?>
       </div>
-      <img src="<?php echo get_template_directory_uri(); ?>/assets/img/gallery_project/toreodor.jpg" alt="" />
-      <img src="<?php echo get_template_directory_uri(); ?>/assets/img/gallery_project/khokhlova.jpg" alt="" />
-      <img src="<?php echo get_template_directory_uri(); ?>/assets/img/gallery_project/propellers.jpg" alt="" />
-      <img src="<?php echo get_template_directory_uri(); ?>/assets/img/gallery_project/girl_gimnast.jpg" alt="" />
-      <img src="<?php echo get_template_directory_uri(); ?>/assets/img/gallery_project/alter_ego.jpg" alt="" />
-      <img src="<?php echo get_template_directory_uri(); ?>/assets/img/gallery_project/girls.jpg" alt="" />
     </div>
   </div>
-</div>
+<?}?>
 
 <!------------------------------------ Partners --------------------------------------------->
 

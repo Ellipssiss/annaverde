@@ -3878,8 +3878,18 @@ h3.nearest_performance_title {
   /* margin-bottom: 100px; */
 }
 
+.gallery > .image_regular {
+  width: 282px;
+  height: 190px;
+}
+
 .gallery_video {
   position: relative;
+}
+
+.gallery_video > img.focused_preview_img{
+  width: 282px;
+  height: 190px;
 }
 
 .gallery_video .focused_preview_img {

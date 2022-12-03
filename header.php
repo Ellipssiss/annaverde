@@ -63,56 +63,13 @@ $langUrl = '?' . http_build_query($output);
   <script src="<?php echo get_template_directory_uri(); ?>/assets/js/jquery-3.6.0.min.js"></script>
   <script src="<?php echo get_template_directory_uri(); ?>/assets/js/owl.carousel.js"></script>
   <script src="<?php echo get_template_directory_uri(); ?>/assets/js/script.js"></script>
-  <script src="<?php echo get_template_directory_uri(); ?>/assets/js/easy-toggler.min.js"></script>
 
   <?php wp_head(); ?>
 </head>
 
 <body>
   <?php wp_body_open(); ?>
-  <!----------------------------- VIDEO PLAYER --------------------------------------------------->
-  <div class="player_interface_bg">
-    <div class="item_bg_player"></div>
-    <div class="player_and_interface">
-      <div class="owl-nav">
-        <img class="prev_video_btn big owl-prev" src="<?php echo get_template_directory_uri(); ?>/assets/img/prev_video_btn_big.svg" alt="" />
-        <img class="prev_video_btn average owl-prev" src="<?php echo get_template_directory_uri(); ?>/assets/img/prev_video_btn_average.svg" alt="" />
-        <img class="prev_video_btn small owl-prev" src="<?php echo get_template_directory_uri(); ?>/assets/img/prev_video_btn_small.svg" alt="" />
-      </div>
-      <div class="owl-carousel owl-theme">
-        <div class="item">
-          <iframe width="560" height="315" src="https://www.youtube.com/embed/007o-XFS8PA" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-        </div>
-        <div class="item">
-          <img alt="" src="<?php echo get_template_directory_uri(); ?>/assets/img/main_project_img.jpg" />
-        </div>
-        <div class="item">
-          <img src="<?php echo get_template_directory_uri(); ?>/assets/img/gallery_project/toreodor.jpg" alt="" />
-        </div>
-        <div class="item">
-          <img src="<?php echo get_template_directory_uri(); ?>/assets/img/gallery_project/khokhlova.jpg" alt="" />
-        </div>
-        <div class="item">
-          <img src="<?php echo get_template_directory_uri(); ?>/assets/img/gallery_project/propellers.jpg" alt="" />
-        </div>
-        <div class="item">
-          <img src="<?php echo get_template_directory_uri(); ?>/img/gallery_project/girl_gimnast.jpg" alt="" />
-        </div>
-        <div class="item">
-          <img src="<?php echo get_template_directory_uri(); ?>/img/gallery_project/alter_ego.jpg" alt="" />
-        </div>
-        <div class="item">
-          <img src="<?php echo get_template_directory_uri(); ?>/assets/img/gallery_project/girls.jpg" alt="" />
-        </div>
-      </div>
-      <div class="next_and_exit_btn">
-        <img class="next_video_btn big" src="<?php echo get_template_directory_uri(); ?>/assets/img/next_video_btn_big.svg" alt="" />
-        <img class="next_video_btn average" src="<?php echo get_template_directory_uri(); ?>/assets/img/next_video_btn_average.svg" alt="" />
-        <img class="next_video_btn small" src="<?php echo get_template_directory_uri(); ?>/assets/img/next_video_btn_small.svg" alt="" />
-        <img class="exit_video_btn" src="<?php echo get_template_directory_uri(); ?>/assets/img/exit_video_btn.svg" alt="" />
-      </div>
-    </div>
-  </div>
+  
   <!----------------------------- BURGER MENU ---------------------------------------------------->
   <div class="burger_menu_bg">
     <div class="item_bg_burger_menu"></div>
