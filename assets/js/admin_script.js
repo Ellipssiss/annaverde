@@ -240,7 +240,7 @@ $(document).ready(function () {
         
         const fieldArr = JSON.parse($('.proj_video_input').val()); 
         const hasElementInArr = fieldArr.some((item) => item.url === videoUrl);
-        console.log(1);
+        
         if (!hasElementInArr) {
             fieldArr.push(addItem);            
             $('.proj_video_list').find('tbody').append(`
@@ -267,6 +267,59 @@ $(document).ready(function () {
         const fieldResult = fieldDayArr.filter((item) => item.url !== itemUrl);
 
         $('.proj_video_input').val(JSON.stringify(fieldResult));
+    });
+
+    $('.proj_partners_buttons_add_button').click(function(event){
+        event.preventDefault(); 
+		const customUploader = wp.media({
+			title: 'Выберите изображение плз',
+			library : {
+				// uploadedTo : wp.media.view.settings.post.id, // если для метобокса и хотим прилепить к текущему посту
+				type : 'image'
+			},
+			button: {
+				text: 'Выбрать изображение' // текст кнопки, по умолчанию "Вставить в запись"
+			},
+			multiple: false
+		});
+ 
+		// добавляем событие выбора изображения
+		customUploader.on('select', function() {
+			const image = customUploader.state().get('selection').first().toJSON();
+            const imageId = image.id;
+
+            $('.proj_partners_box').append(`
+                <span class="proj_partners_item" data-id="${imageId}">
+                    <span class="close proj_partners_item_close"><img alt="" src="${FromBackend.templateUrl}/assets/img/admin_close.svg" /></span>
+                    <img alt="" src="${image.sizes.thumbnail.url}" />
+                </span>
+            `);
+
+            const imagesJSON = $('.proj_partners_input').val();
+            let imagesIdsArr = JSON.parse(imagesJSON);
+
+            const imageHasInArr = imagesIdsArr.some((id) => id === imageId);
+
+            if(!imageHasInArr) imagesIdsArr.push(imageId);
+
+            $('.proj_partners_input').val(JSON.stringify(imagesIdsArr));
+		});
+ 
+		// и открываем модальное окно с выбором изображения
+		customUploader.open();
+    });
+
+    $('.proj_partners_box').on('click', function(event) {
+        pictureId = $(event.target).parent().parent().data('id');
+
+        const imagesJSON = $('.proj_partners_input').val();
+        let imagesIdsArr = JSON.parse(imagesJSON);
+
+        const clearImagesIdsArr = imagesIdsArr.filter((id) => id !== pictureId);
+
+        $('.proj_partners_input').val(JSON.stringify(clearImagesIdsArr));
+
+        $(this).find('span[data-id=' + pictureId + ']').remove();
     });
 
 });

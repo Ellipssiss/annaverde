@@ -21,16 +21,19 @@ p {
   padding-bottom: 20px;
 }
 
-.proj_images_box {
+.proj_images_box,
+.proj_partners_box {
   display: flex;
 }
 
-.proj_images_item {
+.proj_images_item,
+.proj_partners_item {
   padding-right: 4px;
   position: relative;
 }
 
-.proj_images_item span.close {
+.proj_images_item span.close,
+.proj_partners_item span.close {
   display: none;
   position: absolute;
   left: 50%;
@@ -39,11 +42,13 @@ p {
   margin-left: -25px;
 }
 
-.proj_images_item:hover span.close {
+.proj_images_item:hover span.close,
+.proj_partners_item:hover span.close {
   display: block;
 }
 
-.proj_images_item span.close img {
+.proj_images_item span.close img,
+.proj_partners_item span.close img {
   width: 50px;
   height: 50px;
   cursor: pointer;

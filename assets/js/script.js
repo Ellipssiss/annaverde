@@ -1,7 +1,4 @@
 $(document).ready(function () {
-
-	console.log('1');
-	
 	const owl = $('.owl-carousel');
 
 	const creators = $('.creators');

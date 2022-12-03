@@ -7,6 +7,22 @@ if (!function_exists('str_contains')) {
     }
 }
 
+function get_project_partners($post_id) {
+    $projPartnersJSON = get_post_meta($post_id, 'proj_partners', true);
+    $projPartnersArr = json_decode($projPartnersJSON);
+
+    if(!empty($projPartnersArr)) {
+        foreach($projPartnersArr as $key => $value){
+            $projImageAr = wp_get_attachment_image_src($value, 'full');
+            $projImageSrc = $projImageAr[0];
+
+            $arResult[] = $projImageSrc;
+        }
+    }
+
+    return $arResult;
+}
+
 function getYoutubeVideoId($url){
     $arUrl = parse_url($url);
     $queryString = $arUrl['query'];
@@ -408,6 +424,7 @@ function add_media_metabox()
     add_meta_box('duration', 'Продолжительность', 'create_duration_layout', 'projects', 'normal', 'low');
     add_meta_box('proj_video', 'Видеозаписи', 'create_video_layout', 'projects', 'normal', 'low');
     add_meta_box('proj_media', 'Изображения', 'func_proj_mediabox', 'projects', 'normal', 'low');
+    add_meta_box('proj_partners', 'Партнеры', 'func_proj_partners', 'projects', 'normal', 'low');
 
     add_meta_box('afisha_project_selector', 'Выбор проекта', 'create_selector_of_project_layout', 'afisha_perfomance', 'normal', 'low');
 
@@ -860,6 +877,37 @@ function func_proj_mediabox($post)
 <?
 }
 
+function func_proj_partners($post)
+{
+    $postId = $post->ID;
+
+    $projPartnersImagesJSON = get_post_meta($postId, 'proj_partners', true);
+    $projPartnersImagesArr = json_decode($projPartnersImagesJSON);
+
+    if ($projPartnersImagesJSON === '') $projPartnersImagesJSON = '[]';
+    if (empty($projPartnersImagesArr)) $projPartnersImagesArr = [];
+?>
+    <div class="proj_labelbox">
+        <h4>Добавить логотипы партнеров</h4>
+        <p>Картинки должны быть размером 180х90 пикселей</p>
+        <input class="proj_partners_input" type="hidden" name="proj_partners" autocomplete="off" value="<? echo $projPartnersImagesJSON; ?>" />
+        <div class="proj_partners_box">
+            <? foreach ($projPartnersImagesArr as $item) {
+                $itemImage = wp_get_attachment_image_src($item);
+            ?>
+                <span class="proj_partners_item" data-id="<? echo $item ?>">
+                    <span class="close proj_partners_item_close"><img alt="" src="<? echo get_template_directory_uri(); ?>/assets/img/admin_close.svg" /></span>
+                    <img alt="" src="<? echo $itemImage[0]; ?>" />
+                </span>
+            <? } ?>
+        </div>
+        <div class="proj_partners_buttons">
+            <button class="proj_partners_buttons_add_button">Добавить картинку</button>
+        </div>
+    </div>
+<?
+}
+
 // Сохраняем данные из мета-бокса
 add_action('save_post', 'func_save_proj_post');
 function func_save_proj_post($post_id)
@@ -891,6 +939,7 @@ function func_save_proj_post($post_id)
     update_post_meta($post_id, 'en_duration', $_POST['en_duration']);
 
     update_post_meta($post_id, 'proj_video', $_POST['proj_video']);
+    update_post_meta($post_id, 'proj_partners', $_POST['proj_partners']);
 
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
         return $post_id;

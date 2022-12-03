@@ -11,7 +11,8 @@ $posts = $arResult['posts'];
 $postCount = $arResult['count'];
 $postId = ($_GET['p']);
 
-$arGallery = get_project_gallery($postId);;
+$arGallery = get_project_gallery($postId);
+$arPartners = get_project_partners($postId);
 
 $isEnglish = $_GET['lang'] === 'en';
 
@@ -121,9 +122,6 @@ $projImageSrc = $projImageAttr[0];
         </p>
         <?
         $creators = get_post_creators($postId);
-        // print_r($creators);
-        // echo gettype($creators);
-
         if ($creators) {
           foreach ($creators as $key => $value) {
         ?>
@@ -455,28 +453,29 @@ $projImageSrc = $projImageAttr[0];
 <?}?>
 
 <!------------------------------------ Partners --------------------------------------------->
-
-<div class="partners_wrapper">
-  <div class="partners_container">
-    <div class="partners">
-      <h3 class="partners_title">
-        <!-- Партнеры -->
-        <?
-        if ($isEnglish) {
-          echo 'Partners';
-        } else {
-          echo 'Партнеры';
-        }
-        ?>
-      </h3>
-      <div class="project_partners">
-        <img class="partner_img first_partner" src="<?php echo get_template_directory_uri(); ?>/assets/img/partners/snob.svg" alt="" />
-        <img class="partner_img second_partner" src="<?php echo get_template_directory_uri(); ?>/assets/img/partners/balzi_rossi.svg" alt="" />
-        <img class="partner_img third_partner" src="<?php echo get_template_directory_uri(); ?>/assets/img/partners/molecule.svg" alt="" />
+<? if(!empty($arPartners)) { ?>
+  <div class="partners_wrapper">
+    <div class="partners_container">
+      <div class="partners">
+        <h3 class="partners_title">
+          <!-- Партнеры -->
+          <?
+          if ($isEnglish) {
+            echo 'Partners';
+          } else {
+            echo 'Партнеры';
+          }
+          ?>
+        </h3>
+        <div class="project_partners">
+          <? foreach($arPartners as $key => $value) { ?>
+            <img class="partner_img first_partner" src="<?php echo $value; ?>" alt="" />
+          <? } ?>
+        </div>
       </div>
     </div>
   </div>
-</div>
+<? } ?>
 <!------------------------------------ Press block ------------------------------------------>
 <div class="press_block project_page">
   <div class="press_container project_page">

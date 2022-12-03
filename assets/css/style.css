@@ -4328,10 +4328,10 @@ h3.nearest_performance_title {
 
 .partner_img {
   margin-right: 45px;
-  display: flex;
-  /* width: 100%;
-  max-width: 40%; */
+  width: 180px;
+  height: 90px;
 }
+
 /* @media (min-width: 768px) {
   .partner_img {
     max-width: 30%;
