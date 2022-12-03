@@ -19,12 +19,6 @@ $(document).ready(function () {
 		$('.musicians').toggleClass('show');
 	})
 
-
-
-
-
-
-
 	$('.burger_btn').click(function () {
 		$('.burger_menu_bg').addClass('show');
 	})
@@ -33,7 +27,9 @@ $(document).ready(function () {
 		$('.burger_menu_bg').removeClass('show');
 	});
 
-	$('.go_to_in_middle_projects').click(function () {
+	$('.go_to_in_middle_projects').click(function (event) {
+		event.preventDefault();
+
 		$('.go_to_in_middle_projects').removeClass('show');
 		$('.pretty_loader_wrapper').addClass('show');
 	})

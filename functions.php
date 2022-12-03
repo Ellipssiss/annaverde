@@ -258,12 +258,7 @@ function get_modificator_header_class()
     $url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     $urlMainPage = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
 
-    $url = explode('?', $url);
-
-    $url = $url[0];
-    $output .= null;
-
-    if (str_contains($url, $urlMainPage)) {
+    if ($url === $urlMainPage) {
         $output .= 'header_main';
     } elseif (str_contains($url, '404')) {
         $output .= 'black_header';
@@ -302,7 +297,7 @@ function true_register_post_type_init()
         'has_archive' => true,
         'menu_icon' => 'dashicons-superhero-alt', // иконка в меню
         'menu_position' => 20, // порядок в меню
-        'supports' => array('title', 'editor', 'comments', 'author', 'thumbnail')
+        'supports' => array('title', 'editor', 'thumbnail')
     );
 
 
@@ -328,7 +323,7 @@ function true_register_post_type_init()
         'has_archive' => true,
         'menu_icon' => 'dashicons-tickets', // иконка в меню
         'menu_position' => 20, // порядок в меню
-        'supports' => array('title', 'comments', 'author', 'editor', 'thumbnail')  //'custom-fields', ,
+        'supports' => array('title', 'editor', 'thumbnail')  //'custom-fields', ,
     );
 
     // Добавляем новый тип постов (Пресса - статьи)
@@ -353,7 +348,7 @@ function true_register_post_type_init()
         'has_archive' => true,
         'menu_icon' => 'dashicons-book-alt', // иконка в меню
         'menu_position' => 20, // порядок в меню
-        'supports' => array('title', 'editor', 'comments', 'author', 'thumbnail')
+        'supports' => array('title', 'editor', 'thumbnail')
     );
     register_post_type('projects', $args_proj);
     register_post_type('afisha_perfomance', $args_perf);
@@ -418,7 +413,6 @@ function create_selector_of_project_layout($post)
             <? foreach ($projectsList['posts'] as $key => $value) { ?>
                 <? $projectId = $projectsList['posts'][$key]->ID; ?>
                 <option value="<? echo $projectId; ?>"><? echo get_post_title($projectId) ?></option>
-
             <? } ?>
         </select>
         <p>Время:</p>
@@ -898,7 +892,7 @@ register_nav_menus(
 add_action('admin_head', 'func_admin_style');
 function func_admin_style()
 {
-    wp_enqueue_style('style-main', get_stylesheet_directory_uri() . '/assets/css/style.css');
+    // wp_enqueue_style('style-main', get_stylesheet_directory_uri() . '/assets/css/style.css');
     wp_enqueue_style('style-admin', get_stylesheet_directory_uri() . '/assets/css/admin_style.css');
 }
 

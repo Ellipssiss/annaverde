@@ -59,6 +59,6 @@ $postCount = $arResult['count'];
             </div>
           </div>
         </div>
-        <img class="anna_bg" src="/wp-content/themes/my_theme/assets/img/anna_foto.png" alt="" />
+        <img class="anna_bg" src="<?php echo get_template_directory_uri(); ?>/assets/img/anna_foto.png" alt="" />
 
 <? get_footer(); ?>

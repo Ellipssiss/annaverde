@@ -132,11 +132,11 @@ $langUrl = '?' . http_build_query($output);
   <div class="page_wrapper">
     <div class="page">
       <!----------------------------- HEADER --------------------------------------------------------->
-
+            
       <header class="header <? get_modificator_header_class(); ?>">
         <div class="header_container">
           <div class="header_inner">
-            <a href="my-website.com/main">
+            <a href="/">
               <img class="logo" src="<?php echo get_template_directory_uri(); ?>/assets/img/logo_on_black.png" alt="" />
               <img class="logo" src="<?php echo get_template_directory_uri(); ?>/assets/img/logo_on_white.png" alt="" />
             </a>
