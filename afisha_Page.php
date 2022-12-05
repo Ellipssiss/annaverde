@@ -13,6 +13,10 @@ $postCount = $arResult['count'];
 // Afisha test content
 // Afisha step1
 // Afisha test branch check
+
+$arAfishaPosts = getAfishaPosts();
+
+$isEnglish = $_GET['lang'] === 'en';
 ?>
 
 
@@ -33,7 +37,7 @@ $postCount = $arResult['count'];
         <div id="dropdown" class="dropdown" easy-toggle="#dropdown" easy-class="show">
           <button class="dropdown_toggle">
             Все месяцы
-            <img src="/wp-content/themes/my_theme/assets/img/dropdown_up_pointer.svg" alt="" />
+            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/dropdown_up_pointer.svg" alt="" />
           </button>
 
           <div id="dropdown_menu" class="dropdown_menu">
@@ -50,42 +54,52 @@ $postCount = $arResult['count'];
         </div>
       </div>
       <!------------------------------------- Первый день ------------------------------------------------->
-      <!-- Один день в афише -->
-      <div class="afisha_perfomance_day">
-        <!-- Блок с датой -->
-        <div class="date">
-          <div class="month_day_of_month">
-            <span class="day_of_month">28</span>
-            <span class="month">Сентября</span>
+      <? foreach($arAfishaPosts as $key => $value){ 
+        if ($isEnglish) {
+          $afishaPost = $value['en'];
+        } else {
+          $afishaPost = $value['ru'];
+        }
+        ?>
+        <!-- Один день в афише -->
+        <div class="afisha_perfomance_day">
+          <!-- Блок с датой -->
+          <div class="date">
+            <div class="month_day_of_month">
+              <span class="day_of_month">28</span>
+              <span class="month">Сентября</span>
+            </div>
+            <span class="day_of_week">Воскресенье</span>
           </div>
-          <span class="day_of_week">Воскресенье</span>
-        </div>
-        <!-- Список всех представлений в этот день -->
-        <div class="afisha_events_list">
-          <!-- Информаци о конкретном представлении в этот день -->
-          <div class="afisha_perfomance_event">
-            <img class="event_photo_mobile" src="/wp-content/themes/my_theme/assets/img/afishaInMain.png" alt="" />
-            <img class="event_photo_desktop" src="/wp-content/themes/my_theme/assets/img/afishaInMain.png" alt="" />
-            <div class="name_date_location_wrapper">
-              <div class="name_date_location">
-                <p class="performance_name">
-                  В объятиях минотавра Пикассо В объятиях минотавра
-                  Пикассо
-                </p>
-                <div class="perfomrmance_time_and_location">
-                  <div class="performance_time">20:00</div>
-                  <p class="performance_location">
-                    Москва, Яровит Холл
+          <!-- Список всех представлений в этот день -->
+          <div class="afisha_events_list">
+            <!-- Информаци о конкретном представлении в этот день -->
+            <div class="afisha_perfomance_event">
+              <img class="event_photo_mobile" src="<?php echo get_template_directory_uri(); ?>/img/afishaInMain.png" alt="" />
+              <img class="event_photo_desktop" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
+              <div class="name_date_location_wrapper">
+                <div class="name_date_location">
+                  <p class="performance_name">
+                    <? echo $afishaPost['title']; ?>
                   </p>
+                  <div class="perfomrmance_time_and_location">
+                    <div class="performance_time"><? echo $afishaPost['time']; ?></div>
+                    <p class="performance_location">
+                      <? echo $afishaPost['place']; ?>
+                    </p>
+                  </div>
                 </div>
               </div>
+              <a class="buy_ticket" href="afisha.html">Купить билет</a>
             </div>
-            <a class="buy_ticket" href="afisha.html">Купить билет</a>
+            <!-- /.afisha_events_list -->
           </div>
-          <!-- /.afisha_events_list -->
+          <!-- /.afisha_perfomance_day -->
         </div>
-        <!-- /.afisha_perfomance_day -->
-      </div>
+
+      <? } ?>
+      
+      
       <!------------------------------------- Второй день ------------------------------------------------->
       <!-- Один день в афише -->
       <div class="afisha_perfomance_day">
@@ -101,8 +115,8 @@ $postCount = $arResult['count'];
         <div class="afisha_events_list">
           <!-- Информаци о конкретном представлении в этот день -->
           <div class="afisha_perfomance_event">
-            <img class="event_photo_mobile" src="/wp-content/themes/my_theme/assets/img/afishaInMain.png" alt="" />
-            <img class="event_photo_desktop" src="/wp-content/themes/my_theme/assets/img/afishaInMain.png" alt="" />
+            <img class="event_photo_mobile" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
+            <img class="event_photo_desktop" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
             <div class="name_date_location_wrapper">
               <div class="name_date_location">
                 <p class="performance_name">
@@ -138,8 +152,8 @@ $postCount = $arResult['count'];
         <div class="afisha_events_list">
           <!-- Информаци о конкретном представлении в этот день -->
           <div class="afisha_perfomance_event">
-            <img class="event_photo_mobile" src="/wp-content/themes/my_theme/assets/img/afishaInMain.png" alt="" />
-            <img class="event_photo_desktop" src="/wp-content/themes/my_theme/assets/img/afishaInMain.png" alt="" />
+            <img class="event_photo_mobile" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
+            <img class="event_photo_desktop" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
             <div class="name_date_location_wrapper">
               <div class="name_date_location">
                 <p class="performance_name">
@@ -175,8 +189,8 @@ $postCount = $arResult['count'];
         <div class="afisha_events_list">
           <!-- Информаци о конкретном представлении в этот день -->
           <div class="afisha_perfomance_event">
-            <img class="event_photo_mobile" src="/wp-content/themes/my_theme/assets/img/afishaInMain.png" alt="" />
-            <img class="event_photo_desktop" src="/wp-content/themes/my_theme/assets/img/afishaInMain.png" alt="" />
+            <img class="event_photo_mobile" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
+            <img class="event_photo_desktop" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
             <div class="name_date_location_wrapper">
               <div class="name_date_location">
                 <p class="performance_name">
@@ -212,8 +226,8 @@ $postCount = $arResult['count'];
         <div class="afisha_events_list">
           <!-- Информаци о конкретном представлении в этот день -->
           <div class="afisha_perfomance_event">
-            <img class="event_photo_mobile" src="/wp-content/themes/my_theme/assets/img/afishaInMain.png" alt="" />
-            <img class="event_photo_desktop" src="/wp-content/themes/my_theme/assets/img/afishaInMain.png" alt="" />
+            <img class="event_photo_mobile" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
+            <img class="event_photo_desktop" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
             <div class="name_date_location_wrapper">
               <div class="name_date_location">
                 <p class="performance_name">
@@ -234,8 +248,8 @@ $postCount = $arResult['count'];
 
           <!-- Информаци о конкретном представлении в этот день -->
           <div class="afisha_perfomance_event">
-            <img class="event_photo_mobile" src="/wp-content/themes/my_theme/assets/img/afishaInMain.png" alt="" />
-            <img class="event_photo_desktop" src="/wp-content/themes/my_theme/assets/img/afishaInMain.png" alt="" />
+            <img class="event_photo_mobile" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
+            <img class="event_photo_desktop" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
             <div class="name_date_location_wrapper">
               <div class="name_date_location">
                 <p class="performance_name">
@@ -262,7 +276,7 @@ $postCount = $arResult['count'];
       <!-- Ещё проекты -> -->
       <a class="go_to_in_middle_afisha show" href="#">
         <span class="go_to_text">Ещё проекты</span>
-        <img class="go_to_pointer pointer_down" src="/wp-content/themes/my_theme/assets/img/go_to_pointer_down.svg" alt="" />
+        <img class="go_to_pointer pointer_down" src="<?php echo get_template_directory_uri(); ?>/assets/img/go_to_pointer_down.svg" alt="" />
       </a>
       <div class="pretty_loader_wrapper pretty_loader_wrapper_press_page">
         <div class="pretty_loader">

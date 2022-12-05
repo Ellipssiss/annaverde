@@ -7,6 +7,40 @@ if (!function_exists('str_contains')) {
     }
 }
 
+function getAfishaPosts() {
+    $args = [
+        'post_type' => 'afisha_perfomance',
+        'posts_per_page' => 10,
+        'paged' => (get_query_var('paged') ? get_query_var('paged') : 1),
+    ];
+
+    $afishaPosts = get_posts($args);
+    $afishaResult = [];
+
+    foreach($afishaPosts as $key => $value){
+        $afishaPostId = $value -> ID;
+        $afishaPostDate = get_post_meta($afishaPostId, 'afisha_date', true);
+
+        $afishaResult[] = [
+            'id' => $afishaPostId,
+            'ru' => [
+                'title' => $value -> post_title,
+                'date' => $afishaPostDate,
+                'time' => get_post_meta($afishaPostId, 'ru_event_time', true),
+                'place' => get_post_meta($afishaPostId, 'ru_event_place', true)
+            ],
+            'en' => [
+                'title' => get_post_meta($afishaPostId, 'en_post_title_filed_name', true),
+                'date' => $afishaPostDate,
+                'time' => get_post_meta($afishaPostId, 'en_event_time', true),
+                'place' => get_post_meta($afishaPostId, 'en_event_place', true)
+            ],
+        ];
+    }
+
+    return $afishaResult;
+}
+
 function get_project_partners($post_id) {
     $projPartnersJSON = get_post_meta($post_id, 'proj_partners', true);
     $projPartnersArr = json_decode($projPartnersJSON);
@@ -178,6 +212,22 @@ function get_post_musicians($post_id)
         // return get_post_meta($post_id, 'musician_ru', true);
         return json_decode(get_post_meta($post_id, 'musician_ru', true), JSON_UNESCAPED_UNICODE);
     }
+}
+
+function getProjectPosts()
+{
+    $args = [
+        'post_type' => 'projects',
+        'posts_per_page' => 10,
+        'paged' => (get_query_var('paged') ? get_query_var('paged') : 1),
+    ];
+
+    $wp_query = new WP_Query($args);
+
+    return [
+        'posts' => get_posts($args),
+        'count' => $wp_query->found_posts
+    ];
 }
 
 /*
@@ -426,56 +476,96 @@ function add_media_metabox()
     add_meta_box('proj_media', 'Изображения', 'func_proj_mediabox', 'projects', 'normal', 'low');
     add_meta_box('proj_partners', 'Партнеры', 'func_proj_partners', 'projects', 'normal', 'low');
 
-    add_meta_box('afisha_project_selector', 'Выбор проекта', 'create_selector_of_project_layout', 'afisha_perfomance', 'normal', 'low');
+    add_meta_box('afisha_projects', 'Выбор проекта', 'create_selector_of_project_layout', 'afisha_perfomance', 'normal', 'low');
+    add_meta_box('afisha_images', 'Выбор изображения', 'func_afisha_mediabox', 'afisha_perfomance', 'normal', 'low');
+    add_meta_box('afisha_date', 'Выбор даты', 'func_afisha_date', 'afisha_perfomance', 'normal', 'low');
 
     // add_meta_box('proj_media', 'Изображения', 'func_proj_mediabox', 'projects', 'normal', 'low');
+}
+
+
+function func_afisha_date($post)
+{
+    $postId = $post->ID;
+
+    $afishaDate = get_post_meta($postId, 'afisha_date', true);
+?>
+    <div class="afisha_labelbox">
+        <h4>Введите дату мероприятия</h4>
+        <p>Дата должна быть в формате ДД.ММ.ГГГГ</p>
+        <input type="text" name="afisha_date" value="<? echo $afishaDate; ?>" />
+    </div>
+<?
+}
+
+function func_afisha_mediabox($post)
+{
+    $postId = $post->ID;
+
+    $afishaCoverImgId = get_post_meta($postId, 'afisha_label', true);
+    $afishaImageAttr = wp_get_attachment_image_src($afishaCoverImgId, array(115, 90));
+    $afishaImageSrc = $afishaImageAttr[0];
+
+    $afishaMobileCoverImgId = get_post_meta($postId, 'afisha_mobile_label', true);
+    $afishaMobileImageAttr = wp_get_attachment_image_src($afishaMobileCoverImgId, array(115, 90));
+    $afishaMobileImageSrc = $afishaMobileImageAttr[0];
+?>
+    <div class="afisha_labelbox">
+        <h4>Добавить обложку для десктопной версии проекта</h4>
+        <p>Обложка должна быть размером 180х120 пикселя</p>
+        <img class="afisha_labelimg" alt="" src="<? echo $afishaImageSrc; ?>" />
+        <input class="afisha_labelinput" type="hidden" name="afisha_label" value="<? echo $afishaCoverImgId; ?>" />
+        <div class="afisha_button_box">
+            <button class="afisha_add_cover">Добавить обложку</button>
+            <button class="afisha_clear_cover">Очистить обложку</button>
+        </div>
+
+        <h4>Добавить обложку для мобильной версии проекта</h4>
+        <p>Обложка должна быть размером 180x120 пикселя</p>
+        <img class="afisha_mobile_labelimg" alt="" src="<? echo $afishaMobileImageSrc; ?>" />
+        <input class="afisha_mobile_labelinput" type="hidden" name="afisha_mobile_label" value="<? echo $afishaMobileCoverImgId; ?>" />
+        <div class="afisha_mobile_button_box">
+            <button class="afisha_mobile_add_cover">Добавить обложку</button>
+            <button class="afisha_mobile_clear_cover">Очистить обложку</button>
+        </div>
+    </div>
+<?
 }
 
 // Создание верстки метабокса для заполнения информации о времени проведения выступления
 function create_selector_of_project_layout($post)
 {
-    $value = get_post_meta($post->ID, 'field_day_events', true);
-    $arValue = json_decode($value, JSON_UNESCAPED_UNICODE);
-    $projectsList = getProjectPosts('all');
-
-    if ($value === '') $value = '[]';
-    if ($arValue === null) $arValue = [];
+    $projectsList = getProjectPosts();
+    $eventProjects = get_post_meta($post->ID, 'event_projects', true);
+    $ruEventTime = get_post_meta($post->ID, 'ru_event_time', true);
+    $ruEventPlace = get_post_meta($post->ID, 'ru_event_place', true);
+    $enEventTime = get_post_meta($post->ID, 'en_event_time', true);
+    $enEventPlace = get_post_meta($post->ID, 'en_event_place', true);
 ?>
-    <input class="field_day_events" type="hidden" name="field_day_events" value='<? echo $value; ?>' />
-    <table class="day_events" border="1">
-        <thead>
-            <tr>
-                <th>Спектакль</th>
-                <th>Время</th>
-                <th>Место</th>
-                <th>Действия</th>
-            </tr>
-        </thead>
-        <tbody>
-            <? foreach ($arValue as $key => $val) { ?>
-                <tr>
-                    <td><? echo $arValue[$key]['name']; ?></td>
-                    <td><? echo $arValue[$key]['time']; ?></td>
-                    <td><? echo $arValue[$key]['place']; ?></td>
-                    <td><a class="day_events_delete" href="javascript:void(0)" data-id="<? echo $arValue[$key]['id']; ?>">Удалить</a></td>
-                </tr>
-            <? } ?>
-        </tbody>
-    </table>
-
     <div>
         <p>Проект:</p>
         <select class="event_projects" name="event_projects">
             <? foreach ($projectsList['posts'] as $key => $value) { ?>
-                <? $projectId = $projectsList['posts'][$key]->ID; ?>
-                <option value="<? echo $projectId; ?>"><? echo get_post_title($projectId) ?></option>
+                <? 
+                    $projectId = $projectsList['posts'][$key]->ID; 
+                    if ($projectId == $eventProjects) {
+                        $selected = "selected";
+                    } else {
+                        $selected = "";
+                    }
+                ?>
+                <option value="<? echo $projectId; ?>" <? echo $selected; ?>><? echo get_post_title($projectId); ?></option>
             <? } ?>
         </select>
-        <p>Время:</p>
-        <input class="event_time" type="text" name="event_time" />
-        <p>Место:</p>
-        <input class="event_place" type="text" name="event_place" /><br /><br />
-        <button type="button" name="add_perfomance" id="add_perfomance" class="button button-primary button-large flex_button">Добавить выступление</button>
+        <p>Время(На русском):</p>
+        <input class="event_time" type="text" name="ru_event_time" value="<? echo $ruEventTime; ?>" />
+        <p>Место(На русском):</p>
+        <input class="event_place" type="text" name="ru_event_place" value="<? echo $ruEventPlace ?>" /><br /><br />
+        
+        <p>Время(На английском):</p>
+        <input class="event_time" type="text" name="en_event_time" value="<? echo $enEventTime; ?>" />
+        <p>Место(На английском):</p>
+        <input class="event_place" type="text" name="en_event_place" value="<? echo $enEventPlace ?>" /><br /><br />
     </div>
 
 <?
@@ -818,8 +908,6 @@ function create_video_layout($post)
 <?
 }
 
-
-
 function func_proj_mediabox($post)
 {
     $postId = $post->ID;
@@ -940,6 +1028,15 @@ function func_save_proj_post($post_id)
 
     update_post_meta($post_id, 'proj_video', $_POST['proj_video']);
     update_post_meta($post_id, 'proj_partners', $_POST['proj_partners']);
+    
+    update_post_meta($post_id, 'event_projects', $_POST['event_projects']);
+    update_post_meta($post_id, 'ru_event_time', $_POST['ru_event_time']);
+    update_post_meta($post_id, 'ru_event_place', $_POST['ru_event_place']);
+    update_post_meta($post_id, 'en_event_time', $_POST['en_event_time']);
+    update_post_meta($post_id, 'en_event_place', $_POST['en_event_place']);
+    update_post_meta($post_id, 'afisha_label', $_POST['afisha_label']);
+    update_post_meta($post_id, 'afisha_mobile_label', $_POST['afisha_mobile_label']);
+    update_post_meta($post_id, 'afisha_date', $_POST['afisha_date']);
 
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
         return $post_id;
@@ -953,22 +1050,6 @@ function func_save_proj_post($post_id)
     }
 
     return $post_id;
-}
-
-function getProjectPosts()
-{
-    $args = [
-        'post_type' => 'projects',
-        'posts_per_page' => 10,
-        'paged' => (get_query_var('paged') ? get_query_var('paged') : 1),
-    ];
-
-    $wp_query = new WP_Query($args);
-
-    return [
-        'posts' => get_posts($args),
-        'count' => $wp_query->found_posts
-    ];
 }
 
 // Добавление поддержки кастомного меню в текущую тему

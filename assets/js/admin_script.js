@@ -89,8 +89,6 @@ $(document).ready(function () {
         $('.proj_labelimg').attr('src', '');
 		$('.proj_labelinput').val('');
     });
-
-    
     
     $('.all_proj_add_cover').click(function (event) {
         event.preventDefault(); 
@@ -176,55 +174,6 @@ $(document).ready(function () {
         $('.proj_images_input').val(JSON.stringify(clearImagesIdsArr));
 
         $(this).find('span[data-id=' + pictureId + ']').remove();
-    });
-
-    $('#add_perfomance').click(function (event) {
-        event.preventDefault();
-
-        const perfomanceId = $('.event_projects').val();
-        const time = $('.event_time').val();
-        const place = $('.event_place').val();
-
-        const projectPosts = FromBackend.projectPosts;
-        const perfomancePost = projectPosts.filter((post) => post.ID === parseInt(perfomanceId, 10));
-
-        const addItem = {
-            id: perfomanceId,
-            name: perfomancePost[0].post_title,
-            time: time,
-            place: place,
-        }
-        
-        const fieldArr = JSON.parse($('.field_day_events').val()); 
-        const hasElementInArr = fieldArr.some((item) => item.id === perfomanceId);
-
-        if (!hasElementInArr) {
-            fieldArr.push(addItem);            
-            $('.day_events').find('tbody').append(`
-                <tr>
-                    <td>${perfomancePost[0].post_title}</td>
-                    <td>${time}</td>
-                    <td>${place}</td>
-                    <td><a class="day_events_delete" href="javascript:void(0)" data-id="${perfomanceId}">Удалить</a></td>
-                </tr>
-            `);
-        }
-
-        $('.field_day_events').val(JSON.stringify(fieldArr));        
-    });
-
-    $('.day_events').on('click', '.day_events_delete', function(){
-        const thisElem = $(this);
-        const itemId = thisElem.data('id');
-
-        thisElem.parent().parent().remove();
-
-        const fieldDayJSON = $('.field_day_events').val();
-        const fieldDayArr = JSON.parse(fieldDayJSON);
-
-        const fieldResult = fieldDayArr.filter((item) => parseInt(item.id, 10) !== parseInt(itemId, 10));
-
-        $('.field_day_events').val(JSON.stringify(fieldResult));
     });
 
     $('#add_video').click(function (event) {
@@ -320,6 +269,72 @@ $(document).ready(function () {
         $('.proj_partners_input').val(JSON.stringify(clearImagesIdsArr));
 
         $(this).find('span[data-id=' + pictureId + ']').remove();
+    });
+
+    $('.afisha_add_cover').click(function (event) {
+        event.preventDefault(); 
+		const customUploader = wp.media({
+			title: 'Выберите изображение плз',
+			library : {
+				// uploadedTo : wp.media.view.settings.post.id, // если для метобокса и хотим прилепить к текущему посту
+				type : 'image'
+			},
+			button: {
+				text: 'Выбрать изображение' // текст кнопки, по умолчанию "Вставить в запись"
+			},
+			multiple: false
+		});
+ 
+		// добавляем событие выбора изображения
+		customUploader.on('select', function() {
+			const image = customUploader.state().get('selection').first().toJSON();
+
+            $('.afisha_labelimg').attr('src', image.sizes.thumbnail.url);
+			$('.afisha_labelinput').val(image.id);
+		});
+ 
+		// и открываем модальное окно с выбором изображения
+		customUploader.open();
+    });
+
+    $('.afisha_clear_cover').click(function(event) {
+        event.preventDefault();
+
+        $('.afisha_labelimg').attr('src', '');
+		$('.afisha_labelinput').val('');
+    });
+
+    $('.afisha_mobile_add_cover').click(function (event) {
+        event.preventDefault(); 
+		const customUploader = wp.media({
+			title: 'Выберите изображение плз',
+			library : {
+				// uploadedTo : wp.media.view.settings.post.id, // если для метобокса и хотим прилепить к текущему посту
+				type : 'image'
+			},
+			button: {
+				text: 'Выбрать изображение' // текст кнопки, по умолчанию "Вставить в запись"
+			},
+			multiple: false
+		});
+ 
+		// добавляем событие выбора изображения
+		customUploader.on('select', function() {
+			const image = customUploader.state().get('selection').first().toJSON();
+
+            $('.afisha_mobile_labelimg').attr('src', image.sizes.thumbnail.url);
+			$('.afisha_mobile_labelinput').val(image.id);
+		});
+ 
+		// и открываем модальное окно с выбором изображения
+		customUploader.open();
+    });
+
+    $('.afisha_mobile_clear_cover').click(function(event) {
+        event.preventDefault();
+
+        $('.afisha_mobile_labelimg').attr('src', '');
+		$('.afisha_mobile_labelinput').val('');
     });
 
 });
