@@ -13,6 +13,11 @@ function getAfishaPosts() {
         'posts_per_page' => 10,
         'paged' => (get_query_var('paged') ? get_query_var('paged') : 1),
     ];
+    $ruDaysOfWeek = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
+    $enDaysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+    $ruMonthes = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
+    $enMonthes = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
     $afishaPosts = get_posts($args);
     $afishaResult = [];
@@ -20,20 +25,42 @@ function getAfishaPosts() {
     foreach($afishaPosts as $key => $value){
         $afishaPostId = $value -> ID;
         $afishaPostDate = get_post_meta($afishaPostId, 'afisha_date', true);
+        $arAfishaPostDate = explode('.', $afishaPostDate);
+        $timestamp = mktime(0,0,0, $arAfishaPostDate[1], $arAfishaPostDate[0], $arAfishaPostDate[2]);
+        $afishaCoverImgId = get_post_meta($afishaPostId, 'afisha_label', true);
+        $afishaImageAttr = wp_get_attachment_image_src($afishaCoverImgId, 'full');
+        $afishaImageSrc = $afishaImageAttr[0];
+    
+        $afishaMobileCoverImgId = get_post_meta($afishaPostId, 'afisha_mobile_label', true);
+        $afishaMobileImageAttr = wp_get_attachment_image_src($afishaMobileCoverImgId, 'full');
+        $afishaMobileImageSrc = $afishaMobileImageAttr[0];
 
-        $afishaResult[] = [
+        $afishaTicketLink = get_post_meta($afishaPostId, 'afisha_ticketlink', true);
+        $afishaSoldOut = get_post_meta($afishaPostId, 'afisha_sold_out', true);
+       
+        $afishaResult[$afishaPostDate][] = [
             'id' => $afishaPostId,
+            'desktop_image' => $afishaImageSrc,
+            'mobile_image' => $afishaMobileImageSrc,
+            'ticket_link' => $afishaTicketLink,
+            'sold_out' => $afishaSoldOut,
             'ru' => [
                 'title' => $value -> post_title,
                 'date' => $afishaPostDate,
+                'ar_date' => $arAfishaPostDate,
                 'time' => get_post_meta($afishaPostId, 'ru_event_time', true),
-                'place' => get_post_meta($afishaPostId, 'ru_event_place', true)
+                'place' => get_post_meta($afishaPostId, 'ru_event_place', true),
+                'day' => $ruDaysOfWeek[date('N', $timestamp) - 1],
+                'month' => $ruMonthes[date('n', $timestamp) - 1],
             ],
             'en' => [
                 'title' => get_post_meta($afishaPostId, 'en_post_title_filed_name', true),
                 'date' => $afishaPostDate,
+                'ar_date' => $arAfishaPostDate,
                 'time' => get_post_meta($afishaPostId, 'en_event_time', true),
-                'place' => get_post_meta($afishaPostId, 'en_event_place', true)
+                'place' => get_post_meta($afishaPostId, 'en_event_place', true),
+                'day' => $enDaysOfWeek[date('N', $timestamp) - 1],
+                'month' => $enMonthes[date('n', $timestamp) - 1],
             ],
         ];
     }
@@ -479,10 +506,31 @@ function add_media_metabox()
     add_meta_box('afisha_projects', 'Выбор проекта', 'create_selector_of_project_layout', 'afisha_perfomance', 'normal', 'low');
     add_meta_box('afisha_images', 'Выбор изображения', 'func_afisha_mediabox', 'afisha_perfomance', 'normal', 'low');
     add_meta_box('afisha_date', 'Выбор даты', 'func_afisha_date', 'afisha_perfomance', 'normal', 'low');
+    add_meta_box('afisha_ticket', 'Билеты', 'func_afisha_ticket', 'afisha_perfomance', 'normal', 'low');
 
     // add_meta_box('proj_media', 'Изображения', 'func_proj_mediabox', 'projects', 'normal', 'low');
 }
 
+
+
+function func_afisha_ticket($post)
+{
+    $postId = $post->ID;
+
+    $afishaTicketLink = get_post_meta($postId, 'afisha_ticketlink', true);
+    $afishaSoldOut = get_post_meta($postId, 'afisha_sold_out', true);
+
+    if($afishaSoldOut === 'true') {
+        $checked = 'checked="checked"';
+    }
+?>
+    <div class="afisha_labelbox">
+        <h4>Укажите ссылку для покупки билетов</h4>
+        <input type="text" name="afisha_ticketlink" value="<? echo $afishaTicketLink; ?>" /><br />
+        <label for="sold_out"><input id="sold_out" type="checkbox" value="true" name="afisha_sold_out" <? echo $checked; ?> /> Билеты проданы</label>
+    </div>
+<?
+}
 
 function func_afisha_date($post)
 {
@@ -503,11 +551,11 @@ function func_afisha_mediabox($post)
     $postId = $post->ID;
 
     $afishaCoverImgId = get_post_meta($postId, 'afisha_label', true);
-    $afishaImageAttr = wp_get_attachment_image_src($afishaCoverImgId, array(115, 90));
+    $afishaImageAttr = wp_get_attachment_image_src($afishaCoverImgId);
     $afishaImageSrc = $afishaImageAttr[0];
 
     $afishaMobileCoverImgId = get_post_meta($postId, 'afisha_mobile_label', true);
-    $afishaMobileImageAttr = wp_get_attachment_image_src($afishaMobileCoverImgId, array(115, 90));
+    $afishaMobileImageAttr = wp_get_attachment_image_src($afishaMobileCoverImgId);
     $afishaMobileImageSrc = $afishaMobileImageAttr[0];
 ?>
     <div class="afisha_labelbox">
@@ -1037,6 +1085,8 @@ function func_save_proj_post($post_id)
     update_post_meta($post_id, 'afisha_label', $_POST['afisha_label']);
     update_post_meta($post_id, 'afisha_mobile_label', $_POST['afisha_mobile_label']);
     update_post_meta($post_id, 'afisha_date', $_POST['afisha_date']);
+    update_post_meta($post_id, 'afisha_ticketlink', $_POST['afisha_ticketlink']);
+    update_post_meta($post_id, 'afisha_sold_out', $_POST['afisha_sold_out']);
 
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
         return $post_id;

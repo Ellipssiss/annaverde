@@ -19,8 +19,6 @@ $arAfishaPosts = getAfishaPosts();
 $isEnglish = $_GET['lang'] === 'en';
 ?>
 
-
-
 <!-- Блок афишы -->
 <div class="afisha_block afisha_page">
   <!-- Контейнер афишы -->
@@ -54,11 +52,11 @@ $isEnglish = $_GET['lang'] === 'en';
         </div>
       </div>
       <!------------------------------------- Первый день ------------------------------------------------->
-      <? foreach($arAfishaPosts as $key => $value){ 
+      <? foreach($arAfishaPosts as $key => $arEvents){ 
         if ($isEnglish) {
-          $afishaPost = $value['en'];
+          $afishaPost = $arEvents[0]['en'];
         } else {
-          $afishaPost = $value['ru'];
+          $afishaPost = $arEvents[0]['ru'];
         }
         ?>
         <!-- Один день в афише -->
@@ -66,210 +64,65 @@ $isEnglish = $_GET['lang'] === 'en';
           <!-- Блок с датой -->
           <div class="date">
             <div class="month_day_of_month">
-              <span class="day_of_month">28</span>
-              <span class="month">Сентября</span>
+              <span class="day_of_month"><? echo $afishaPost['ar_date'][0]; ?></span>
+              <span class="month"><? echo $afishaPost['month']; ?></span>
             </div>
-            <span class="day_of_week">Воскресенье</span>
+            <span class="day_of_week"><? echo $afishaPost['day']; ?></span>
           </div>
           <!-- Список всех представлений в этот день -->
           <div class="afisha_events_list">
             <!-- Информаци о конкретном представлении в этот день -->
-            <div class="afisha_perfomance_event">
-              <img class="event_photo_mobile" src="<?php echo get_template_directory_uri(); ?>/img/afishaInMain.png" alt="" />
-              <img class="event_photo_desktop" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
-              <div class="name_date_location_wrapper">
-                <div class="name_date_location">
-                  <p class="performance_name">
-                    <? echo $afishaPost['title']; ?>
-                  </p>
-                  <div class="perfomrmance_time_and_location">
-                    <div class="performance_time"><? echo $afishaPost['time']; ?></div>
-                    <p class="performance_location">
-                      <? echo $afishaPost['place']; ?>
+            <? foreach($arEvents as $eventKey => $eventValue ) {
+              if ($isEnglish) {
+                $event = $eventValue['en'];
+              } else {
+                $event = $eventValue['ru'];
+              }
+
+              if ($eventValue['sold_out'] === 'true') {
+                $classNoTicket = 'no_ticket';
+                if ($isEnglish) {
+                  $valueTicket = 'Sold out';
+                } else {
+                  $valueTicket = 'Билеты проданы';
+                }
+              } else {
+                $classNoTicket = '';
+                if ($isEnglish) {
+                  $valueTicket = 'Buy tickets';
+                } else {
+                  $valueTicket = 'Купить билеты';
+                }
+              }
+            ?>
+              <div class="afisha_perfomance_event">
+                <img class="event_photo_mobile" src="<?php echo $eventValue['mobile_image']; ?>" alt="" />
+                <img class="event_photo_desktop" src="<?php echo $eventValue['desktop_image']; ?>" alt="" />
+                <div class="name_date_location_wrapper">
+                  <div class="name_date_location">
+                    <p class="performance_name">
+                      <? echo $event['title']; ?>
                     </p>
+                    <div class="perfomrmance_time_and_location">
+                      <div class="performance_time"><? echo $event['time']; ?></div>
+                      <p class="performance_location">
+                        <? echo $event['place']; ?>
+                      </p>
+                    </div>
                   </div>
                 </div>
+                <? if ($eventValue['sold_out'] === 'true') { ?>
+                  <span class="buy_ticket <? echo $classNoTicket; ?>" target="_blanck" href="<? echo $eventValue['ticket_link']; ?>"><? echo $valueTicket; ?></span>
+                <? } else { ?>
+                  <a class="buy_ticket <? echo $classNoTicket; ?>" target="_blanck" href="<? echo $eventValue['ticket_link']; ?>"><? echo $valueTicket; ?></a>
+                <? } ?>                
               </div>
-              <a class="buy_ticket" href="afisha.html">Купить билет</a>
-            </div>
+            <? } ?>
             <!-- /.afisha_events_list -->
           </div>
           <!-- /.afisha_perfomance_day -->
         </div>
-
       <? } ?>
-      
-      
-      <!------------------------------------- Второй день ------------------------------------------------->
-      <!-- Один день в афише -->
-      <div class="afisha_perfomance_day">
-        <!-- Блок с датой -->
-        <div class="date">
-          <div class="month_day_of_month">
-            <span class="day_of_month">28</span>
-            <span class="month">Сентября</span>
-          </div>
-          <span class="day_of_week">Воскресенье</span>
-        </div>
-        <!-- Список всех представлений в этот день -->
-        <div class="afisha_events_list">
-          <!-- Информаци о конкретном представлении в этот день -->
-          <div class="afisha_perfomance_event">
-            <img class="event_photo_mobile" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
-            <img class="event_photo_desktop" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
-            <div class="name_date_location_wrapper">
-              <div class="name_date_location">
-                <p class="performance_name">
-                  В объятиях минотавра Пикассо В объятиях минотавра
-                  Пикассо
-                </p>
-                <div class="perfomrmance_time_and_location">
-                  <div class="performance_time">20:00</div>
-                  <p class="performance_location">
-                    Москва, Яровит Холл
-                  </p>
-                </div>
-              </div>
-            </div>
-            <a class="buy_ticket no_ticket">Купить билет</a>
-          </div>
-          <!-- /.afisha_events_list -->
-        </div>
-        <!-- /.afisha_perfomance_day -->
-      </div>
-      <!------------------------------------- Третий день ------------------------------------------------->
-      <!-- Один день в афише -->
-      <div class="afisha_perfomance_day">
-        <!-- Блок с датой -->
-        <div class="date">
-          <div class="month_day_of_month">
-            <span class="day_of_month">28</span>
-            <span class="month">Сентября</span>
-          </div>
-          <span class="day_of_week">Воскресенье</span>
-        </div>
-        <!-- Список всех представлений в этот день -->
-        <div class="afisha_events_list">
-          <!-- Информаци о конкретном представлении в этот день -->
-          <div class="afisha_perfomance_event">
-            <img class="event_photo_mobile" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
-            <img class="event_photo_desktop" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
-            <div class="name_date_location_wrapper">
-              <div class="name_date_location">
-                <p class="performance_name">
-                  В объятиях минотавра Пикассо В объятиях минотавра
-                  Пикассо
-                </p>
-                <div class="perfomrmance_time_and_location">
-                  <div class="performance_time">20:00</div>
-                  <p class="performance_location">
-                    Москва, Яровит Холл
-                  </p>
-                </div>
-              </div>
-            </div>
-            <a class="buy_ticket no_ticket">Купить билет</a>
-          </div>
-          <!-- /.afisha_events_list -->
-        </div>
-        <!-- /.afisha_perfomance_day -->
-      </div>
-      <!------------------------------------- Четвертый день ------------------------------------------------->
-      <!-- Один день в афише -->
-      <div class="afisha_perfomance_day">
-        <!-- Блок с датой -->
-        <div class="date">
-          <div class="month_day_of_month">
-            <span class="day_of_month">28</span>
-            <span class="month">Сентября</span>
-          </div>
-          <span class="day_of_week">Воскресенье</span>
-        </div>
-        <!-- Список всех представлений в этот день -->
-        <div class="afisha_events_list">
-          <!-- Информаци о конкретном представлении в этот день -->
-          <div class="afisha_perfomance_event">
-            <img class="event_photo_mobile" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
-            <img class="event_photo_desktop" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
-            <div class="name_date_location_wrapper">
-              <div class="name_date_location">
-                <p class="performance_name">
-                  В объятиях минотавра Пикассо В объятиях минотавра
-                  Пикассо
-                </p>
-                <div class="perfomrmance_time_and_location">
-                  <div class="performance_time">20:00</div>
-                  <p class="performance_location">
-                    Москва, Яровит Холл
-                  </p>
-                </div>
-              </div>
-            </div>
-            <a class="buy_ticket no_ticket">Купить билет</a>
-          </div>
-          <!-- /.afisha_events_list -->
-        </div>
-        <!-- /.afisha_perfomance_day -->
-      </div>
-      <!------------------------------------- Пятый день ------------------------------------------------->
-      <!-- Один день в афише -->
-      <div class="afisha_perfomance_day">
-        <!-- Блок с датой -->
-        <div class="date">
-          <div class="month_day_of_month">
-            <span class="day_of_month">28</span>
-            <span class="month">Мая</span>
-          </div>
-          <span class="day_of_week">Cуббота</span>
-        </div>
-        <!-- Список всех представлений в этот день -->
-        <div class="afisha_events_list">
-          <!-- Информаци о конкретном представлении в этот день -->
-          <div class="afisha_perfomance_event">
-            <img class="event_photo_mobile" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
-            <img class="event_photo_desktop" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
-            <div class="name_date_location_wrapper">
-              <div class="name_date_location">
-                <p class="performance_name">
-                  В объятиях минотавра Пикассо В объятиях минотавра
-                  Пикассо
-                </p>
-                <div class="perfomrmance_time_and_location">
-                  <div class="performance_time">19:00</div>
-                  <p class="performance_location">
-                    Москва, Яровит Холл Москва, Яровит Холл Москва,
-                    Яровит Холл
-                  </p>
-                </div>
-              </div>
-            </div>
-            <a class="buy_ticket no_ticket">Билетов нет</a>
-          </div>
-
-          <!-- Информаци о конкретном представлении в этот день -->
-          <div class="afisha_perfomance_event">
-            <img class="event_photo_mobile" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
-            <img class="event_photo_desktop" src="<?php echo get_template_directory_uri(); ?>/assets/img/afishaInMain.png" alt="" />
-            <div class="name_date_location_wrapper">
-              <div class="name_date_location">
-                <p class="performance_name">
-                  В объятиях минотавра Пикассо
-                </p>
-                <div class="perfomrmance_time_and_location">
-                  <div class="performance_time">19:00</div>
-                  <p class="performance_location">
-                    Москва, Яровит Холл
-                  </p>
-                </div>
-              </div>
-            </div>
-            <a class="buy_ticket">Купить билет</a>
-          </div>
-
-          <!-- /.afisha_events_list -->
-        </div>
-        <!-- /.afisha_perfomance_day -->
-      </div>
 
       <!------------------------------------- Конец списка дней ------------------------------>
 
