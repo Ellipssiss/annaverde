@@ -27,12 +27,12 @@ $postCount = $arResult['count'];
 
             <button class="buy_ticket donate_btn">Донатить</button>
 
-            <img class="qr_code" src="/wp-content/themes/my_theme/assets/img/qr_code.png" alt="" />
+            <img class="qr_code" src="<?php echo get_template_directory_uri(); ?>/assets/img/qr_code.png" alt="" />
           </div>
         </div>
         <img
         class="support_us_bg_img"
-        src="/wp-content/themes/my_theme/assets/img/support_us_img.png"
+        src="<?php echo get_template_directory_uri(); ?>/assets/img/support_us_img.png"
         alt=""
       />
 

@@ -29,23 +29,23 @@ $postCount = $arResult['count'];
 
             <div class="socialLinks_contacts_page">
               <a href="">
-                <img src="img/yt_black.svg" alt="" />
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/yt_black.svg" alt="" />
               </a>
               <a href="">
-                <img src="img/inst_black.svg" alt="" />
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/inst_black.svg" alt="" />
               </a>
               <a href="">
-                <img src="img/fb_black.svg" alt="" />
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/fb_black.svg" alt="" />
               </a>
               <a href="">
-                <img src="img/vk_black.svg" alt="" />
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/vk_black.svg" alt="" />
               </a>
             </div>
       </div>
     </div>
     <img
         class="contacts_bg_img"
-        src="/wp-content/themes/my_theme/assets/img/contacts_bg_img_cut_bottom1.png"
+        src="<?php echo get_template_directory_uri(); ?>/assets/img/contacts_bg_img_cut_bottom1.png"
         alt=""
       />
 

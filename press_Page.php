@@ -19,7 +19,6 @@ if($isEnglish) {
 
 ?>
 
-
       <!---------------------------------------------------------------------- Press block -------------------------------------------------------------------------------->
       <div class="press_block press_block_press_page">
             <div class="press_container press_container_press_page">
@@ -58,7 +57,7 @@ if($isEnglish) {
               <!-- Ещё пресса -> -->
               <a class="go_to_in_middle_press show" href="#">
                 <span class="go_to_text">Ещё пресса</span>
-                <img class="go_to_pointer pointer_down" src="/wp-content/themes/my_theme/assets/img/go_to_pointer_down.svg" alt="">
+                <img class="go_to_pointer pointer_down" src="<?php echo get_template_directory_uri(); ?>/assets/img/go_to_pointer_down.svg" alt="">
             </a>
             <div class="pretty_loader_wrapper pretty_loader_wrapper_press_page">
               <div class="pretty_loader show">
