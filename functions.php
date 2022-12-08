@@ -1,4 +1,6 @@
 <?
+require_once( __DIR__.'/option_fields/mainoptions.php');
+
 // based on original work from the PHP Laravel framework
 if (!function_exists('str_contains')) {
     function str_contains($haystack, $needle)
@@ -6,6 +8,55 @@ if (!function_exists('str_contains')) {
         return $needle !== '' && mb_strpos($haystack, $needle) !== false;
     }
 }
+
+function getMainPageFotoAnotation () {
+    $isEnglish = $_GET['lang'] === 'en';
+    if($isEnglish) {
+        return get_option('en_main_photoanotation');
+    } else {
+        return get_option('ru_main_photoanotation');
+    }
+}
+
+function getMainPageAnotation () {
+    $isEnglish = $_GET['lang'] === 'en';
+    if($isEnglish) {
+        return get_option('en_main_anotation');
+    } else {
+        return get_option('ru_main_anotation');
+    }
+}
+
+function getMainPageTitle () {
+    $isEnglish = $_GET['lang'] === 'en';
+    if($isEnglish) {
+        return get_option('en_main_text');
+    } else {
+        return get_option('ru_main_text');
+    }
+}
+
+
+// Добавление страницы настроек
+add_action('admin_menu', function(){
+	add_menu_page( 'Общие настройки сайта', 'Пульт', 'manage_options', 'site-options', 'add_my_setting', '', 20 );
+});
+
+function add_my_setting() {    
+    ?>
+    <div class="wrap">
+	<h1><? echo get_admin_page_title() ?></h1>
+	<form method="post" action="options.php">
+        <?
+            settings_fields( 'main_settings' ); // название настроек
+            do_settings_sections( 'main_page_link' ); // ярлык страницы, не более
+            submit_button(); // функция для вывода кнопки сохранения
+        ?>
+	</form></div>
+    <?
+}
+
+
 
 function getPressPosts() {
     $args = [
@@ -435,8 +486,10 @@ function get_modificator_header_class()
 {
     $url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
     $urlMainPage = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/';
+    $enUrlMainPage = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/?lang=en';
+    $qUrlMainPage = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/?';
 
-    if ($url === $urlMainPage) {
+    if ($url === $urlMainPage || $url === $enUrlMainPage || $url === $qUrlMainPage) {
         $output .= 'header_main';
     } elseif (str_contains($url, '404')) {
         $output .= 'black_header';
@@ -446,8 +499,6 @@ function get_modificator_header_class()
 
     echo $output;
 }
-
-
 
 // Добавляем новый тип постов
 add_action('init', 'true_register_post_type_init');

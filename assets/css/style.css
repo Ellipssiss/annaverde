@@ -5526,7 +5526,7 @@ h2.title_on_support_us_page {
   display: none;
   width: 268px;
   height: auto;
-  filter: drop-shadow(30px 0px 20px black);
+  /* filter: drop-shadow(30px 0px 20px black); */
 
   z-index: 10;
 }

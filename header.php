@@ -47,6 +47,10 @@ if (!array_key_exists('lang', $output)) {
 }
 $langUrl = '?' . http_build_query($output);
 
+$headerMainLabel = getMainPageTitle();
+$headerMainAnotation = getMainPageAnotation();
+$headerMainFotoAnotation = getMainPageFotoAnotation();
+
 ?>
 
 <!doctype html>
@@ -105,14 +109,11 @@ $langUrl = '?' . http_build_query($output);
             <img class="burger_btn" src="<?php echo get_template_directory_uri(); ?>/assets/img/burger_btn_black.svg" alt="burger" style="vertical-align: middle" />
           </div>
           <div class="name_and_about_on_main_photo">
-            <p class="name_on_main_photo">Анна Верде</p>
-            <p class="about_person_on_main_photo">
-              Хореограф, режиссер, продюсер независимых театральных проектов.
-              Основатель и руководитель театра танца Averdera.
-            </p>
+            <p class="name_on_main_photo"><? echo $headerMainLabel; ?></p>
+            <p class="about_person_on_main_photo"><? echo $headerMainAnotation ?></p>
           </div>
           <blockquote class="blockquote_on_main_photo">
-            «Мыслю образами, вкладываю многослойные смыслы, ищу новые формы»
+            <? echo $headerMainFotoAnotation; ?>
           </blockquote>
         </div>
         <!-- /.header_container -->
