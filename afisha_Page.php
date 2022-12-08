@@ -32,7 +32,7 @@ $isEnglish = $_GET['lang'] === 'en';
           Афиша
         </h2>
 
-        <div id="dropdown" class="dropdown" easy-toggle="#dropdown" easy-class="show">
+        <div id="dropdown" class="dropdown">
           <button class="dropdown_toggle">
             Все месяцы
             <img src="<?php echo get_template_directory_uri(); ?>/assets/img/dropdown_up_pointer.svg" alt="" />
@@ -112,9 +112,9 @@ $isEnglish = $_GET['lang'] === 'en';
                   </div>
                 </div>
                 <? if ($eventValue['sold_out'] === 'true') { ?>
-                  <span class="buy_ticket <? echo $classNoTicket; ?>" target="_blanck" href="<? echo $eventValue['ticket_link']; ?>"><? echo $valueTicket; ?></span>
+                  <span class="buy_ticket <? echo $classNoTicket; ?>"?>"><? echo $valueTicket; ?></span>
                 <? } else { ?>
-                  <a class="buy_ticket <? echo $classNoTicket; ?>" target="_blanck" href="<? echo $eventValue['ticket_link']; ?>"><? echo $valueTicket; ?></a>
+                  <a class="buy_ticket" target="_blanck" href="<? echo $eventValue['ticket_link']; ?>"><? echo $valueTicket; ?></a>
                 <? } ?>                
               </div>
             <? } ?>

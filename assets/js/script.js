@@ -75,7 +75,9 @@ $(document).ready(function () {
 	// 	console.log('1');
 	//   });
 
-	
+	$('#dropdown').click(function() {
+		$(this).toggleClass('show');
+	});
 
 
 	function addRemoveBorder() {

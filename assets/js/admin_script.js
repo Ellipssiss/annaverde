@@ -337,4 +337,36 @@ $(document).ready(function () {
 		$('.afisha_mobile_labelinput').val('');
     });
 
+    $('.press_add_cover').click(function (event) {
+        event.preventDefault(); 
+		const customUploader = wp.media({
+			title: 'Выберите изображение плз',
+			library : {
+				// uploadedTo : wp.media.view.settings.post.id, // если для метобокса и хотим прилепить к текущему посту
+				type : 'image'
+			},
+			button: {
+				text: 'Выбрать изображение' // текст кнопки, по умолчанию "Вставить в запись"
+			},
+			multiple: false
+		});
+ 
+		// добавляем событие выбора изображения
+		customUploader.on('select', function() {
+			const image = customUploader.state().get('selection').first().toJSON();
+
+            $('.press_labelimg').attr('src', image.sizes.thumbnail.url);
+			$('.press_labelinput').val(image.id);
+		});
+ 
+		// и открываем модальное окно с выбором изображения
+		customUploader.open();
+    });
+
+    $('.press_clear_cover').click(function(event) {
+        event.preventDefault();
+
+        $('.press_labelimg').attr('src', '');
+		$('.press_labelinput').val('');
+    });
 });

@@ -10,6 +10,8 @@ get_header();
 $arResult = getProjectPosts();
 $posts = $arResult['posts'];
 $postCount = $arResult['count'];
+
+ print_r(getPressPosts());
 ?>
 
 

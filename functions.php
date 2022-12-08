@@ -7,6 +7,51 @@ if (!function_exists('str_contains')) {
     }
 }
 
+function getPressPosts() {
+    $args = [
+        'post_type' => 'press_article',
+        'posts_per_page' => 10,
+        'paged' => (get_query_var('paged') ? get_query_var('paged') : 1),
+    ];
+
+    $pressPosts = get_posts($args);
+    $pressResult = [];
+
+    foreach ($pressPosts as $key => $value) {
+        $pressPostId = $value -> ID;
+        $pressLink = get_post_meta($pressPostId, 'press_link', true);
+        $pressDate = get_post_meta($pressPostId, 'press_date', true);
+
+        $ruPressOwner = get_post_meta($pressPostId, 'ru_press_owner', true);
+        $enPressOwner = get_post_meta($pressPostId, 'en_press_owner', true);
+
+        $enTitle = get_post_meta($pressPostId, 'en_post_title_filed_name', true);
+        $enContent = get_post_meta($pressPostId, 'en_editor_filed_name', true);
+
+        $pressImageId = get_post_meta($pressPostId, 'press_pic', true);
+        $pressImageAttr = wp_get_attachment_image_src($pressImageId, 'full');
+        $pressImageSrc = $pressImageAttr[0];
+
+        $pressResult[] = [
+            'link' => $pressLink,
+            'date' => $pressDate,
+            'image' => $pressImageSrc,
+            'ru' => [
+                'title' => $value -> post_title,
+                'content' => $value -> post_content,
+                'owner' => $ruPressOwner,
+            ],
+            'en' => [
+                'title' => $enTitle,
+                'content' => $enContent,
+                'owner' => $enPressOwner,
+            ],
+        ];
+    };
+
+    return $pressResult;
+}
+
 function getAfishaPosts() {
     $args = [
         'post_type' => 'afisha_perfomance',
@@ -503,15 +548,59 @@ function add_media_metabox()
     add_meta_box('proj_media', 'Изображения', 'func_proj_mediabox', 'projects', 'normal', 'low');
     add_meta_box('proj_partners', 'Партнеры', 'func_proj_partners', 'projects', 'normal', 'low');
 
+    // Создание метабоксов в админке для типа постов "Афиша"
     add_meta_box('afisha_projects', 'Выбор проекта', 'create_selector_of_project_layout', 'afisha_perfomance', 'normal', 'low');
     add_meta_box('afisha_images', 'Выбор изображения', 'func_afisha_mediabox', 'afisha_perfomance', 'normal', 'low');
     add_meta_box('afisha_date', 'Выбор даты', 'func_afisha_date', 'afisha_perfomance', 'normal', 'low');
     add_meta_box('afisha_ticket', 'Билеты', 'func_afisha_ticket', 'afisha_perfomance', 'normal', 'low');
-
-    // add_meta_box('proj_media', 'Изображения', 'func_proj_mediabox', 'projects', 'normal', 'low');
+    
+    // Создание метабоксов в адмике для типа постов "Пресса"
+    add_meta_box('press_link', 'Ссылка на публикацию', 'func_press_link', 'press_article', 'normal', 'low');
+    add_meta_box('press_date', 'Дата публикации', 'func_press_date', 'press_article', 'normal', 'low');
+    add_meta_box('press_pic', 'Изображение публикации', 'func_press_pic', 'press_article', 'normal', 'low');
+    add_meta_box('press_owner', 'Источник', 'func_press_owner', 'press_article', 'normal', 'low');
 }
 
+function func_press_owner($post)
+{
+    $postId = $post->ID;
 
+    $ruPressOwner = get_post_meta($postId, 'ru_press_owner', true);
+    $enPressOwner = get_post_meta($postId, 'en_press_owner', true);
+?>
+    <div class="press_ownerbox">
+        <h4>Укажите источник публикации:</h4>
+        RU: <input class="press_owner" type="text" name="ru_press_owner" value="<? echo $ruPressOwner; ?>" /><br />        
+        EN: <input class="press_owner" type="text" name="en_press_owner" value="<? echo $enPressOwner; ?>" /><br />        
+    </div>
+<?
+}
+
+function func_press_date($post)
+{
+    $postId = $post->ID;
+
+    $pressDate = get_post_meta($postId, 'press_date', true);
+?>
+    <div class="press_datebox">
+        <h4>Укажите дату публикации</h4>
+        <input class="press_date" type="text" name="press_date" value="<? echo $pressDate; ?>" /><br />        
+    </div>
+<?
+}
+
+function func_press_link($post)
+{
+    $postId = $post->ID;
+
+    $pressLink = get_post_meta($postId, 'press_link', true);
+?>
+    <div class="press_linkbox">
+        <h4>Укажите ссылку на публикацию</h4>
+        <input class="press_link" type="text" name="press_link" value="<? echo $pressLink; ?>" /><br />        
+    </div>
+<?
+}
 
 function func_afisha_ticket($post)
 {
@@ -1044,6 +1133,27 @@ function func_proj_partners($post)
 <?
 }
 
+function func_press_pic($post)
+{
+    $postId = $post->ID;
+
+    $pressImageId = get_post_meta($postId, 'press_pic', true);
+    $pressImageAttr = wp_get_attachment_image_src($pressImageId);
+    $pressImageSrc = $pressImageAttr[0];
+?>
+    <div class="press_labelbox">
+        <h4>Добавить изображение публикации</h4>
+        <p>Обложка должна быть размером 384х260 пикселя</p>
+        <img class="press_labelimg" alt="" src="<? echo $pressImageSrc; ?>" />
+        <input class="press_labelinput" type="hidden" name="press_pic" value="<? echo $pressImageId; ?>" />
+        <div class="press_button_box">
+            <button class="press_add_cover">Добавить изображение</button>
+            <button class="press_clear_cover">Очистить изображение</button>
+        </div>
+    </div>
+<?
+}
+
 // Сохраняем данные из мета-бокса
 add_action('save_post', 'func_save_proj_post');
 function func_save_proj_post($post_id)
@@ -1087,11 +1197,16 @@ function func_save_proj_post($post_id)
     update_post_meta($post_id, 'afisha_date', $_POST['afisha_date']);
     update_post_meta($post_id, 'afisha_ticketlink', $_POST['afisha_ticketlink']);
     update_post_meta($post_id, 'afisha_sold_out', $_POST['afisha_sold_out']);
+    
+    update_post_meta($post_id, 'press_link', $_POST['press_link']);
+    update_post_meta($post_id, 'press_date', $_POST['press_date']);
+    update_post_meta($post_id, 'press_pic', $_POST['press_pic']);
+    update_post_meta($post_id, 'ru_press_owner', $_POST['ru_press_owner']);
+    update_post_meta($post_id, 'en_press_owner', $_POST['en_press_owner']);
 
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
         return $post_id;
     }
-
 
     if ($_POST['proj_modify'] === 'true') {
         update_post_meta($post_id, 'proj_label', $_POST['proj_label']);
@@ -1129,7 +1244,6 @@ function func_admin_scripts()
     if (!did_action('wp_enqueue_media')) {
         wp_enqueue_media();
     }
-
 
     wp_enqueue_script(
         'customjquery',
