@@ -16,6 +16,16 @@ if ($isEnglish) {
   $pageDescription = 'По вопросам сотрудничества пишите или звоните';
 }
 
+$phone = get_option('contacts_phone');
+$phoneLink = preg_replace("/[^,.0-9]/", '', $phone);
+
+$email = get_option('contacts_email');
+
+$youtube = get_option('social_youtube');
+$instagram = get_option('social_instagram');
+$facebook = get_option('social_facebook');
+$vk = get_option('social_vk');
+
 ?>
 
 <!---------------------------------------------- CONTACTS info --------------------------------------------------->
@@ -26,23 +36,23 @@ if ($isEnglish) {
             <p class="contacts_description">
               <? echo $pageDescription; ?>
             </p>
-            <a class="phone_contacts" href="tel:+79161377108">
-              +7 (916) 137-71-08
+            <a class="phone_contacts" href="tel:+<? echo $phoneLink; ?>">
+              <? echo $phone; ?>
             </a>
-            <a class="email_contacts" href="mailto:info@annaverde.ru">
-              info@annaverde.ru
+            <a class="email_contacts" href="mailto:<? echo $email; ?>">
+              <? echo $email; ?>
             </a>
             <div class="socialLinks_contacts_page">
-              <a href="">
+              <a target="_blank" href="<? echo $youtube; ?>">
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/img/yt_black.svg" alt="" />
               </a>
-              <a href="">
+              <a target="_blank" href="<? echo $instagram; ?>">
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/img/inst_black.svg" alt="" />
               </a>
-              <a href="">
+              <a target="_blank" href="<? echo $facebook; ?>">
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/img/fb_black.svg" alt="" />
               </a>
-              <a href="">
+              <a target="_blank" href="<? echo $vk; ?>">
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/img/vk_black.svg" alt="" />
               </a>
             </div>

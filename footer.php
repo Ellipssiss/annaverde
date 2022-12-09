@@ -8,6 +8,7 @@
  *
  * @package My_theme
  */
+
 $args = array(
 	'theme_location' => 'footer_menu',
   'walker' => new True_Walker_Nav_Menu(), // этот параметр нужно добавить
@@ -19,6 +20,17 @@ $args = array(
   'items_wrap' => '<div class="footer_nav">%3$s</div>',
   'item_wrap' => '<a class="footer_nav_link>%3$s</a>',
 );
+
+$phone = get_option('contacts_phone');
+$phoneLink = preg_replace("/[^,.0-9]/", '', $phone);
+
+$email = get_option('contacts_email');
+
+$youtube = get_option('social_youtube');
+$instagram = get_option('social_instagram');
+$facebook = get_option('social_facebook');
+$vk = get_option('social_vk');
+
 ?>
         <!-- /.page -->
         </div>
@@ -30,43 +42,26 @@ $args = array(
         <div class="support_and_menu">
           <a class="support_us_btn" href="support_us.html">Поддержать нас</a>
           <? wp_nav_menu($args) ?>
-          <!-- <nav class="header-nav in_footer">
-            <a class="header_nav_link in_footer bio" href="bio.html"
-              >Биография</a
-            >
-            <a class="header_nav_link in_footer afisha" href="afisha.html"
-              >Афиша</a
-            >
-            <a class="header_nav_link in_footer projects" href="projects.html"
-              >Проекты</a
-            >
-            <a class="header_nav_link in_footer press" href="press.html"
-              >Пресса</a
-            >
-            <a class="header_nav_link in_footer contacts" href="contacts.html"
-              >Контакты</a
-            >
-          </nav> -->
         </div>
 
         <div class="phone_and_email">
-          <a class="phone" href="tel:+79161377108">+7 (916) 137-71-08</a>
-          <a class="email" href="mailto:info@annaverde.ru">info@annaverde.ru</a>
+          <a class="phone" href="tel:+<? echo $phoneLink ?>"><? echo $phone; ?></a>
+          <a class="email" href="mailto:<? echo $email; ?>"><? echo $email; ?></a>
         </div>
 
         <div class="copy_and_socialLinks">
           <p class="copy">© Anna Verde 2022</p>
           <div class="socialLinks">
-            <a href="">
+            <a target="_blank" href="<? echo $youtube; ?>">
               <img class="social_icon_footer" src="<?php echo get_template_directory_uri(); ?>/assets/img/youtb.svg" alt="" />
             </a>
-            <a href="">
+            <a target="_blank" href="<? echo $instagram; ?>">
               <img class="social_icon_footer" src="<?php echo get_template_directory_uri(); ?>/assets/img/inst.svg" alt="" />
             </a>
-            <a href="">
+            <a target="_blank" href="<? echo $facebook; ?>">
               <img class="social_icon_footer" src="<?php echo get_template_directory_uri(); ?>/assets/img/fb.svg" alt="" />
             </a>
-            <a href="">
+            <a target="_blank" href="<? echo $vk; ?>">
               <img class="social_icon_footer" src="<?php echo get_template_directory_uri(); ?>/assets/img/vk.svg" alt="" />
             </a>
           </div>
