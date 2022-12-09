@@ -1,12 +1,42 @@
 <?
 require_once( __DIR__.'/option_fields/mainoptions.php');
 
+define('PAGE_ID_PROJECT', 74);
+define('PAGE_ID_PRESS', 77);
+
 // based on original work from the PHP Laravel framework
 if (!function_exists('str_contains')) {
     function str_contains($haystack, $needle)
     {
         return $needle !== '' && mb_strpos($haystack, $needle) !== false;
     }
+}
+
+function getEnglishURL($string) {
+    $isEnglish = $_GET['lang'] === 'en';
+
+    if ($isEnglish) {
+        $arString = parse_url($string);
+        parse_str($arString['query'], $arStringQuery);
+
+        $arStringQuery['lang'] = 'en';
+
+        return $arString['scheme'].'://'.$arString['host'].$arString['path'].'?'.http_build_query($arStringQuery);
+    }
+
+    return $string;
+}
+
+function getProjectPageURL() {
+    $post = get_post(PAGE_ID_PROJECT);
+
+    return getEnglishURL($post -> guid);
+}
+
+function getPressPageURL() {
+    $post = get_post(PAGE_ID_PRESS);
+
+    return getEnglishURL($post -> guid);
 }
 
 function getMainPageFotoAnotation () {
@@ -477,12 +507,7 @@ class True_Walker_Nav_Menu extends Walker_Nav_Menu
         if ($isEnglish) {
             $title = get_post_meta($pagePostId, 'en_post_title_filed_name', true);
 
-            $arItemLink = parse_url($item_href);
-            parse_str($arItemLink['query'], $arItemLinkQuery);
-
-            $arItemLinkQuery['lang'] = 'en';
-
-            $item_href = $arItemLink['scheme'].'://'.$arItemLink['host'].$arItemLink['path'].'?'.http_build_query($arItemLinkQuery);
+            $item_href = getEnglishURL($item_href);
         }
 
         $url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];

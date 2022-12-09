@@ -156,11 +156,17 @@ if ($isEnglish) {
     </div>
 
       <!-- Перейти в проекты -> -->
-      <div class="go_to_block">
-        <a class="go_to_text" href="projects.html">Перейти в проекты</a>
+      <a class="go_to_block" href="<? echo getProjectPageURL(); ?>">
+        <span class="go_to_text" >
+          <? if ($isEnglish) { ?> 
+            Go to projects
+          <? } else { ?>
+            Перейти в проекты
+          <? } ?>
+        </span>
         <img class="go_to_pointer" src="<?php echo get_template_directory_uri(); ?>/assets/img/go_to_pointer.svg" alt="" />
         <!-- ./go_to_block -->
-      </div>
+      </a>
 
       <!-- ./projects-column -->
     </div>
@@ -200,10 +206,16 @@ if ($isEnglish) {
     </div>
 
     <!-- Перейти в прессу -> -->
-    <div class="go_to_press">
-      <a class="go_to_text" href="press.html">Перейти в прессу</a>
+    <a class="go_to_press" href="<? echo getPressPageURL(); ?>">
+      <span class="go_to_text">
+        <? if ($isEnglish) { ?> 
+          Go to press
+        <? } else { ?>
+          Перейти в прессу
+        <? } ?>
+      </span>
       <img class="go_to_pointer" src="<?php echo get_template_directory_uri(); ?>/assets/img/go_to_pointer.svg" alt="" />
-    </div>
+    </a>
     <!-- /.press_container -->
   </div>
   <!-- /.press-blok -->
