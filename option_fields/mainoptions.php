@@ -2,6 +2,7 @@
 add_action( 'admin_init',  'main_options' );
 add_action( 'admin_init',  'contacts_options' );
 add_action( 'admin_init',  'social_options' );
+add_action( 'admin_init',  'support_options' );
 
 // Настройки главной страницы
 function main_options(){
@@ -375,6 +376,80 @@ function social_page_vk( $args ){
 
 	?>
 		<input class="<? echo $args['class']; ?>" type="text" id="<? echo $args['name']; ?>" name="<? echo $args['name']; ?>" value="<? echo $value; ?>" />
+	<?
+}
+
+// Страница "Поддержать нас"
+function support_options() {
+	register_setting(
+		'main_settings', // название настроек из предыдущего шага
+		'support_donate', // ярлык опции
+		// 'absint' // функция очистки
+	);
+
+	register_setting(
+		'main_settings', // название настроек из предыдущего шага
+		'support_qr', // ярлык опции
+		// 'absint' // функция очистки
+	);
+
+	// добавляем секцию страницы контактов
+	add_settings_section(
+		'support_page_section_id', // ID секции, пригодится ниже
+		'Страница "Поддержать нас"', // заголовок (не обязательно)
+		'', // функция для вывода HTML секции (необязательно)
+		'main_page_link' // ярлык страницы
+	);
+
+	add_settings_field(
+		'support_donate',
+		'Ссылка копки "Донатить"',
+		'support_page_donate', // название функции для вывода
+		'main_page_link', // ярлык страницы
+		'support_page_section_id', // // ID секции, куда добавляем опцию
+		array( 
+			'label_for' => 'support_donate',
+			'class' => 'main_class', // для элемента <tr>
+			'name' => 'support_donate', // любые доп параметры в колбэк функцию
+		)
+	);
+
+	add_settings_field(
+		'support_qr',
+		'Изображение QR-кода',
+		'support_page_qr', // название функции для вывода
+		'main_page_link', // ярлык страницы
+		'support_page_section_id', // // ID секции, куда добавляем опцию
+		array( 
+			'label_for' => 'support_qr',
+			'class' => 'main_class', // для элемента <tr>
+			'name' => 'support_qr', // любые доп параметры в колбэк функцию
+		)
+	);
+}
+
+function support_page_donate( $args ){
+	// получаем значение из базы данных
+	$value = get_option('support_donate');
+
+	?>
+		<input class="<? echo $args['class']; ?>" type="text" id="<? echo $args['name']; ?>" name="<? echo $args['name']; ?>" value="<? echo $value; ?>" />
+	<?
+}
+
+function support_page_qr( $args ){
+	// получаем значение из базы данных
+	$value = get_option('support_qr');
+
+	$afishaCoverImgId = $value;
+	$afishaImageAttr = wp_get_attachment_image_src($afishaCoverImgId, 'thumbnail');
+	$afishaImageSrc = $afishaImageAttr[0];
+
+	?>
+		<img class="support_qr_image" alt="" src="<? echo $afishaImageSrc; ?>" /><br />
+		<input class="support_qr_input" type="hidden" id="<? echo $args['name']; ?>" name="<? echo $args['name']; ?>" value="<? echo $value; ?>" />
+		<button class="support_qr_add">Выбрать картику QR-кода</button>
+		<button class="support_qr_clear">Очистить картинку</button>
 	<?
 }
 ?>

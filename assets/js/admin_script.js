@@ -369,4 +369,37 @@ $(document).ready(function () {
         $('.press_labelimg').attr('src', '');
 		$('.press_labelinput').val('');
     });
+
+    $('.support_qr_add').click(function (event) {
+        event.preventDefault(); 
+		const customUploader = wp.media({
+			title: 'Выберите изображение плз',
+			library : {
+				// uploadedTo : wp.media.view.settings.post.id, // если для метобокса и хотим прилепить к текущему посту
+				type : 'image'
+			},
+			button: {
+				text: 'Выбрать изображение' // текст кнопки, по умолчанию "Вставить в запись"
+			},
+			multiple: false
+		});
+ 
+		// добавляем событие выбора изображения
+		customUploader.on('select', function() {
+			const image = customUploader.state().get('selection').first().toJSON();
+
+            $('.support_qr_image').attr('src', image.sizes.thumbnail.url);
+			$('.support_qr_input').val(image.id);
+		});
+ 
+		// и открываем модальное окно с выбором изображения
+		customUploader.open();
+    });
+
+    $('.support_qr_clear').click(function(event) {
+        event.preventDefault();
+
+        $('.support_qr_image').attr('src', '');
+		$('.support_qr_input').val('');
+    });
 });
