@@ -469,6 +469,21 @@ class True_Walker_Nav_Menu extends Walker_Nav_Menu
         $output .= $indent . '<li' . $id . $value . $class_names . '>';
 
         $item_href = $menu_item->url;
+        
+        
+        $isEnglish = $_GET['lang'] === 'en';
+        $pagePostId = $menu_item -> object_id;
+
+        if ($isEnglish) {
+            $title = get_post_meta($pagePostId, 'en_post_title_filed_name', true);
+
+            $arItemLink = parse_url($item_href);
+            parse_str($arItemLink['query'], $arItemLinkQuery);
+
+            $arItemLinkQuery['lang'] = 'en';
+
+            $item_href = $arItemLink['scheme'].'://'.$arItemLink['host'].$arItemLink['path'].'?'.http_build_query($arItemLinkQuery);
+        }
         // ссылка и околоссылочный текст
         $item_output = $args->before;
         $item_output .= '<a href="' . $item_href . '"' . $pageId . $attributes . '>';
