@@ -503,7 +503,7 @@ blockquote {
   font-size: 14px;
   line-height: 164%;
   text-decoration: none;
-  margin-left: 25px;
+  /* margin-left: 25px; */
   /* transform: rotate(-90deg); */
   transition: font-weight 0.2s linear;
   text-transform: uppercase;

@@ -450,7 +450,7 @@ class True_Walker_Nav_Menu extends Walker_Nav_Menu
 		 */
         $class_names = $value = '';
         $classes = empty($item->classes) ? array() : (array) $item->classes;
-        $classes[] = 'menu-item-' . $item->ID;
+        $classes[] = 'menu-item-'.$menu_item -> object_id;
 
         // функция join превращает массив в строку
         $class_names = join(' ', apply_filters('nav_menu_css_class', array_filter($classes), $item, $args));
@@ -484,9 +484,17 @@ class True_Walker_Nav_Menu extends Walker_Nav_Menu
 
             $item_href = $arItemLink['scheme'].'://'.$arItemLink['host'].$arItemLink['path'].'?'.http_build_query($arItemLinkQuery);
         }
+
+        $url = ((!empty($_SERVER['HTTPS'])) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+        if(str_contains($url, $item_href)){
+            $activeClass = 'active';
+        } else {
+            $activeClass = '';
+        }
+
         // ссылка и околоссылочный текст
         $item_output = $args->before;
-        $item_output .= '<a href="' . $item_href . '"' . $pageId . $attributes . '>';
+        $item_output .= '<a class="header_nav_link '.$activeClass.'" href="' . $item_href . '"' . $pageId . $attributes . '>';
         // $item_output .= $args->link_before . apply_filters( 'the_title', $item->title, $item->ID ) . $args->link_after;
         $item_output .= $args->link_before . $title . $args->link_after;
         $item_output .= '</a>';

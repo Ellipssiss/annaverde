@@ -37,9 +37,14 @@ $langBtnName = '';
 $parseUrl = parse_url($_SERVER["REQUEST_URI"]);
 parse_str($parseUrl['query'], $output);
 
+if ($isEnglish){
+  $mainLink = '/?lang=en';
+} else {
+  $mainLink = '/';
+}
+
 if (!array_key_exists('lang', $output)) {
   $switchLang = 'ENG';
-
   $output['lang'] = 'en';
 } else {
   $switchLang = 'RU';
@@ -97,7 +102,7 @@ $headerMainFotoAnotation = getMainPageFotoAnotation();
       <header class="header <? get_modificator_header_class(); ?>">
         <div class="header_container">
           <div class="header_inner">
-            <a href="/">
+            <a href="<? echo $mainLink; ?>">
               <img class="logo" src="<?php echo get_template_directory_uri(); ?>/assets/img/logo_on_black.png" alt="" />
               <img class="logo" src="<?php echo get_template_directory_uri(); ?>/assets/img/logo_on_white.png" alt="" />
             </a>
