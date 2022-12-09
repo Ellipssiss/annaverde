@@ -8,18 +8,27 @@ get_header();
 
 $arResult = getProjectPosts();
 $posts_list = $arResult['posts'];
+
+$isEnglish = $_GET['lang'] === 'en';
+
+if ($isEnglish) {
+  $projectsTitle = "Projects";
+} else {
+  $projectsTitle = "Проекты";
+}
+
+
 ?>
 
 <!--------------------------------------- PROJECTS main content ------------------------------------------------->
 
 <div class="projects_container">
   <div class="projects_content">
-    <h2 class="title_on_projects_page">Проекты</h2>
+    <h2 class="title_on_projects_page"><? echo $projectsTitle; ?></h2>
     <div class="projects_list_project_page">
       <? foreach ($posts_list as $post) {
         $postTitle = $post->post_title;
         $postId = $post->ID;
-        $postType = get_post_meta($postId, 'proj_type', true);
 
         $allProjCoverImgId = get_post_meta($postId, 'all_proj_label', true);
         $allProjImageAttr = wp_get_attachment_image_src($allProjCoverImgId, 'full');

@@ -58,10 +58,10 @@ function add_my_setting() {
 
 
 
-function getPressPosts() {
+function getPressPosts($countPosts = 10) {
     $args = [
         'post_type' => 'press_article',
-        'posts_per_page' => 10,
+        'posts_per_page' => $countPosts,
         'paged' => (get_query_var('paged') ? get_query_var('paged') : 1),
     ];
 
@@ -103,10 +103,10 @@ function getPressPosts() {
     return $pressResult;
 }
 
-function getAfishaPosts() {
+function getAfishaPosts($countPosts = 10) {
     $args = [
         'post_type' => 'afisha_perfomance',
-        'posts_per_page' => 10,
+        'posts_per_page' => $countPosts,
         'paged' => (get_query_var('paged') ? get_query_var('paged') : 1),
     ];
     $ruDaysOfWeek = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
@@ -337,11 +337,11 @@ function get_post_musicians($post_id)
     }
 }
 
-function getProjectPosts()
+function getProjectPosts($countPosts = 10)
 {
     $args = [
         'post_type' => 'projects',
-        'posts_per_page' => 10,
+        'posts_per_page' => $countPosts,
         'paged' => (get_query_var('paged') ? get_query_var('paged') : 1),
     ];
 
@@ -1306,7 +1306,7 @@ function func_admin_scripts()
         get_template_directory_uri() . '/assets/js/admin_script.js'
     );
 
-    $projectPosts = getProjectPosts('all');
+    $projectPosts = getProjectPosts();
 
     $translation_array = array(
         'templateUrl' => get_stylesheet_directory_uri(),

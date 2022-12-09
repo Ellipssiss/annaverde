@@ -17,6 +17,12 @@ $postCount = $arResult['count'];
 $arAfishaPosts = getAfishaPosts();
 
 $isEnglish = $_GET['lang'] === 'en';
+
+if ($isEnglish) {
+  $afishaTitle = "Afisha";
+} else {
+  $afishaTitle = "Афиша";
+}
 ?>
 
 <!-- Блок афишы -->
@@ -29,7 +35,7 @@ $isEnglish = $_GET['lang'] === 'en';
       <div class="title_and_dropdown">
         <!-- Название блока -->
         <h2 class="afisha_title_on_main afisha_title_on_afisha">
-          Афиша
+          <? echo $afishaTitle; ?>
         </h2>
 
         <div id="dropdown" class="dropdown">
@@ -112,7 +118,7 @@ $isEnglish = $_GET['lang'] === 'en';
                   </div>
                 </div>
                 <? if ($eventValue['sold_out'] === 'true') { ?>
-                  <span class="buy_ticket <? echo $classNoTicket; ?>"?>"><? echo $valueTicket; ?></span>
+                  <span class="buy_ticket <? echo $classNoTicket; ?>"?><? echo $valueTicket; ?></span>
                 <? } else { ?>
                   <a class="buy_ticket" target="_blanck" href="<? echo $eventValue['ticket_link']; ?>"><? echo $valueTicket; ?></a>
                 <? } ?>                

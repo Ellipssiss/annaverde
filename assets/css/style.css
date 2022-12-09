@@ -1892,6 +1892,10 @@ h2.afisha_title_on_main {
   text-decoration: underline;
 }
 
+.project_label_wrapper {
+
+}
+
 .project_photo_desktop {
   display: none;
 }
