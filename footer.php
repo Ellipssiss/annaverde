@@ -45,7 +45,7 @@ $vk = get_option('social_vk');
         </div>
 
         <div class="phone_and_email">
-          <a class="phone" href="tel:+<? echo $phoneLink ?>"><? echo $phone; ?></a>
+          <a class="phone" href="tel:+<? echo $phoneLink; ?>"><? echo $phone; ?></a>
           <a class="email" href="mailto:<? echo $email; ?>"><? echo $email; ?></a>
         </div>
 

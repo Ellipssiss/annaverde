@@ -9,13 +9,14 @@ get_header();
 $arResult = getProjectPosts();
 $posts = $arResult['posts'];
 $postCount = $arResult['count'];
-$postId = ($_GET['p']);
+$postId = ($_GET[PROJECT_GET_PROPERTY]);
 
 $arGallery = get_project_gallery($postId);
 $arPartners = get_project_partners($postId);
+$arEvents = get_project_events($postId);
+$arPress = get_project_press($postId);
 
 $isEnglish = $_GET['lang'] === 'en';
-
 ?>
 
 
@@ -364,6 +365,8 @@ $projImageSrc = $projImageAttr[0];
   </div>
 </div>
 <!-- /.container (width) -->
+
+<? if(!empty($arEvents)){ ?>
 <div class="nearest_performances_in_project_wrapper">
   <div class="nearest_performances_in_project">
     <h3 class="nearest_performance_title">
@@ -376,54 +379,43 @@ $projImageSrc = $projImageAttr[0];
       }
       ?>
     </h3>
-
-    <!-- 1-ый ближайший спектакль -->
-    <div class="nearest_performance">
-      <div class="nearest_performance_all_except_btn">
-        <div class="date_in_project">
-          <div class="day_of_month_nearest_project">
-            <h2 class="day_of_month">28</h2>
+    
+    <? foreach($arEvents as $key => $value) {
+      if ($isEnglish) {
+        $arCurrentLang = $value['en'];
+      } else {
+        $arCurrentLang = $value['ru'];
+      }
+    ?>
+      <div class="nearest_performance">
+        <div class="nearest_performance_all_except_btn">
+          <div class="date_in_project">
+            <div class="day_of_month_nearest_project">
+              <h2 class="day_of_month"><? echo $arCurrentLang['ar_date'][0]; ?></h2>
+            </div>
+            <div class="month_and_day_of_weak_nearest">
+              <span class="month"><? echo $arCurrentLang['month']; ?></span>
+              <span class="day_of_week"><? echo $arCurrentLang['day']; ?></span>
+            </div>
           </div>
-          <div class="month_and_day_of_weak_nearest">
-            <span class="month">Сентября</span>
-            <span class="day_of_week">Воскресенье</span>
+          <div class="time_and_location_nearest_project">
+            <div class="time_nearest_project"><? echo $arCurrentLang['time']; ?></div>
+
+            <p class="location_nearest_project">
+              <? echo $arCurrentLang['place']; ?>
+            </p>
           </div>
         </div>
-        <div class="time_and_location_nearest_project">
-          <div class="time_nearest_project">19:00</div>
-
-          <p class="location_nearest_project">
-            Москва. Яровит Холл Москва.
-          </p>
-        </div>
+        <? if($value['sold_out']) { ?>
+          <span class="buy_ticket nearest no_ticket">Билеты проданы</span>
+        <? } else { ?>
+          <a class="buy_ticket nearest" target="_blank" href="<? echo $value['ticket_link']; ?>">Купить билет</a>
+        <? } ?>
       </div>
-      <a class="buy_ticket nearest">Купить билет</a>
-    </div>
-
-    <!-- 2-ой блидайший спектакль -->
-    <div class="nearest_performance">
-      <div class="nearest_performance_all_except_btn">
-        <div class="date_in_project">
-          <div class="day_of_month_nearest_project">
-            <h2 class="day_of_month">28</h2>
-          </div>
-          <div class="month_and_day_of_weak_nearest">
-            <span class="month">Мая</span>
-            <span class="day_of_week">Cуббота</span>
-          </div>
-        </div>
-        <div class="time_and_location_nearest_project">
-          <div class="time_nearest_project">19:00</div>
-
-          <p class="location_nearest_project">
-            Москва. Яровит Холл Москва. Яровит Холл Москва. Яровит Холл
-          </p>
-        </div>
-      </div>
-      <a class="buy_ticket nearest">Купить билет</a>
-    </div>
+    <? } ?>
   </div>
 </div>
+<? } ?>
 <!-- /.nearest_performances_in_project -->
 
 <!------------------------------------ Gallery ---------------------------------------------->
@@ -477,6 +469,7 @@ $projImageSrc = $projImageAttr[0];
   </div>
 <? } ?>
 <!------------------------------------ Press block ------------------------------------------>
+<? if(!empty($arPress)) { ?>
 <div class="press_block project_page">
   <div class="press_container project_page">
     <h2 class="press_block_title project_page">
@@ -490,135 +483,35 @@ $projImageSrc = $projImageAttr[0];
       ?>
     </h2>
     <div class="articles_container project_page">
-      <div class="article_wraper project_page">
-        <div class="article project_page">
-          <img class="press_img project_page" src="<?php echo get_template_directory_uri(); ?>/assets/img/press_photo.png" alt="" />
-          <div class="article_name_and_pointer project_page">
-            <p class="article_name project_page">
-              Пластический спектакль «В объятиях минотавра
-              ПикассоПластический спектакль «В объятиях минотавра
-              ПикассоПластический спектакль «В объятиях минотавра
-              Пикассо
-            </p>
-            <div class="press_pointer show">
-              <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
+      <? foreach($arPress as $key => $value) {
+        if ($isEnglish) {
+          $pressInfo = $value['en'];
+        } else {
+          $pressInfo = $value['ru'];
+        }
+      ?>
+        <a class="article_wraper project_page" target="_blank" href="<? echo $value['link'] ?>">
+          <div class="article project_page">
+            <img class="press_img project_page" src="<? echo $value['image'] ?>" alt="" />
+            <div class="article_name_and_pointer project_page">
+              <p class="article_name project_page"><? echo $pressInfo['content']; ?></p>
+              <div class="press_pointer show">
+                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
+              </div>
+            </div>
+            <div class="article_date_and_source project_page">
+              <p class="article_source project_page"><? echo $pressInfo['owner']; ?></p>
+              <p class="article_date project_page"><? echo $value['date'] ?></p>
             </div>
           </div>
-          <div class="article_date_and_source project_page">
-            <p class="article_source project_page">Культура. РФ</p>
-            <p class="article_date project_page">01.02.21</p>
-          </div>
-        </div>
-      </div>
-      <div class="article_wraper project_page">
-        <div class="article project_page">
-          <img class="press_img project_page" src="<?php echo get_template_directory_uri(); ?>/assets/img/press_photo.png" alt="" />
-          <div class="article_name_and_pointer project_page">
-            <p class="article_name project_page">
-              Пластический спектакль «В объятиях минотавра
-              ПикассоПластический спектакль «В объятиях минотавра
-              ПикассоПластический спектакль «В объятиях минотавра
-              Пикассо
-            </p>
-            <div class="press_pointer show">
-              <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
-            </div>
-          </div>
-          <div class="article_date_and_source project_page">
-            <p class="article_source project_page">Культура. РФ</p>
-            <p class="article_date project_page">01.02.21</p>
-          </div>
-        </div>
-      </div>
-      <div class="article_wraper project_page">
-        <div class="article project_page">
-          <img class="press_img project_page" src="<?php echo get_template_directory_uri(); ?>/assets/img/press_photo.png" alt="" />
-          <div class="article_name_and_pointer project_page">
-            <p class="article_name project_page">
-              Пластический спектакль «В объятиях минотавра
-              ПикассоПластический спектакль «В объятиях минотавра
-              ПикассоПластический спектакль «В объятиях минотавра
-              Пикассо
-            </p>
-            <div class="press_pointer show">
-              <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
-            </div>
-          </div>
-          <div class="article_date_and_source project_page">
-            <p class="article_source project_page">Культура. РФ</p>
-            <p class="article_date project_page">01.02.21</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="article_wraper project_page">
-        <div class="article project_page">
-          <img class="press_img project_page" src="<?php echo get_template_directory_uri(); ?>/assets/img/press_photo.png" alt="" />
-          <div class="article_name_and_pointer project_page">
-            <p class="article_name project_page">
-              Пластический спектакль «В объятиях минотавра
-              ПикассоПластический спектакль «В объятиях минотавра
-              ПикассоПластический спектакль «В объятиях минотавра
-              Пикассо
-            </p>
-            <div class="press_pointer show">
-              <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
-            </div>
-          </div>
-          <div class="article_date_and_source project_page">
-            <p class="article_source project_page">Культура. РФ</p>
-            <p class="article_date project_page">01.02.21</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="article_wraper project_page">
-        <div class="article project_page">
-          <img class="press_img project_page" src="<?php echo get_template_directory_uri(); ?>/assets/img/press_photo.png" alt="" />
-          <div class="article_name_and_pointer project_page">
-            <p class="article_name project_page">
-              Пластический спектакль «В объятиях минотавра
-              ПикассоПластический спектакль «В объятиях минотавра
-              ПикассоПластический спектакль «В объятиях минотавра
-              Пикассо
-            </p>
-            <div class="press_pointer show">
-              <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
-            </div>
-          </div>
-          <div class="article_date_and_source project_page">
-            <p class="article_source project_page">Культура. РФ</p>
-            <p class="article_date project_page">01.02.21</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="article_wraper project_page">
-        <div class="article project_page">
-          <img class="press_img project_page" src="<?php echo get_template_directory_uri(); ?>/assets/img/press_photo.png" alt="" />
-          <div class="article_name_and_pointer project_page">
-            <p class="article_name project_page">
-              Пластический спектакль «В объятиях минотавра
-              ПикассоПластический спектакль «В объятиях минотавра
-              ПикассоПластический спектакль «В объятиях минотавра
-              Пикассо
-            </p>
-            <div class="press_pointer show">
-              <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
-            </div>
-          </div>
-          <div class="article_date_and_source project_page">
-            <p class="article_source project_page">Культура. РФ</p>
-            <p class="article_date project_page">01.02.21</p>
-          </div>
-        </div>
-      </div>
+      </a>
+      <? } ?>
       <!-- /.articles_container -->
     </div>
 
     <!-- Перейти в прессу -> -->
     <div class="go_to_press">
-      <a class="go_to_text" href="#">
+      <a class="go_to_text" href="<? echo getPressPageURL(); ?>">
         <?
         if ($isEnglish) {
           echo 'Go to press';
@@ -633,6 +526,7 @@ $projImageSrc = $projImageAttr[0];
   </div>
   <!-- /.press-blok -->
 </div>
+<? } ?>
 <div class="clear"></div>
 
 

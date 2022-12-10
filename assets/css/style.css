@@ -2193,6 +2193,8 @@ h3 {
   width: 280px;
   border-bottom: 1px solid #8a8a8a;
   margin-bottom: 20px;
+  text-decoration: none;
+  color: #000;
 }
 /* .article_wraper:nth-of-type(6) {
   margin-bottom: 0;

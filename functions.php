@@ -1,8 +1,11 @@
 <?
+require_once( __DIR__.'/devtools.php');
 require_once( __DIR__.'/option_fields/mainoptions.php');
 
 define('PAGE_ID_PROJECT', 74);
 define('PAGE_ID_PRESS', 77);
+
+define('PROJECT_GET_PROPERTY', 'p');
 
 // based on original work from the PHP Laravel framework
 if (!function_exists('str_contains')) {
@@ -86,7 +89,41 @@ function add_my_setting() {
     <?
 }
 
+function getPressPostInfo($postId) {
+    $pressPostId = $postId;
+    $pressPostBody = get_post($postId);
+    $pressLink = get_post_meta($pressPostId, 'press_link', true);
+    $pressDate = get_post_meta($pressPostId, 'press_date', true);
 
+    $ruPressOwner = get_post_meta($pressPostId, 'ru_press_owner', true);
+    $enPressOwner = get_post_meta($pressPostId, 'en_press_owner', true);
+
+    $enTitle = get_post_meta($pressPostId, 'en_post_title_filed_name', true);
+    $enContent = get_post_meta($pressPostId, 'en_editor_filed_name', true);
+
+    $pressImageId = get_post_meta($pressPostId, 'press_pic', true);
+    $pressImageAttr = wp_get_attachment_image_src($pressImageId, 'full');
+    $pressImageSrc = $pressImageAttr[0];
+
+    $arResult = [
+        'id' => $pressPostBody -> ID,
+        'link' => $pressLink,
+        'date' => $pressDate,
+        'image' => $pressImageSrc,
+        'ru' => [
+            'title' => $pressPostBody -> post_title,
+            'content' => $pressPostBody -> post_content,
+            'owner' => $ruPressOwner,
+        ],
+        'en' => [
+            'title' => $enTitle,
+            'content' => $enContent,
+            'owner' => $enPressOwner,
+        ],
+    ];
+
+    return $arResult;
+}
 
 function getPressPosts($countPosts = 10) {
     $args = [
@@ -99,38 +136,61 @@ function getPressPosts($countPosts = 10) {
     $pressResult = [];
 
     foreach ($pressPosts as $key => $value) {
-        $pressPostId = $value -> ID;
-        $pressLink = get_post_meta($pressPostId, 'press_link', true);
-        $pressDate = get_post_meta($pressPostId, 'press_date', true);
-
-        $ruPressOwner = get_post_meta($pressPostId, 'ru_press_owner', true);
-        $enPressOwner = get_post_meta($pressPostId, 'en_press_owner', true);
-
-        $enTitle = get_post_meta($pressPostId, 'en_post_title_filed_name', true);
-        $enContent = get_post_meta($pressPostId, 'en_editor_filed_name', true);
-
-        $pressImageId = get_post_meta($pressPostId, 'press_pic', true);
-        $pressImageAttr = wp_get_attachment_image_src($pressImageId, 'full');
-        $pressImageSrc = $pressImageAttr[0];
-
-        $pressResult[] = [
-            'link' => $pressLink,
-            'date' => $pressDate,
-            'image' => $pressImageSrc,
-            'ru' => [
-                'title' => $value -> post_title,
-                'content' => $value -> post_content,
-                'owner' => $ruPressOwner,
-            ],
-            'en' => [
-                'title' => $enTitle,
-                'content' => $enContent,
-                'owner' => $enPressOwner,
-            ],
-        ];
+        $pressResult[] = getPressPostInfo($value -> ID);
     };
 
     return $pressResult;
+}
+
+function getAfishaPostInfo($afishaPostId){
+    $objPost = get_post($afishaPostId);
+    $afishaPostDate = get_post_meta($afishaPostId, 'afisha_date', true);
+    $arAfishaPostDate = explode('.', $afishaPostDate);
+    $timestamp = mktime(0,0,0, $arAfishaPostDate[1], $arAfishaPostDate[0], $arAfishaPostDate[2]);
+    $afishaCoverImgId = get_post_meta($afishaPostId, 'afisha_label', true);
+    $afishaImageAttr = wp_get_attachment_image_src($afishaCoverImgId, 'full');
+    $afishaImageSrc = $afishaImageAttr[0];
+
+    $afishaMobileCoverImgId = get_post_meta($afishaPostId, 'afisha_mobile_label', true);
+    $afishaMobileImageAttr = wp_get_attachment_image_src($afishaMobileCoverImgId, 'full');
+    $afishaMobileImageSrc = $afishaMobileImageAttr[0];
+
+    $afishaTicketLink = get_post_meta($afishaPostId, 'afisha_ticketlink', true);
+    $afishaSoldOut = get_post_meta($afishaPostId, 'afisha_sold_out', true);
+    
+    $ruDaysOfWeek = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
+    $enDaysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+    $ruMonthes = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
+    $enMonthes = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+
+    $afishaPostInfo = [
+        'id' => $afishaPostId,
+        'desktop_image' => $afishaImageSrc,
+        'mobile_image' => $afishaMobileImageSrc,
+        'ticket_link' => $afishaTicketLink,
+        'sold_out' => $afishaSoldOut,
+        'ru' => [
+            'title' => $objPost -> post_title,
+            'date' => $afishaPostDate,
+            'ar_date' => $arAfishaPostDate,
+            'time' => get_post_meta($afishaPostId, 'ru_event_time', true),
+            'place' => get_post_meta($afishaPostId, 'ru_event_place', true),
+            'day' => $ruDaysOfWeek[date('N', $timestamp) - 1],
+            'month' => $ruMonthes[date('n', $timestamp) - 1],
+        ],
+        'en' => [
+            'title' => get_post_meta($afishaPostId, 'en_post_title_filed_name', true),
+            'date' => $afishaPostDate,
+            'ar_date' => $arAfishaPostDate,
+            'time' => get_post_meta($afishaPostId, 'en_event_time', true),
+            'place' => get_post_meta($afishaPostId, 'en_event_place', true),
+            'day' => $enDaysOfWeek[date('N', $timestamp) - 1],
+            'month' => $enMonthes[date('n', $timestamp) - 1],
+        ],
+    ];
+
+    return $afishaPostInfo;
 }
 
 function getAfishaPosts($countPosts = 10) {
@@ -139,59 +199,54 @@ function getAfishaPosts($countPosts = 10) {
         'posts_per_page' => $countPosts,
         'paged' => (get_query_var('paged') ? get_query_var('paged') : 1),
     ];
-    $ruDaysOfWeek = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
-    $enDaysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
-    $ruMonthes = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
-    $enMonthes = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
     $afishaPosts = get_posts($args);
     $afishaResult = [];
 
     foreach($afishaPosts as $key => $value){
-        $afishaPostId = $value -> ID;
-        $afishaPostDate = get_post_meta($afishaPostId, 'afisha_date', true);
-        $arAfishaPostDate = explode('.', $afishaPostDate);
-        $timestamp = mktime(0,0,0, $arAfishaPostDate[1], $arAfishaPostDate[0], $arAfishaPostDate[2]);
-        $afishaCoverImgId = get_post_meta($afishaPostId, 'afisha_label', true);
-        $afishaImageAttr = wp_get_attachment_image_src($afishaCoverImgId, 'full');
-        $afishaImageSrc = $afishaImageAttr[0];
-    
-        $afishaMobileCoverImgId = get_post_meta($afishaPostId, 'afisha_mobile_label', true);
-        $afishaMobileImageAttr = wp_get_attachment_image_src($afishaMobileCoverImgId, 'full');
-        $afishaMobileImageSrc = $afishaMobileImageAttr[0];
-
-        $afishaTicketLink = get_post_meta($afishaPostId, 'afisha_ticketlink', true);
-        $afishaSoldOut = get_post_meta($afishaPostId, 'afisha_sold_out', true);
-       
-        $afishaResult[$afishaPostDate][] = [
-            'id' => $afishaPostId,
-            'desktop_image' => $afishaImageSrc,
-            'mobile_image' => $afishaMobileImageSrc,
-            'ticket_link' => $afishaTicketLink,
-            'sold_out' => $afishaSoldOut,
-            'ru' => [
-                'title' => $value -> post_title,
-                'date' => $afishaPostDate,
-                'ar_date' => $arAfishaPostDate,
-                'time' => get_post_meta($afishaPostId, 'ru_event_time', true),
-                'place' => get_post_meta($afishaPostId, 'ru_event_place', true),
-                'day' => $ruDaysOfWeek[date('N', $timestamp) - 1],
-                'month' => $ruMonthes[date('n', $timestamp) - 1],
-            ],
-            'en' => [
-                'title' => get_post_meta($afishaPostId, 'en_post_title_filed_name', true),
-                'date' => $afishaPostDate,
-                'ar_date' => $arAfishaPostDate,
-                'time' => get_post_meta($afishaPostId, 'en_event_time', true),
-                'place' => get_post_meta($afishaPostId, 'en_event_place', true),
-                'day' => $enDaysOfWeek[date('N', $timestamp) - 1],
-                'month' => $enMonthes[date('n', $timestamp) - 1],
-            ],
-        ];
+        $afishaPostDate = get_post_meta($value -> ID, 'afisha_date', true);
+        $afishaResult[$afishaPostDate][] = getAfishaPostInfo($value -> ID);
     }
 
     return $afishaResult;
+}
+
+function get_project_press($post_id) {
+    $arPressPosts = getPressPosts();
+    $arPressPostIds = [];
+
+    foreach ($arPressPosts as $key => $value) {
+        $pressPostId = $value['id'];
+        $eventProjects = get_post_meta($pressPostId, 'press_event', true);
+
+        if ($eventProjects == $post_id) $arPressPostIds[] = $value['id'];
+    }
+
+    foreach($arPressPostIds as $key => $value) {
+        $arResult[] = getPressPostInfo($value);
+    }
+
+    return $arResult;
+}
+
+function get_project_events($post_id) {
+    $arAfishaPosts = getAfishaPosts();
+    $arAfishaEventIds = [];
+
+    foreach ($arAfishaPosts as $keyOneDate => $oneDate) {
+        foreach ($oneDate as $key => $value){
+            $afishaPostId = $value['id'];
+            $eventProjects = get_post_meta($afishaPostId, 'event_projects', true);
+            
+            if ($eventProjects == $post_id) $arAfishaEventIds[] = $value['id'];
+        }
+    }
+
+    foreach($arAfishaEventIds as $key => $afishaPostId) {
+        $arResult[] = getAfishaPostInfo($afishaPostId); 
+    }
+
+    return $arResult;
 }
 
 function get_project_partners($post_id) {
@@ -648,7 +703,7 @@ function add_media_metabox()
     add_meta_box('proj_partners', 'Партнеры', 'func_proj_partners', 'projects', 'normal', 'low');
 
     // Создание метабоксов в админке для типа постов "Афиша"
-    add_meta_box('afisha_projects', 'Выбор проекта', 'create_selector_of_project_layout', 'afisha_perfomance', 'normal', 'low');
+    add_meta_box('afisha_projects', 'Выбор проекта', 'func_afisha_project', 'afisha_perfomance', 'normal', 'low');
     add_meta_box('afisha_images', 'Выбор изображения', 'func_afisha_mediabox', 'afisha_perfomance', 'normal', 'low');
     add_meta_box('afisha_date', 'Выбор даты', 'func_afisha_date', 'afisha_perfomance', 'normal', 'low');
     add_meta_box('afisha_ticket', 'Билеты', 'func_afisha_ticket', 'afisha_perfomance', 'normal', 'low');
@@ -658,6 +713,33 @@ function add_media_metabox()
     add_meta_box('press_date', 'Дата публикации', 'func_press_date', 'press_article', 'normal', 'low');
     add_meta_box('press_pic', 'Изображение публикации', 'func_press_pic', 'press_article', 'normal', 'low');
     add_meta_box('press_owner', 'Источник', 'func_press_owner', 'press_article', 'normal', 'low');
+    add_meta_box('press_project', 'Проект', 'func_press_project', 'press_article', 'normal', 'low');
+}
+
+// Создание верстки метабокса для заполнения информации о времени проведения выступления
+function func_press_project($post)
+{
+    $projectsList = getProjectPosts();
+    $eventProjects = get_post_meta($post->ID, 'press_event', true);
+?>
+    <div>
+        <p>Проект:</p>
+        <select class="press_event" name="press_event">
+            <? foreach ($projectsList['posts'] as $key => $value) { ?>
+                <? 
+                    $projectId = $projectsList['posts'][$key]->ID; 
+                    if ($projectId == $eventProjects) {
+                        $selected = "selected";
+                    } else {
+                        $selected = "";
+                    }
+                ?>
+                <option value="<? echo $projectId; ?>" <? echo $selected; ?>><? echo get_post_title($projectId); ?></option>
+            <? } ?>
+        </select>
+    </div>
+
+<?
 }
 
 function func_press_owner($post)
@@ -769,7 +851,7 @@ function func_afisha_mediabox($post)
 }
 
 // Создание верстки метабокса для заполнения информации о времени проведения выступления
-function create_selector_of_project_layout($post)
+function func_afisha_project($post)
 {
     $projectsList = getProjectPosts();
     $eventProjects = get_post_meta($post->ID, 'event_projects', true);
@@ -1300,6 +1382,7 @@ function func_save_proj_post($post_id)
     update_post_meta($post_id, 'press_link', $_POST['press_link']);
     update_post_meta($post_id, 'press_date', $_POST['press_date']);
     update_post_meta($post_id, 'press_pic', $_POST['press_pic']);
+    update_post_meta($post_id, 'press_event', $_POST['press_event']);
     update_post_meta($post_id, 'ru_press_owner', $_POST['ru_press_owner']);
     update_post_meta($post_id, 'en_press_owner', $_POST['en_press_owner']);
 

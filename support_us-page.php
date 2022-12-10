@@ -25,10 +25,7 @@ $donateId = get_option('support_qr');
 $donateImgId = $donateId;
 $donateImageAttr = wp_get_attachment_image_src($donateImgId, 'full');
 $donateImageSrc = $donateImageAttr[0];
-
 ?>
-
-
  <!----------------------------------------------------------- SUPPORT-US MAIN BLOCK ---------------------------------------------------------------------------------------->
 
  <div class="support_us_container">
