@@ -144,6 +144,25 @@ function getPressPosts($countPosts = 10) {
     return $pressResult;
 }
 
+function getAfishaMonthes($posts) {
+    $arMonthes = [];
+    $isEnglish = $_GET['lang'] === 'en';
+
+    foreach($posts as $keyDate => $valueDate) {
+        foreach($valueDate as $key => $value) {
+            if($isEnglish) {
+                $month = $value['en']['month_main'];
+            } else {
+                $month = $value['ru']['month_main'];
+            }
+
+            $arMonthes[] = $month;
+        }
+    }
+
+    return array_unique($arMonthes);
+}
+
 function getAfishaPostInfo($afishaPostId){
     $objPost = get_post($afishaPostId);
     $afishaPostDate = get_post_meta($afishaPostId, 'afisha_date', true);
@@ -163,6 +182,7 @@ function getAfishaPostInfo($afishaPostId){
     $ruDaysOfWeek = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', 'Воскресенье'];
     $enDaysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
+    $ruMonthesMain = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
     $ruMonthes = ['Января', 'Февраля', 'Марта', 'Апреля', 'Мая', 'Июня', 'Июля', 'Августа', 'Сентября', 'Октября', 'Ноября', 'Декабря'];
     $enMonthes = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
@@ -180,6 +200,7 @@ function getAfishaPostInfo($afishaPostId){
             'place' => get_post_meta($afishaPostId, 'ru_event_place', true),
             'day' => $ruDaysOfWeek[date('N', $timestamp) - 1],
             'month' => $ruMonthes[date('n', $timestamp) - 1],
+            'month_main' => $ruMonthesMain[date('n', $timestamp) - 1],
         ],
         'en' => [
             'title' => get_post_meta($afishaPostId, 'en_post_title_filed_name', true),
@@ -189,6 +210,7 @@ function getAfishaPostInfo($afishaPostId){
             'place' => get_post_meta($afishaPostId, 'en_event_place', true),
             'day' => $enDaysOfWeek[date('N', $timestamp) - 1],
             'month' => $enMonthes[date('n', $timestamp) - 1],
+            'month_main' => $enMonthes[date('n', $timestamp) - 1],
         ],
     ];
 

@@ -68,8 +68,6 @@ $(document).ready(function () {
 	$('.go_to_in_middle_afisha').click(function (event) {
 		event.preventDefault();
 
-		console.log(FromBackend.templateUrl);
-
 		$.ajax({
 			method: "POST",
 			url: `${FromBackend.templateUrl}/ajax.php`,
@@ -175,10 +173,20 @@ $(document).ready(function () {
 		});
 	})
 
-	// $( "#add_musician" ).on('click',function() {
-	// 	// alert( "Handler for .click() called." );
-	// 	console.log('1');
-	//   });
+	$('#dropdown_menu_wrapper').on('click', '.dropdown_link', function (){
+		const value = $(this).html()
+
+		$(this).parent().parent().parent().find('.dropdown_mainbox').html(value);
+
+		if(value === 'Все месяцы' || value === 'All monthes') {
+			$('.afisha_perfomance_day_wrapper').removeClass('filter');
+			$('.afisha_perfomance_day_wrapper').find('.afisha_perfomance_day').removeClass('show');
+		} else {
+			$('.afisha_perfomance_day_wrapper').addClass('filter');
+			$('.afisha_perfomance_day_wrapper').find('.afisha_perfomance_day').removeClass('show');
+			$('.afisha_perfomance_day_wrapper').find('.afisha_perfomance_day[data-month="' + value + '"]').addClass('show');
+		}
+	});
 
 	$('#dropdown').click(function() {
 		$(this).toggleClass('show');

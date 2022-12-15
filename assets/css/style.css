@@ -1281,6 +1281,15 @@ h2.afisha_title_on_main {
   }
 }
 
+.afisha_perfomance_day_wrapper.filter > div {
+  display: none;
+}
+
+
+.afisha_perfomance_day_wrapper.filter > div.show {
+  display: flex;
+}
+
 .afisha_perfomance_day {
   display: flex;
   flex-direction: column;
@@ -5717,7 +5726,7 @@ h2.title_on_support_us_page {
   background-color: #ffffff;
   width: calc(100% + 2px);
 
-  height: 200px;
+  max-height: 200px;
   overflow: hidden;
 
   border-left: 1px solid #000;
@@ -5738,12 +5747,12 @@ h2.title_on_support_us_page {
   overflow-y: scroll;
 }
 
-.dropdown_menu a {
+.dropdown_menu span {
   display: block;
   padding: 10px;
 }
 
-.dropdown_menu a:hover {
+.dropdown_menu span:hover {
   background-color: #000;
   color: #ffffff;
 }

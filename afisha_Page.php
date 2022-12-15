@@ -16,12 +16,16 @@ $postCount = $arResult['count'];
 
 $arAfishaPosts = getAfishaPosts(MAX_AFISHA_POSTS);
 
+$arAfishaMonthes = getAfishaMonthes($arAfishaPosts);
+
 $isEnglish = $_GET['lang'] === 'en';
 
 if ($isEnglish) {
-  $afishaTitle = "Afisha";
+  $afishaTitle = 'Afisha';
+  $allMonthes = 'All monthes';
 } else {
-  $afishaTitle = "Афиша";
+  $afishaTitle = 'Афиша';
+  $allMonthes = 'Все месяцы';
 }
 ?>
 
@@ -40,19 +44,16 @@ if ($isEnglish) {
 
         <div id="dropdown" class="dropdown">
           <button class="dropdown_toggle">
-            Все месяцы
+            <span class="dropdown_mainbox"><? echo $allMonthes; ?></span>
             <img src="<?php echo get_template_directory_uri(); ?>/assets/img/dropdown_up_pointer.svg" alt="" />
           </button>
 
           <div id="dropdown_menu" class="dropdown_menu">
             <div id="dropdown_menu_wrapper">
-              <a href="#" class="dropdown_link">Январь</a>
-              <a href="#" class="dropdown_link">Февраль</a>
-              <a href="#" class="dropdown_link">Март</a>
-              <a href="#" class="dropdown_link">Апрель</a>
-              <a href="#" class="dropdown_link">Февраль</a>
-              <a href="#" class="dropdown_link">Март</a>
-              <a href="#" class="dropdown_link">Апрель</a>
+              <span class="dropdown_link"><? echo $allMonthes; ?></span>
+              <? foreach($arAfishaMonthes as $key => $month) { ?>
+                <span class="dropdown_link"><? echo $month; ?></span>
+              <? } ?>
             </div>
           </div>
         </div>
@@ -67,7 +68,7 @@ if ($isEnglish) {
           }
           ?>
           <!-- Один день в афише -->
-          <div class="afisha_perfomance_day">
+          <div class="afisha_perfomance_day" data-month="<? echo $afishaPost['month_main']; ?>">
             <!-- Блок с датой -->
             <div class="date">
               <div class="month_day_of_month">
