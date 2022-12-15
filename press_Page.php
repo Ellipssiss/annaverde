@@ -13,8 +13,10 @@ $isEnglish = $_GET['lang'] === 'en';
 
 if($isEnglish) {
   $pageTitle = 'PRESS';
+  $more = 'More press';
 } else {
   $pageTitle = 'Пресса';
+  $more = 'Еще пресса';
 }
 
 ?>
@@ -55,7 +57,7 @@ if($isEnglish) {
               </div>
               <!-- Ещё пресса -> -->
               <a class="go_to_in_middle_press show" href="#">
-                <span class="go_to_text">Ещё пресса</span>
+                <span class="go_to_text"><? echo $more; ?></span>
                 <img class="go_to_pointer pointer_down" src="<?php echo get_template_directory_uri(); ?>/assets/img/go_to_pointer_down.svg" alt="">
               </a>
               <div class="pretty_loader_wrapper pretty_loader_wrapper_press_page">

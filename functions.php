@@ -9,6 +9,7 @@ define('PROJECT_GET_PROPERTY', 'p');
 
 define('MAX_AFISHA_POSTS', 5);
 define('MAX_PRESS_POSTS', 1);
+define('MAX_PROJECT_POSTS', 2);
 
 // based on original work from the PHP Laravel framework
 if (!function_exists('str_contains')) {
@@ -447,6 +448,34 @@ function get_post_musicians($post_id)
     }
 }
 
+function getProjectPostInfo($postId) {
+    $post = get_post($postId);
+    $isEnglish = $_GET['lang'] === 'en';
+
+    $allProjCoverImgId = get_post_meta($postId, 'all_proj_label', true);
+    $allProjImageAttr = wp_get_attachment_image_src($allProjCoverImgId, 'full');
+    $allProjImageSrc = $allProjImageAttr[0];
+
+    $arPostInfo = [
+        'id' => $postId,
+        'image' => $allProjImageSrc,
+        'link' => $post -> guid,
+        'ru' => [
+            'title' => $post -> post_title,
+            'premiere' => get_post_meta($postId, 'ru_premiere', true),
+            'short_desc' => get_post_meta($postId, 'ru_short_description', true),
+        ],
+        'en' => [
+            'title' => get_post_meta($postId, 'en_post_title_filed_name', true),
+            'premiere' => get_post_meta($postId, 'en_premiere', true),
+            'short_desc' => get_post_meta($postId, 'en_short_description', true),
+        ],
+    ];
+
+    return $arPostInfo;
+
+}
+
 function getProjectPosts($countPosts = 10)
 {
     $args = [
@@ -457,10 +486,13 @@ function getProjectPosts($countPosts = 10)
 
     $wp_query = new WP_Query($args);
 
-    return [
-        'posts' => get_posts($args),
-        'count' => $wp_query->found_posts
-    ];
+    $posts = get_posts($args);
+
+    foreach($posts as $key => $value){
+        $arResult[] = getProjectPostInfo($value -> ID);
+    }
+
+    return $arResult;
 }
 
 /*

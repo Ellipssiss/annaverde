@@ -224,8 +224,6 @@ $(document).ready(function () {
 			const arItems = JSON.parse(msg);
 			const isEnglish = $.query.get('lang') === 'en';
 
-			console.log('arItems', arItems);
-
 			$('.articles_container_press_page').empty();
 
 			arItems.forEach((item) => {
@@ -262,6 +260,62 @@ $(document).ready(function () {
 			addRemoveBorder();
 
 			$('.go_to_in_middle_press').removeClass('show');
+			$('.pretty_loader_wrapper').removeClass('show');
+		});
+	});
+
+	// Проекты
+	$('.go_to_in_middle_projects').click(function(event){
+		event.preventDefault();
+
+		$.ajax({
+			method: "POST",
+			url: `${FromBackend.templateUrl}/ajax.php`,
+			data: { post_type: "projects", },
+			beforeSend: function() {
+				$('.go_to_in_middle_projects').removeClass('show');
+				$('.pretty_loader_wrapper').addClass('show');
+			}
+		})
+		.done(function( msg ) {
+			const arItems = JSON.parse(msg);
+			const isEnglish = $.query.get('lang') === 'en';
+			
+			$('.projects_list_project_page').empty();
+
+			arItems.forEach((item) => {
+				let itemContent = [];
+				if(isEnglish){
+					itemContent = item['en'];
+				} else {
+					itemContent = item['ru'];
+				}
+
+				$('.projects_list_project_page').append(`
+					<a class="performance_in_projects" href="${item['link']}">
+						<div class="performance_in_projects_wpapper">
+							<div class="all_except_pointer">
+								<img class="small_project_photo" src="${item['image']}" alt="" />
+								<div class="project_info_block">
+									<p class="gray_small_text">
+										${itemContent['premiere']}
+									</p>
+
+									<h3 class="project_name">${itemContent['title']}</h3>
+									<p class="project_performance_location">
+										${itemContent['short_desc']}
+									</p>
+								</div>
+							</div>
+							<div class="projects_pointer">
+								<img src="${FromBackend.templateUrl}/assets/img/pointer.svg" alt="" />
+							</div>
+						</div>
+					</a>
+				`);
+			})
+
+			$('.go_to_in_middle_projects').removeClass('show');
 			$('.pretty_loader_wrapper').removeClass('show');
 		});
 	});

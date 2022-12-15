@@ -6,18 +6,17 @@ Template Post Type: post, page, product
 set_query_var('title', 'Projects page');
 get_header();
 
-$arResult = getProjectPosts();
-$posts_list = $arResult['posts'];
+$postsList = getProjectPosts(MAX_PROJECT_POSTS);
 
 $isEnglish = $_GET['lang'] === 'en';
 
 if ($isEnglish) {
   $projectsTitle = "Projects";
+  $more = 'More projects';
 } else {
   $projectsTitle = "Проекты";
+  $more = 'Еще проекты';
 }
-
-
 ?>
 
 <!--------------------------------------- PROJECTS main content ------------------------------------------------->
@@ -26,26 +25,25 @@ if ($isEnglish) {
   <div class="projects_content">
     <h2 class="title_on_projects_page"><? echo $projectsTitle; ?></h2>
     <div class="projects_list_project_page">
-      <? foreach ($posts_list as $post) {
-        $postTitle = $post->post_title;
-        $postId = $post->ID;
-
-        $allProjCoverImgId = get_post_meta($postId, 'all_proj_label', true);
-        $allProjImageAttr = wp_get_attachment_image_src($allProjCoverImgId, 'full');
-        $allProjImageSrc = $allProjImageAttr[0];
+      <? foreach ($postsList as $post) { 
+        if($isEnglish) {
+          $itemContent = $post['en'];
+        } else {
+          $itemContent = $post['ru'];
+        }
       ?>
-        <a class="performance_in_projects" href="<? echo $post -> guid; ?>">
+        <a class="performance_in_projects" href="<? echo $post['link']; ?>">
           <div class="performance_in_projects_wpapper">
             <div class="all_except_pointer">
-              <img class="small_project_photo" src="<? echo $allProjImageSrc ?>" alt="" />
+              <img class="small_project_photo" src="<? echo $post['image'] ?>" alt="" />
               <div class="project_info_block">
                 <p class="gray_small_text">
-                  <? echo get_post_premiere($postId); ?>
+                  <? echo $itemContent['premiere']; ?>
                 </p>
 
-                <h3 class="project_name"><? echo get_post_title($postId); ?></h3>
+                <h3 class="project_name"><? echo $itemContent['title']; ?></h3>
                 <p class="project_performance_location">
-                  <? echo get_post_short_description($postId); ?>
+                  <? echo $itemContent['short_desc']; ?>
                 </p>
               </div>
             </div>
@@ -61,10 +59,9 @@ if ($isEnglish) {
     <!-- Ещё проекты -> -->
 
     <a class="go_to_in_middle_projects show" href="#">
-      <span class="go_to_text">Ещё проекты</span>
+      <span class="go_to_text"><? echo $more; ?></span>
       <img class="go_to_pointer pointer_down" src="<?php echo get_template_directory_uri(); ?>/assets/img/go_to_pointer_down.svg" alt="" />
     </a>
-    <div class="loader"></div>
     <div class="pretty_loader_wrapper">
       <div class="pretty_loader">
         <span></span>

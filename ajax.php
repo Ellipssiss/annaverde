@@ -33,6 +33,19 @@
 
         $arItems = $pressResult;
     }
+
+    if($postType == 'projects'){
+        $projectPosts = $WPQuery -> query([
+            'post_type' => 'projects',
+        ]);
+
+        // обрабатываем результат
+        foreach($projectPosts as $key => $value){
+            $pressResult[] = getProjectPostInfo($value -> ID);
+        }
+
+        $arItems = $pressResult;
+    }
   
     echo json_encode($arItems);
 ?>

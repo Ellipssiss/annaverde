@@ -23,9 +23,11 @@ $isEnglish = $_GET['lang'] === 'en';
 if ($isEnglish) {
   $afishaTitle = 'Afisha';
   $allMonthes = 'All monthes';
+  $more = 'More projects';
 } else {
   $afishaTitle = 'Афиша';
   $allMonthes = 'Все месяцы';
+  $more = 'Еще проекты';
 }
 ?>
 
@@ -137,7 +139,7 @@ if ($isEnglish) {
 
       <!-- Ещё проекты -> -->
       <a class="go_to_in_middle_afisha show" href="#">
-        <span class="go_to_text">Ещё проекты</span>
+        <span class="go_to_text"><? echo $more; ?></span>
         <img class="go_to_pointer pointer_down" src="<?php echo get_template_directory_uri(); ?>/assets/img/go_to_pointer_down.svg" alt="" />
       </a>
       <div class="pretty_loader_wrapper pretty_loader_wrapper_press_page">
