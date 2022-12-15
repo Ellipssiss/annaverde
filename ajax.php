@@ -20,6 +20,19 @@
 
         $arItems = $afishaResult;
     }
+
+    if($postType == 'press'){
+        $pressPosts = $WPQuery -> query([
+            'post_type' => 'press_article',
+        ]);
+
+        // обрабатываем результат
+        foreach($pressPosts as $key => $value){
+            $pressResult[] = getPressPostInfo($value -> ID);
+        }
+
+        $arItems = $pressResult;
+    }
   
     echo json_encode($arItems);
 ?>

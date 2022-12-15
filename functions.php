@@ -8,6 +8,7 @@ define('PAGE_ID_PRESS', 77);
 define('PROJECT_GET_PROPERTY', 'p');
 
 define('MAX_AFISHA_POSTS', 5);
+define('MAX_PRESS_POSTS', 1);
 
 // based on original work from the PHP Laravel framework
 if (!function_exists('str_contains')) {

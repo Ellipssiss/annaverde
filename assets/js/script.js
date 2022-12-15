@@ -207,6 +207,65 @@ $(document).ready(function () {
 		$(this).toggleClass('show');
 	});
 
+	// Пресса
+	$('.go_to_in_middle_press').click(function(event){
+		event.preventDefault();
+
+		$.ajax({
+			method: "POST",
+			url: `${FromBackend.templateUrl}/ajax.php`,
+			data: { post_type: "press", },
+			beforeSend: function() {
+				$('.go_to_in_middle_press').removeClass('show');
+				$('.pretty_loader_wrapper').addClass('show');
+			}
+		})
+		.done(function( msg ) {
+			const arItems = JSON.parse(msg);
+			const isEnglish = $.query.get('lang') === 'en';
+
+			console.log('arItems', arItems);
+
+			$('.articles_container_press_page').empty();
+
+			arItems.forEach((item) => {
+				let itemContent = [];
+				if (isEnglish) {
+					itemContent = item['en'];
+				} else {
+					itemContent = item['ru'];
+				}
+
+				$('.articles_container_press_page').append(`
+					<div class="article_wraper article_wraper_press_page">
+						<div class="article article_press_page">
+							<img
+								class="press_img press_img_press_page"
+								src="${item['image']}"
+								alt=""
+							/>
+							<div class="article_name_and_pointer article_name_and_pointer_press_page">
+								<p class="article_name article_name_press_page">${itemContent['content']}</p>
+								<div class="press_pointer">
+									<img src="${FromBackend.templateUrl}/assets/img/pointer.svg" alt="" />
+								</div>
+							</div>
+							<div class="article_date_and_source article_date_and_source_press_page">
+								<p class="article_source article_source_press_page">${itemContent['owner']}</p>
+								<p class="article_date article_date_press_page">${item['date']}</p>
+							</div>
+						</div>
+					</div>
+				`);
+			});
+
+			addRemoveBorder();
+
+			$('.go_to_in_middle_press').removeClass('show');
+			$('.pretty_loader_wrapper').removeClass('show');
+		});
+	});
+
 	function addRemoveBorder() {
 		
 		const windowWidth = this.outerWidth
@@ -216,25 +275,20 @@ $(document).ready(function () {
 	    const avSpace = $('.articles_container').width(); 
 	    const countColumns = parseInt((avSpace / wrapperWidth));
 	    let j = countElements - countColumns;
-		
+
 		$('.articles_container > .article_wraper').removeClass('no_border_bottom');
 
 		for (let k = countElements; k > j; k--) { 
 			$('.articles_container > .article_wraper:nth-child(' + k + ')').addClass('no_border_bottom');
 		}
-	}
-	
+	}	
 
 	addRemoveBorder();
 
-	$( window ).resize(function() {
+	$(window).resize(function() {
 		addRemoveBorder();
-	  });
+	});
 	
-	
-
-
-
 	function preload(imgs, func_before, func_after){
 
 		var load;
