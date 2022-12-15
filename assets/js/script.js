@@ -80,6 +80,8 @@ $(document).ready(function () {
 		.done(function( msg ) {
 			const arItems = JSON.parse(msg);
 			const isEnglish = $.query.get('lang') === 'en';
+			const arMonthes = [];
+			const allMonthesItem = isEnglish ? 'All monthes' : 'Все месяцы';
 
 			$('.go_to_in_middle_afisha').removeClass('show');
 			$('.pretty_loader_wrapper').removeClass('show');
@@ -96,7 +98,7 @@ $(document).ready(function () {
 				}
 
 				let ItemContent = `
-					<div class="afisha_perfomance_day">
+					<div class="afisha_perfomance_day" data-month="${afishaPost['month_main']}">
 						<!-- Блок с датой -->
 						<div class="date">
 							<div class="month_day_of_month">
@@ -120,6 +122,8 @@ $(document).ready(function () {
 					} else {
 						event = item['ru'];
 					}
+
+					arMonthes.push(event['month_main']);
 
 					if (item['sold_out'] === 'true') {
 						classNoTicket = 'no_ticket';
@@ -167,7 +171,18 @@ $(document).ready(function () {
 						<!-- /.afisha_perfomance_day -->
 					</div>`;
 
+
 				$('.afisha_perfomance_day_wrapper').append(ItemContent);
+			});
+
+			const uniqueArMonthes = arMonthes.filter(function(itm, i, a) {
+				return i == a.indexOf(itm);
+			});
+
+			$('#dropdown_menu_wrapper').empty();
+			$('#dropdown_menu_wrapper').append(`<span class="dropdown_link">${allMonthesItem}</span>`);
+			uniqueArMonthes.forEach((month) => {
+				$('#dropdown_menu_wrapper').append(`<span class="dropdown_link">${month}</span>`);
 			});
 
 		});
@@ -200,21 +215,8 @@ $(document).ready(function () {
 	    const countElements = $('.articles_container').children('.article_wraper').length;
 	    const avSpace = $('.articles_container').width(); 
 	    const countColumns = parseInt((avSpace / wrapperWidth));
-	    // let i = countColumns;
 	    let j = countElements - countColumns;
 		
-        console.log('windowWidth ', windowWidth, 'avSpace', avSpace, 'wrapperWidth ', wrapperWidth, 'countColumns ', countColumns);
-		
-        // while (i > 0) { // убирает нижнюю границу у последних i элементов
-		// 	$('.articles_container > .article_wraper:nth-last-child(' + i + ')').addClass('no_border_bottom');
-		//   i--;
-		// }
-
-		// while (j > 0) { // добавляет нижнюю границу первым j элементам
-		// 	$('.articles_container > .article_wraper:nth-child(' + j + ')').removeClass('no_border_bottom');
-		//   j--;
-		// }
-
 		$('.articles_container > .article_wraper').removeClass('no_border_bottom');
 
 		for (let k = countElements; k > j; k--) { 
