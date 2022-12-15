@@ -65,9 +65,114 @@ $(document).ready(function () {
 		owl.trigger('destroy.owl.carousel');
 	})
 
-	$('.go_to_in_middle_afisha').click(function () {
-		$('.go_to_in_middle_afisha').removeClass('show');
-		$('.pretty_loader_wrapper').addClass('show');
+	$('.go_to_in_middle_afisha').click(function (event) {
+		event.preventDefault();
+
+		console.log(FromBackend.templateUrl);
+
+		$.ajax({
+			method: "POST",
+			url: `${FromBackend.templateUrl}/ajax.php`,
+			data: { post_type: "afisha", },
+			beforeSend: function() {
+				$('.go_to_in_middle_afisha').removeClass('show');
+				$('.pretty_loader_wrapper').addClass('show');
+			}
+		})
+		.done(function( msg ) {
+			const arItems = JSON.parse(msg);
+			const isEnglish = $.query.get('lang') === 'en';
+
+			$('.go_to_in_middle_afisha').removeClass('show');
+			$('.pretty_loader_wrapper').removeClass('show');
+
+			$('.afisha_perfomance_day_wrapper').empty();
+
+			Object.entries(arItems).forEach(([key, value]) => {
+				let afishaPost = [];
+
+				if (isEnglish) {
+					afishaPost = value[0]['en'];
+				} else {
+					afishaPost = value[0]['ru'];
+				}
+
+				let ItemContent = `
+					<div class="afisha_perfomance_day">
+						<!-- Блок с датой -->
+						<div class="date">
+							<div class="month_day_of_month">
+								<span class="day_of_month">${afishaPost['ar_date'][0]}</span>
+								<span class="month">${afishaPost['month']}</span>
+							</div>
+							<span class="day_of_week">${afishaPost['day']}
+							</span>
+						</div>
+						<div class="afisha_events_list">
+				`;
+				
+				value.forEach((item) => {
+					let event = [];
+					let valueTicket = '';
+					let classNoTicket = '';
+					let buyButton = '';
+
+					if (isEnglish) {
+						event = item['en'];
+					} else {
+						event = item['ru'];
+					}
+
+					if (item['sold_out'] === 'true') {
+						classNoTicket = 'no_ticket';
+						if (isEnglish) {
+							valueTicket = 'Sold out';
+						} else {
+							valueTicket = 'Билеты проданы';
+						}
+
+						buyButton = `<span class="buy_ticket ${classNoTicket}">${valueTicket}</span>`;
+					} else {
+						classNoTicket = '';
+						if (isEnglish) {
+							valueTicket = 'Buy tickets';
+						} else {
+							valueTicket = 'Купить билеты';
+						}
+
+						buyButton = `<a class="buy_ticket" target="_blanck" href="${item['ticket_link']}">${valueTicket}</a>`;
+					}
+
+					ItemContent += `
+						<div class="afisha_perfomance_event">
+							<img class="event_photo_mobile" src="${item['mobile_image']}" alt="" />
+							<img class="event_photo_desktop" src="${item['desktop_image']}" alt="" />
+							<div class="name_date_location_wrapper">
+								<div class="name_date_location">
+									<p class="performance_name">${event['title']}</p>
+									<div class="perfomrmance_time_and_location">
+									<div class="performance_time">${event['time']}</div>
+									<p class="performance_location">
+										${event['place']}
+									</p>
+									</div>
+								</div>
+							</div>
+							${buyButton}           
+						</div>
+					`;
+				});
+
+				ItemContent += `
+							<!-- /.afisha_events_list -->
+					  	</div>
+						<!-- /.afisha_perfomance_day -->
+					</div>`;
+
+				$('.afisha_perfomance_day_wrapper').append(ItemContent);
+			});
+
+		});
 	})
 
 	// $( "#add_musician" ).on('click',function() {
@@ -78,7 +183,6 @@ $(document).ready(function () {
 	$('#dropdown').click(function() {
 		$(this).toggleClass('show');
 	});
-
 
 	function addRemoveBorder() {
 		

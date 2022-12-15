@@ -7,6 +7,8 @@ define('PAGE_ID_PRESS', 77);
 
 define('PROJECT_GET_PROPERTY', 'p');
 
+define('MAX_AFISHA_POSTS', 5);
+
 // based on original work from the PHP Laravel framework
 if (!function_exists('str_contains')) {
     function str_contains($haystack, $needle)
@@ -1419,10 +1421,19 @@ function func_admin_style()
     wp_enqueue_style('style-admin', get_stylesheet_directory_uri() . '/assets/css/admin_style.css');
 }
 
+$projectPosts = getProjectPosts();
+$translation_array = array(
+    'templateUrl' => get_stylesheet_directory_uri(),
+    'projectPosts' => $projectPosts['posts'],
+    'isEnglish' => $_GET['lang'] === 'en' ? 'true' : 'false',
+);
+
 // Подключаем скрипты в админке
 add_action('admin_enqueue_scripts', 'func_admin_scripts');
 function func_admin_scripts()
 {
+    global $translation_array;
+
     if (!did_action('wp_enqueue_media')) {
         wp_enqueue_media();
     }
@@ -1437,14 +1448,30 @@ function func_admin_scripts()
         get_template_directory_uri() . '/assets/js/admin_script.js'
     );
 
-    $projectPosts = getProjectPosts();
-
-    $translation_array = array(
-        'templateUrl' => get_stylesheet_directory_uri(),
-        'projectPosts' => $projectPosts['posts'],
-    );
-
     wp_localize_script('customadminscript', 'FromBackend', $translation_array);
+}
+
+add_action( 'wp_enqueue_scripts', 'annaverde_scripts' );
+function annaverde_scripts(){
+    global $translation_array;
+
+    wp_enqueue_script(
+        'annaverde_jquery',
+        get_template_directory_uri() . '/assets/js/jquery-3.6.0.min.js'
+    );
+    wp_enqueue_script(
+        'annaverde_owl',
+        get_template_directory_uri() . '/assets/js/owl.carousel.js'
+    );
+    wp_enqueue_script(
+        'annaverde_query',
+        get_template_directory_uri() . '/assets/js/jquery.query-object.js'
+    );
+    wp_enqueue_script(
+        'annaverde_scripts',
+        get_template_directory_uri() . '/assets/js/script.js'
+    );
+    wp_localize_script('annaverde_scripts', 'FromBackend', $translation_array);
 }
 
 ?>

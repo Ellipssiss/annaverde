@@ -14,7 +14,7 @@ $postCount = $arResult['count'];
 // Afisha step1
 // Afisha test branch check
 
-$arAfishaPosts = getAfishaPosts();
+$arAfishaPosts = getAfishaPosts(MAX_AFISHA_POSTS);
 
 $isEnglish = $_GET['lang'] === 'en';
 
@@ -58,77 +58,79 @@ if ($isEnglish) {
         </div>
       </div>
       <!------------------------------------- Первый день ------------------------------------------------->
-      <? foreach($arAfishaPosts as $key => $arEvents){ 
-        if ($isEnglish) {
-          $afishaPost = $arEvents[0]['en'];
-        } else {
-          $afishaPost = $arEvents[0]['ru'];
-        }
-        ?>
-        <!-- Один день в афише -->
-        <div class="afisha_perfomance_day">
-          <!-- Блок с датой -->
-          <div class="date">
-            <div class="month_day_of_month">
-              <span class="day_of_month"><? echo $afishaPost['ar_date'][0]; ?></span>
-              <span class="month"><? echo $afishaPost['month']; ?></span>
+      <div class="afisha_perfomance_day_wrapper">
+        <? foreach($arAfishaPosts as $key => $arEvents){ 
+          if ($isEnglish) {
+            $afishaPost = $arEvents[0]['en'];
+          } else {
+            $afishaPost = $arEvents[0]['ru'];
+          }
+          ?>
+          <!-- Один день в афише -->
+          <div class="afisha_perfomance_day">
+            <!-- Блок с датой -->
+            <div class="date">
+              <div class="month_day_of_month">
+                <span class="day_of_month"><? echo $afishaPost['ar_date'][0]; ?></span>
+                <span class="month"><? echo $afishaPost['month']; ?></span>
+              </div>
+              <span class="day_of_week"><? echo $afishaPost['day']; ?></span>
             </div>
-            <span class="day_of_week"><? echo $afishaPost['day']; ?></span>
-          </div>
-          <!-- Список всех представлений в этот день -->
-          <div class="afisha_events_list">
-            <!-- Информаци о конкретном представлении в этот день -->
-            <? foreach($arEvents as $eventKey => $eventValue ) {
-              if ($isEnglish) {
-                $event = $eventValue['en'];
-              } else {
-                $event = $eventValue['ru'];
-              }
+            <!-- Список всех представлений в этот день -->
+            <div class="afisha_events_list">
+              <!-- Информаци о конкретном представлении в этот день -->
+              <? foreach($arEvents as $eventKey => $eventValue ) {
+                if ($isEnglish) {
+                  $event = $eventValue['en'];
+                } else {
+                  $event = $eventValue['ru'];
+                }
 
-              if ($eventValue['sold_out'] === 'true') {
-                $classNoTicket = 'no_ticket';
-                if ($isEnglish) {
-                  $valueTicket = 'Sold out';
+                if ($eventValue['sold_out'] === 'true') {
+                  $classNoTicket = 'no_ticket';
+                  if ($isEnglish) {
+                    $valueTicket = 'Sold out';
+                  } else {
+                    $valueTicket = 'Билеты проданы';
+                  }
                 } else {
-                  $valueTicket = 'Билеты проданы';
+                  $classNoTicket = '';
+                  if ($isEnglish) {
+                    $valueTicket = 'Buy tickets';
+                  } else {
+                    $valueTicket = 'Купить билеты';
+                  }
                 }
-              } else {
-                $classNoTicket = '';
-                if ($isEnglish) {
-                  $valueTicket = 'Buy tickets';
-                } else {
-                  $valueTicket = 'Купить билеты';
-                }
-              }
-            ?>
-              <div class="afisha_perfomance_event">
-                <img class="event_photo_mobile" src="<?php echo $eventValue['mobile_image']; ?>" alt="" />
-                <img class="event_photo_desktop" src="<?php echo $eventValue['desktop_image']; ?>" alt="" />
-                <div class="name_date_location_wrapper">
-                  <div class="name_date_location">
-                    <p class="performance_name">
-                      <? echo $event['title']; ?>
-                    </p>
-                    <div class="perfomrmance_time_and_location">
-                      <div class="performance_time"><? echo $event['time']; ?></div>
-                      <p class="performance_location">
-                        <? echo $event['place']; ?>
+              ?>
+                <div class="afisha_perfomance_event">
+                  <img class="event_photo_mobile" src="<?php echo $eventValue['mobile_image']; ?>" alt="" />
+                  <img class="event_photo_desktop" src="<?php echo $eventValue['desktop_image']; ?>" alt="" />
+                  <div class="name_date_location_wrapper">
+                    <div class="name_date_location">
+                      <p class="performance_name">
+                        <? echo $event['title']; ?>
                       </p>
+                      <div class="perfomrmance_time_and_location">
+                        <div class="performance_time"><? echo $event['time']; ?></div>
+                        <p class="performance_location">
+                          <? echo $event['place']; ?>
+                        </p>
+                      </div>
                     </div>
                   </div>
+                  <? if ($eventValue['sold_out'] === 'true') { ?>
+                    <span class="buy_ticket <? echo $classNoTicket; ?>"?><? echo $valueTicket; ?></span>
+                  <? } else { ?>
+                    <a class="buy_ticket" target="_blanck" href="<? echo $eventValue['ticket_link']; ?>"><? echo $valueTicket; ?></a>
+                  <? } ?>                
                 </div>
-                <? if ($eventValue['sold_out'] === 'true') { ?>
-                  <span class="buy_ticket <? echo $classNoTicket; ?>"?><? echo $valueTicket; ?></span>
-                <? } else { ?>
-                  <a class="buy_ticket" target="_blanck" href="<? echo $eventValue['ticket_link']; ?>"><? echo $valueTicket; ?></a>
-                <? } ?>                
-              </div>
-            <? } ?>
-            <!-- /.afisha_events_list -->
+              <? } ?>
+              <!-- /.afisha_events_list -->
+            </div>
+            <!-- /.afisha_perfomance_day -->
           </div>
-          <!-- /.afisha_perfomance_day -->
-        </div>
-      <? } ?>
+        <? } ?>
+      </div>
 
       <!------------------------------------- Конец списка дней ------------------------------>
 
