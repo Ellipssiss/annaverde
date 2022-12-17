@@ -869,11 +869,22 @@ blockquote {
   width: 221px;
   z-index: 10000;
   top: 0;
-  right: 0;
-  /* position: relative; */
-  transform: translateX(0%);
-  transition: all 0.5s ease-in;
+  right: -280px;
+  /* position: relative; */  
+  -o-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
 }
+
+.burger_menu_container.show {
+  -o-transform: translate3d(-280px, 0px, 0px);
+  -ms-transform: translate3d(-280px, 0px, 0px);
+  -moz-transform: translate3d(-280px, 0px, 0px);
+  -webkit-transform: translate3d(-280px, 0px, 0px);
+  transform: translate3d(-280px, 0px, 0px);
+} 
+
 @media (min-width: 320px) {
   .burger_menu_container {
     width: 280px;

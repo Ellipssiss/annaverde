@@ -8,6 +8,20 @@ $(document).ready(function () {
         $(".creators.show .item_content").stop().slideDown();
 	})
 
+	$('.burger_btn').click(function () {
+		$('.burger_menu_bg').addClass('show');
+		setTimeout(function(){
+			$('.burger_menu_container').addClass('show');
+		}, 500);		
+	})
+
+	$('.exit_burger_menu_btn').click(function () {
+		$('.burger_menu_container').removeClass('show');
+		setTimeout(function(){
+			$('.burger_menu_bg').removeClass('show');
+		}, 1000);
+	});
+
 	$('.artists').click(function () {
 		$('.artists').toggleClass('show');
 	})
@@ -16,13 +30,13 @@ $(document).ready(function () {
 		$('.musicians').toggleClass('show');
 	})
 
-	$('.burger_btn').click(function () {
-		$('.burger_menu_bg').addClass('show');
-	})
+	// $('.burger_btn').click(function () {
+	// 	$('.burger_menu_bg').addClass('show');
+	// })
 
-	$('.exit_burger_menu_btn').click(function () {
-		$('.burger_menu_bg').removeClass('show');
-	});
+	// $('.exit_burger_menu_btn').click(function () {
+	// 	$('.burger_menu_bg').removeClass('show');
+	// });
 
 	$('.go_to_in_middle_projects').click(function (event) {
 		event.preventDefault();
