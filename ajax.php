@@ -10,6 +10,9 @@
     if($postType == 'afisha'){
         $afishaPosts = $WPQuery -> query([
             'post_type' => 'afisha_perfomance',
+            'order' => 'DESC',
+            'orderby' => 'meta_value_num',
+            'meta_key' => 'afisha_sort',
         ]);
 
         // обрабатываем результат
@@ -24,6 +27,9 @@
     if($postType == 'press'){
         $pressPosts = $WPQuery -> query([
             'post_type' => 'press_article',
+            'order' => 'DESC',
+            'orderby' => 'meta_value_num',
+            'meta_key' => 'press_sort',
         ]);
 
         // обрабатываем результат
@@ -37,6 +43,9 @@
     if($postType == 'projects'){
         $projectPosts = $WPQuery -> query([
             'post_type' => 'projects',
+            'order' => 'DESC',
+            'orderby' => 'meta_value_num',
+            'meta_key' => 'proj_sort'
         ]);
 
         // обрабатываем результат

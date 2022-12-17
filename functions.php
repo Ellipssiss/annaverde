@@ -134,6 +134,9 @@ function getPressPosts($countPosts = 10) {
         'post_type' => 'press_article',
         'posts_per_page' => $countPosts,
         'paged' => (get_query_var('paged') ? get_query_var('paged') : 1),
+        'order' => 'DESC',
+        'orderby' => 'meta_value_num',
+        'meta_key' => 'press_sort',
     ];
 
     $pressPosts = get_posts($args);
@@ -224,6 +227,9 @@ function getAfishaPosts($countPosts = 10) {
         'post_type' => 'afisha_perfomance',
         'posts_per_page' => $countPosts,
         'paged' => (get_query_var('paged') ? get_query_var('paged') : 1),
+        'order' => 'DESC',
+        'orderby' => 'meta_value_num',
+        'meta_key' => 'afisha_sort',
     ];
 
     $afishaPosts = get_posts($args);
@@ -482,6 +488,9 @@ function getProjectPosts($countPosts = 10)
         'post_type' => 'projects',
         'posts_per_page' => $countPosts,
         'paged' => (get_query_var('paged') ? get_query_var('paged') : 1),
+        'order' => 'DESC',
+        'orderby' => 'meta_value_num',
+        'meta_key' => 'proj_sort'
     ];
 
     $wp_query = new WP_Query($args);
@@ -758,12 +767,14 @@ function add_media_metabox()
     add_meta_box('proj_video', 'Видеозаписи', 'create_video_layout', 'projects', 'normal', 'low');
     add_meta_box('proj_media', 'Изображения', 'func_proj_mediabox', 'projects', 'normal', 'low');
     add_meta_box('proj_partners', 'Партнеры', 'func_proj_partners', 'projects', 'normal', 'low');
+    add_meta_box('proj_sort', 'Сортировка', 'func_proj_sort', 'projects', 'side', 'low');
 
     // Создание метабоксов в админке для типа постов "Афиша"
     add_meta_box('afisha_projects', 'Выбор проекта', 'func_afisha_project', 'afisha_perfomance', 'normal', 'low');
     add_meta_box('afisha_images', 'Выбор изображения', 'func_afisha_mediabox', 'afisha_perfomance', 'normal', 'low');
     add_meta_box('afisha_date', 'Выбор даты', 'func_afisha_date', 'afisha_perfomance', 'normal', 'low');
     add_meta_box('afisha_ticket', 'Билеты', 'func_afisha_ticket', 'afisha_perfomance', 'normal', 'low');
+    add_meta_box('afisha_sort', 'Сортировка', 'func_afisha_sort', 'afisha_perfomance', 'side', 'low');
     
     // Создание метабоксов в адмике для типа постов "Пресса"
     add_meta_box('press_link', 'Ссылка на публикацию', 'func_press_link', 'press_article', 'normal', 'low');
@@ -771,6 +782,46 @@ function add_media_metabox()
     add_meta_box('press_pic', 'Изображение публикации', 'func_press_pic', 'press_article', 'normal', 'low');
     add_meta_box('press_owner', 'Источник', 'func_press_owner', 'press_article', 'normal', 'low');
     add_meta_box('press_project', 'Проект', 'func_press_project', 'press_article', 'normal', 'low');
+    add_meta_box('press_sort', 'Сортировка', 'func_press_sort', 'press_article', 'side', 'low');
+}
+
+function func_press_sort($post)
+{
+    $postId = $post->ID;
+
+    $pressSort = get_post_meta($postId, 'press_sort', true);
+?>
+    <div class="press_datebox">
+        <h4>Укажите порядок сортировки</h4>
+        <input class="press_sort" type="text" name="press_sort" value="<? echo $pressSort ?>" /><br />        
+    </div>
+<?
+}
+
+function func_afisha_sort($post)
+{
+    $postId = $post->ID;
+
+    $afishaSort = get_post_meta($postId, 'afisha_sort', true);
+?>
+    <div class="press_datebox">
+        <h4>Укажите порядок сортировки</h4>
+        <input class="afisha_sort" type="text" name="afisha_sort" value="<? echo $afishaSort ?>" /><br />        
+    </div>
+<?
+}
+
+function func_proj_sort($post)
+{
+    $postId = $post->ID;
+
+    $projSort = get_post_meta($postId, 'proj_sort', true);
+?>
+    <div class="press_datebox">
+        <h4>Укажите порядок сортировки</h4>
+        <input class="proj_sort" type="text" name="proj_sort" value="<? echo $projSort ?>" /><br />        
+    </div>
+<?
 }
 
 // Создание верстки метабокса для заполнения информации о времени проведения выступления
@@ -1424,6 +1475,7 @@ function func_save_proj_post($post_id)
 
     update_post_meta($post_id, 'proj_video', $_POST['proj_video']);
     update_post_meta($post_id, 'proj_partners', $_POST['proj_partners']);
+    update_post_meta($post_id, 'proj_sort', $_POST['proj_sort']);
     
     update_post_meta($post_id, 'event_projects', $_POST['event_projects']);
     update_post_meta($post_id, 'ru_event_time', $_POST['ru_event_time']);
@@ -1435,6 +1487,7 @@ function func_save_proj_post($post_id)
     update_post_meta($post_id, 'afisha_date', $_POST['afisha_date']);
     update_post_meta($post_id, 'afisha_ticketlink', $_POST['afisha_ticketlink']);
     update_post_meta($post_id, 'afisha_sold_out', $_POST['afisha_sold_out']);
+    update_post_meta($post_id, 'afisha_sort', $_POST['afisha_sort']);
     
     update_post_meta($post_id, 'press_link', $_POST['press_link']);
     update_post_meta($post_id, 'press_date', $_POST['press_date']);
@@ -1442,6 +1495,7 @@ function func_save_proj_post($post_id)
     update_post_meta($post_id, 'press_event', $_POST['press_event']);
     update_post_meta($post_id, 'ru_press_owner', $_POST['ru_press_owner']);
     update_post_meta($post_id, 'en_press_owner', $_POST['en_press_owner']);
+    update_post_meta($post_id, 'press_sort', $_POST['press_sort']);
 
     if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
         return $post_id;
