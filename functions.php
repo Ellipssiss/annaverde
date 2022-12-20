@@ -4,6 +4,7 @@ require_once( __DIR__.'/option_fields/mainoptions.php');
 
 define('PAGE_ID_PROJECT', 74);
 define('PAGE_ID_PRESS', 77);
+define('PAGE_ID_AFISHA', 72);
 
 define('PROJECT_GET_PROPERTY', 'p');
 
@@ -32,6 +33,12 @@ function getEnglishURL($string) {
     }
 
     return $string;
+}
+
+function getAfishaPageURL() {
+    $post = get_post(PAGE_ID_AFISHA);
+
+    return getEnglishURL($post -> guid);
 }
 
 function getProjectPageURL() {
@@ -172,7 +179,7 @@ function getAfishaPostInfo($afishaPostId){
     $objPost = get_post($afishaPostId);
     $afishaPostDate = get_post_meta($afishaPostId, 'afisha_date', true);
     $arAfishaPostDate = explode('.', $afishaPostDate);
-    $timestamp = mktime(0,0,0, $arAfishaPostDate[1], $arAfishaPostDate[0], $arAfishaPostDate[2]);
+    $timestamp = mktime(0,0,0, (int)$arAfishaPostDate[1], (int)$arAfishaPostDate[0], (int)$arAfishaPostDate[2]);
     $afishaCoverImgId = get_post_meta($afishaPostId, 'afisha_label', true);
     $afishaImageAttr = wp_get_attachment_image_src($afishaCoverImgId, 'full');
     $afishaImageSrc = $afishaImageAttr[0];
@@ -197,6 +204,7 @@ function getAfishaPostInfo($afishaPostId){
         'mobile_image' => $afishaMobileImageSrc,
         'ticket_link' => $afishaTicketLink,
         'sold_out' => $afishaSoldOut,
+        'proj_link' => $objPost -> guid,
         'ru' => [
             'title' => $objPost -> post_title,
             'date' => $afishaPostDate,

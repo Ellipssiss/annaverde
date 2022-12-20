@@ -16,7 +16,7 @@ set_query_var('title', 'Главная страница');
 
 get_header();
 
-$arProjects = getProjectPosts(3);
+$arProjectPosts = getProjectPosts(3);
 $arAfishaPosts = getAfishaPosts(3);
 $arPressPosts = getPressPosts(3);
 
@@ -34,11 +34,78 @@ if ($isEnglish) {
 
 ?>
 
+<!----------------------------------------------------------------- PROJECTS ON MAIN --------------------------------------------------------------------->
+<div class="projects_block">
+  <div class="projects_container">
+    <div class="projects_column">
+      <h2 class="projects_block_title"><? echo $projectsTitle; ?></h2>
+      <div class="projects_list_project_page">
+      <? foreach ($arProjectPosts as $post) {
+        if ($isEnglish) {
+          $itemContent = $post['en'];
+        } else {
+          $itemContent = $post['ru'];
+        }
+
+        $postTitle = $itemContent['title'];
+        $postShortDesc = $itemContent['short_desc'];
+        $postPremiere = $itemContent['premiere'];
+        $postId = $post['id'];
+
+        $allProjCoverImgId = get_post_meta($postId, 'all_proj_label', true);
+        $allProjImageAttr = wp_get_attachment_image_src($allProjCoverImgId, 'full');
+        $allProjImageSrc = $allProjImageAttr[0];
+      ?>
+        <a class="performance_in_projects" href="<? echo $post['link']; ?>">
+          <div class="performance_in_projects_wpapper">
+            <div class="all_except_pointer">
+              <img class="small_project_photo" src="<? echo $allProjImageSrc; ?>" alt="" />
+              <div class="project_info_block">
+                <p class="gray_small_text">
+                  <? echo $postPremiere; ?>
+                </p>
+
+                <h3 class="project_name"><? echo $postTitle ?></h3>
+                <p class="project_performance_location">
+                  <? echo $postShortDesc; ?>
+                </p>
+              </div>
+            </div>
+            <div class="projects_pointer">
+              <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
+            </div>
+          </div>
+        </a>
+      <? } ?>
+
+    </div>
+
+      <!-- Перейти в проекты -> -->
+      <a class="go_to_block" href="<? echo getProjectPageURL(); ?>">
+        <span class="go_to_text" >
+          <? if ($isEnglish) { ?> 
+            Go to projects
+          <? } else { ?>
+            Перейти в проекты
+          <? } ?>
+        </span>
+        <img class="go_to_pointer" src="<?php echo get_template_directory_uri(); ?>/assets/img/go_to_pointer.svg" alt="" />
+        <!-- ./go_to_block -->
+      </a>
+
+      <!-- ./projects-column -->
+    </div>
+    <!-- ./projects-container -->
+  </div>
+  <!-- ./projects-block -->
+</div>
+
 <!------------------------------------------------------------------------------------- AFISHA ON MAIN --------------------------------------------------------------->
+<? if(!empty($arAfishaPosts)) { ?>
 <div class="afisha_block">
   <div class="afisha_container">
     <div class="afisha_column">
-      <h2 class="afisha_title_on_main"><? echo $afishaTitle; ?></h2>
+      <h2 class="afisha_title_on_main"><a href="<? echo getAfishaPageURL(); ?>"><? echo $afishaTitle; ?></a></h2>
 
       <? foreach($arAfishaPosts as $key => $arEvents){ 
         if ($isEnglish) {
@@ -116,64 +183,7 @@ if ($isEnglish) {
   </div>
   <!-- /.afisha-blok -->
 </div>
-<!----------------------------------------------------------------- PROJECTS ON MAIN --------------------------------------------------------------------->
-
-<div class="projects_block">
-  <div class="projects_container">
-    <div class="projects_column">
-      <h2 class="projects_block_title"><? echo $projectsTitle; ?></h2>
-      <div class="projects_list_project_page">
-      <? foreach ($arProjects['posts'] as $post) {
-        $postTitle = $post->post_title;
-        $postId = $post->ID;
-
-        $allProjCoverImgId = get_post_meta($postId, 'all_proj_label', true);
-        $allProjImageAttr = wp_get_attachment_image_src($allProjCoverImgId, 'full');
-        $allProjImageSrc = $allProjImageAttr[0];
-      ?>
-        <a class="performance_in_projects" href="<? echo $post -> guid; ?>">
-          <div class="performance_in_projects_wpapper">
-            <div class="all_except_pointer">
-              <img class="small_project_photo" src="<? echo $allProjImageSrc ?>" alt="" />
-              <div class="project_info_block">
-                <p class="gray_small_text">
-                  <? echo get_post_premiere($postId); ?>
-                </p>
-
-                <h3 class="project_name"><? echo get_post_title($postId); ?></h3>
-                <p class="project_performance_location">
-                  <? echo get_post_short_description($postId); ?>
-                </p>
-              </div>
-            </div>
-            <div class="projects_pointer">
-              <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
-            </div>
-          </div>
-        </a>
-      <? } ?>
-
-    </div>
-
-      <!-- Перейти в проекты -> -->
-      <a class="go_to_block" href="<? echo getProjectPageURL(); ?>">
-        <span class="go_to_text" >
-          <? if ($isEnglish) { ?> 
-            Go to projects
-          <? } else { ?>
-            Перейти в проекты
-          <? } ?>
-        </span>
-        <img class="go_to_pointer" src="<?php echo get_template_directory_uri(); ?>/assets/img/go_to_pointer.svg" alt="" />
-        <!-- ./go_to_block -->
-      </a>
-
-      <!-- ./projects-column -->
-    </div>
-    <!-- ./projects-container -->
-  </div>
-  <!-- ./projects-block -->
-</div>
+<? } ?>
 <!---------------------------------------------------------------------- Press block -------------------------------------------------------------------------------->
 <div class="press_block">
   <div class="press_container">
