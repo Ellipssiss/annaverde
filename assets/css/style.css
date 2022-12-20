@@ -5306,6 +5306,15 @@ h3.education_title {
   }
 }
 
+.contacts_name {
+  margin-bottom: 10px;
+}
+@media (min-width: 480px) {
+  .contacts_name {
+    margin-bottom: 20px;
+  }
+}
+
 .phone_contacts {
   margin-bottom: 10px;
 }

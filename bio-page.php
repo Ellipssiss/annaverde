@@ -19,10 +19,7 @@ $isEnglish = $_GET['lang'] === 'en';
               <div class="about_person">
                 <h2 class="title_on_bio_page">Anna Verde</h2>
                 <p class="bio_description">
-                  Russian choreographer laureate of international competitions,
-                  director of art and art projects, producer
-                  theater projects. Founder and head of the dance
-                  Saverdera companies.
+                Choreographer, laureate of international competitions, director of art and art projects, producer of theater projects. Founder and head of the Saverdera dance company.
                 </p>
               </div>
 
@@ -43,17 +40,17 @@ $isEnglish = $_GET['lang'] === 'en';
                 </div>
 
                 <div class="institute_and_faculty">
-                  <p class="bio_description">Natalia Nesterova Academy</p>
-                  <p class="bio_description faculty">
-                    Choreographic art
-                  </p>
-                </div>
-
-                <div class="institute_and_faculty">
                   <p class="bio_description">
                     Moscow State Academy of Choreography - MGAKH
                   </p>
                   <p class="bio_description faculty">Professional development</p>
+                </div>
+
+                <div class="institute_and_faculty">
+                  <p class="bio_description">Natalia Nesterova Academy</p>
+                  <p class="bio_description faculty">
+                    Ballet Master 's Faculty
+                  </p>
                 </div>
               </div>
             <? } else { ?>
@@ -61,10 +58,7 @@ $isEnglish = $_GET['lang'] === 'en';
               <div class="about_person">
                 <h2 class="title_on_bio_page">Анна Верде</h2>
                 <p class="bio_description">
-                  Российский хореограф лауреат международных конкурсов,
-                  режиссер-постановщик художественных и арт-проектов, продюсер
-                  театральных проектов. Основатель и руководитель танцевальной
-                  компании Averdera.
+                Хореограф, лауреат международных конкурсов, режиссер-постановщик художественных и арт-проектов, продюсер театральных проектов. Основатель и руководитель танцевальной компании Averdera 
                 </p>
               </div>
 
@@ -85,17 +79,17 @@ $isEnglish = $_GET['lang'] === 'en';
                 </div>
 
                 <div class="institute_and_faculty">
-                  <p class="bio_description">Академия Натальи Нестеровой</p>
-                  <p class="bio_description faculty">
-                    Хореографическое искусство
-                  </p>
-                </div>
-
-                <div class="institute_and_faculty">
                   <p class="bio_description">
                     Московская государственная академия хореографии - МГАХ
                   </p>
                   <p class="bio_description faculty">Повышение квалификации</p>
+                </div>
+
+                <div class="institute_and_faculty">
+                  <p class="bio_description">Академия Натальи Нестеровой</p>
+                  <p class="bio_description faculty">
+                    Балетмейстерский факультет
+                  </p>
                 </div>
               </div>
             <? } ?> 

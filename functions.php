@@ -5,6 +5,7 @@ require_once( __DIR__.'/option_fields/mainoptions.php');
 define('PAGE_ID_PROJECT', 74);
 define('PAGE_ID_PRESS', 77);
 define('PAGE_ID_AFISHA', 72);
+define('PAGE_ID_SUPPORT_US', 81);
 
 define('PROJECT_GET_PROPERTY', 'p');
 
@@ -33,6 +34,12 @@ function getEnglishURL($string) {
     }
 
     return $string;
+}
+
+function getSupportUsPageURL() {
+    $post = get_post(PAGE_ID_SUPPORT_US);
+
+    return getEnglishURL($post -> guid);
 }
 
 function getAfishaPageURL() {

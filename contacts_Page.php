@@ -36,6 +36,9 @@ $vk = get_option('social_vk');
             <p class="contacts_description">
               <? echo $pageDescription; ?>
             </p>
+            <p class="contacts_name">
+              Анна Верде:
+            </p>
             <a class="phone_contacts" href="tel:+<? echo $phoneLink; ?>">
               <? echo $phone; ?>
             </a>

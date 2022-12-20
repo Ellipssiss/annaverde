@@ -40,7 +40,7 @@ $vk = get_option('social_vk');
 <footer class="footer">
       <div class="footer_container">
         <div class="support_and_menu">
-          <a class="support_us_btn" href="support_us.html">Поддержать нас</a>
+          <a class="support_us_btn" href="<? echo getSupportUsPageURL(); ?>">Поддержать нас</a>
           <? wp_nav_menu($args) ?>
         </div>
 
