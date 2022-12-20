@@ -833,9 +833,9 @@ function func_press_project($post)
     <div>
         <p>Проект:</p>
         <select class="press_event" name="press_event">
-            <? foreach ($projectsList['posts'] as $key => $value) { ?>
+            <? foreach ($projectsList as $key => $value) { ?>
                 <? 
-                    $projectId = $projectsList['posts'][$key]->ID; 
+                    $projectId = $projectsList[$key]['id']; 
                     if ($projectId == $eventProjects) {
                         $selected = "selected";
                     } else {

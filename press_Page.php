@@ -33,7 +33,7 @@ if($isEnglish) {
                     $itemContent = $value['ru'];
                   }
                 ?>
-                  <div class="article_wraper article_wraper_press_page">
+                  <a class="article_wraper article_wraper_press_page" target="_blank" href="<? echo $value['link']; ?>">
                     <div class="article article_press_page">
                       <img
                         class="press_img press_img_press_page"
@@ -51,7 +51,7 @@ if($isEnglish) {
                         <p class="article_date article_date_press_page"><? echo $value['date']; ?></p>
                       </div>
                     </div>
-                  </div>
+                </a>
                 <? } ?>
                 <!-- /.articles_container -->
               </div>

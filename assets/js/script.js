@@ -249,7 +249,7 @@ $(document).ready(function () {
 				}
 
 				$('.articles_container_press_page').append(`
-					<div class="article_wraper article_wraper_press_page">
+					<a class="article_wraper article_wraper_press_page" target="_blank" href="${item.link}">
 						<div class="article article_press_page">
 							<img
 								class="press_img press_img_press_page"
@@ -267,7 +267,7 @@ $(document).ready(function () {
 								<p class="article_date article_date_press_page">${item['date']}</p>
 							</div>
 						</div>
-					</div>
+					</a>
 				`);
 			});
 
