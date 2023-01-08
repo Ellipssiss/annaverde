@@ -108,8 +108,8 @@ $headerMainFotoAnotation = getMainPageFotoAnotation();
         <div class="header_container">
           <div class="header_inner">
             <a href="<? echo $mainLink; ?>">
-              <img class="logo" src="<?php echo get_template_directory_uri(); ?>/assets/img/logo_on_black.png" alt="" />
-              <img class="logo" src="<?php echo get_template_directory_uri(); ?>/assets/img/logo_on_white.png" alt="" />
+              <img class="logo logo_on_black" src="<?php echo get_template_directory_uri(); ?>/assets/img/logo_on_black.png" alt="" />
+              <img class="logo logo_on_white" src="<?php echo get_template_directory_uri(); ?>/assets/img/logo_on_white.png" alt="" />
             </a>
             <div class="menu_and_language">
               <? wp_nav_menu($args) ?>
