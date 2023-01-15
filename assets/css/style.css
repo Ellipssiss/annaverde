@@ -412,6 +412,14 @@ blockquote {
   display: none;
 }
 
+.svg_logo_white:hover {
+  fill: #FFFFFF;
+}
+
+.svg_logo_black:hover {
+  fill: #000000;
+}
+
 /* бургер кнопка */
 
 .burger_btn {
