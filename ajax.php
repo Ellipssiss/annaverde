@@ -47,7 +47,7 @@
             'post_type' => 'projects',
             'order' => 'DESC',
             'orderby' => 'meta_value_num',
-            'meta_key' => 'proj_sort'
+            'meta_key' => 'proj_sort',
             'posts_per_page' => -1,
         ]);
 
