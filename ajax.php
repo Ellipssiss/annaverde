@@ -13,6 +13,7 @@
             'order' => 'DESC',
             'orderby' => 'meta_value_num',
             'meta_key' => 'afisha_sort',
+            'posts_per_page' => -1,
         ]);
 
         // обрабатываем результат
@@ -30,6 +31,7 @@
             'order' => 'DESC',
             'orderby' => 'meta_value_num',
             'meta_key' => 'press_sort',
+            'posts_per_page' => -1,
         ]);
 
         // обрабатываем результат
@@ -46,6 +48,7 @@
             'order' => 'DESC',
             'orderby' => 'meta_value_num',
             'meta_key' => 'proj_sort'
+            'posts_per_page' => -1,
         ]);
 
         // обрабатываем результат
