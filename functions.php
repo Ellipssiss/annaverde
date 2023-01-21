@@ -268,7 +268,7 @@ function get_project_press($post_id) {
 
         if ($eventProjects == $post_id) $arPressPostIds[] = $value['id'];
     }
-    
+
     foreach($arPressPostIds as $key => $value) {
         $arResult[] = getPressPostInfo($value);
     }
@@ -1319,6 +1319,7 @@ function create_video_layout($post)
     if ($arValue === null) $arValue = [];
 ?>
     <input class="proj_video_input" type="hidden" name="proj_video" value='<? echo $value; ?>' />
+    <p>Пример сслыки: https://www.youtube.com/watch?v=uFfb87i0OdQ (Параметр "v" обязателен)
     <table class="proj_video_list" border="1">
         <thead>
             <tr>
