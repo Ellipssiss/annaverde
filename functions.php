@@ -9,9 +9,9 @@ define('PAGE_ID_SUPPORT_US', 81);
 
 define('PROJECT_GET_PROPERTY', 'p');
 
-define('MAX_AFISHA_POSTS', 5);
-define('MAX_PRESS_POSTS', 1);
-define('MAX_PROJECT_POSTS', 2);
+define('MAX_AFISHA_POSTS', 10);
+define('MAX_PRESS_POSTS', 10);
+define('MAX_PROJECT_POSTS', 10);
 
 // based on original work from the PHP Laravel framework
 if (!function_exists('str_contains')) {

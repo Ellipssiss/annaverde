@@ -25,6 +25,7 @@ p {
 .proj_partners_box,
 .press_images_box {
   display: flex;
+  flex-wrap: wrap;
 }
 
 .proj_images_item,

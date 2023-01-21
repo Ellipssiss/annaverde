@@ -85,47 +85,54 @@ $projImageSrc = $projImageAttr[0];
 
 <div class="description_and_authors_container">
   <div class="description_and_authors">
-    <div class="project_description">
-      <h3 class="project_description_title">
-        <!-- Описание -->
-        <?
-        if ($isEnglish) {
-          echo 'Description';
-        } else {
-          echo 'Описание';
-        }
-        ?>
-      </h3>
-      <p class="project_description_text">
-        <?
-        echo get_post_content($postId);
-        ?>
-      </p>
-      <p class="project_description_text">
-      </p>
-      <p class="project_time_length">
-        <?
-        echo get_post_duration($postId);
-        ?>
-      </p>
-    </div>
-    <div class="authors_desktop">
-      <div class="creators">
-        <p class="authors_title">
-          <!-- Создатели -->
+    <? if (get_post_content($postId) !== '') { ?>
+      <div class="project_description">
+        <h3 class="project_description_title">
+          <!-- Описание -->
           <?
           if ($isEnglish) {
-            echo 'Creators';
+            echo 'Description';
           } else {
-            echo 'Создатели';
+            echo 'Описание';
           }
           ?>
+        </h3>
+        <p class="project_description_text">
+          <?
+          echo get_post_content($postId);
+          ?>
         </p>
-        <?
+        <p class="project_description_text">
+        </p>
+        <p class="project_time_length">
+          <?
+          echo get_post_duration($postId);
+          ?>
+        </p>
+      </div>
+    <? } ?>
+    <div class="authors_desktop">
+      <?
         $creators = get_post_creators($postId);
-        if ($creators) {
-          foreach ($creators as $key => $value) {
-        ?>
+        if (
+            $creators[0]['role'] !== 'пожалуйста введите роль' ||
+            $creators[0]['name'] !== 'пожалуйста введите имя'
+          ) {
+      ?>
+        <div class="creators">
+          <p class="authors_title">
+            <!-- Создатели -->
+            <?
+            if ($isEnglish) {
+              echo 'Creators';
+            } else {
+              echo 'Создатели';
+            }
+            ?>
+          </p>
+          <?
+            foreach ($creators as $key => $value) {
+          ?>
             <div class="authors_role_and_name">
               <p class="authors_role">
                 <!-- Автор идеи и хореограф -->
@@ -136,75 +143,61 @@ $projImageSrc = $projImageAttr[0];
                 <? echo $creators[$key]['name']; ?>
               </p>
             </div>
-
-        <?
-          }
-        } else {
-          echo 'Данные не найдены';
-        }
-        ?>
-
-      </div>
-      <div class="artists">
-        <p class="authors_title">
-          <!-- Артисты -->
-          <?
-          if ($isEnglish) {
-            echo 'Artists';
-          } else {
-            echo 'Артисты';
-          }
-          ?>
-        </p>
-
-        <?
+          <? } ?>
+        </div>
+      <? } ?>
+      <?
         $artists = get_post_artists($postId);
-        // print_r($artists);
-        // echo gettype($artists);
+        if (
+          $artists[0]['role'] !== 'пожалуйста введите роль' ||
+          $artists[0]['name'] !== 'пожалуйста введите имя'
+        ) {
+      ?>
+        <div class="artists">
+          <p class="authors_title">
+            <!-- Артисты -->
+            <?
+            if ($isEnglish) {
+              echo 'Artists';
+            } else {
+              echo 'Артисты';
+            }
+            ?>
+          </p>
+          <? foreach ($artists as $key => $value) { ?>
+              <div class="authors_role_and_name">
+                <p class="authors_role">
+                  <!-- Автор идеи и хореограф -->
+                  <? echo $artists[$key]['role']; ?>
+                </p>
+                <p class="authors_name">
+                  <!-- Анна Верде -->
+                  <? echo $artists[$key]['name']; ?>
+                </p>
+              </div>
 
-        if ($artists) {
-          foreach ($artists as $key => $value) {
-        ?>
-            <div class="authors_role_and_name">
-              <p class="authors_role">
-                <!-- Автор идеи и хореограф -->
-                <? echo $artists[$key]['role']; ?>
-              </p>
-              <p class="authors_name">
-                <!-- Анна Верде -->
-                <? echo $artists[$key]['name']; ?>
-              </p>
-            </div>
-
-        <?
-          }
-        } else {
-          echo 'Данные не найдены';
-        }
-        ?>
-
-
-      </div>
-      <div class="musicians">
-        <p class="authors_title">
-          <!-- Музыканты -->
-          <?
-          if ($isEnglish) {
-            echo 'Musicians';
-          } else {
-            echo 'Музыканты';
-          }
-          ?>
-        </p>
-
-        <?
+          <? } ?>
+        </div>
+      <? } ?>
+      <? 
         $musicians = get_post_musicians($postId);
-        // print_r($musicians);
-        // echo gettype($musicians);
-
-        if ($musicians) {
-          foreach ($musicians as $key => $value) {
-        ?>
+        if (
+          $musicians[0]['role'] !== 'пожалуйста введите роль' ||
+          $musicians[0]['name'] !== 'пожалуйста введите имя'
+        ) {
+      ?>
+        <div class="musicians">
+          <p class="authors_title">
+            <!-- Музыканты -->
+            <?
+            if ($isEnglish) {
+              echo 'Musicians';
+            } else {
+              echo 'Музыканты';
+            }
+            ?>
+          </p>
+          <? foreach ($musicians as $key => $value) { ?>
             <div class="authors_role_and_name">
               <p class="authors_role">
                 <!-- Автор идеи и хореограф -->
@@ -215,15 +208,9 @@ $projImageSrc = $projImageAttr[0];
                 <? echo $musicians[$key]['name']; ?>
               </p>
             </div>
-
-        <?
-          }
-        } else {
-          echo 'Данные не найдены';
-        }
-        ?>
-
-      </div>
+          <? } ?>
+        </div>
+      <? } ?>
     </div>
     <div class="authors_mobile">
       <div class="creators">

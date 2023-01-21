@@ -3913,7 +3913,7 @@ h3.nearest_performance_title {
   margin: 0 20px;
   max-width: 1200px;
   /* overflow: hidden; */
-  overflow-x: scroll;
+  /* overflow-x: scroll; */
 }
 @media (min-width: 480px) {
   .gallery_container {
@@ -3936,7 +3936,7 @@ h3.nearest_performance_title {
 
 .gallery > .image_regular {
   width: 282px;
-  height: 190px;
+  height: 150px;
 }
 
 .gallery_video {
@@ -4378,12 +4378,13 @@ h3.nearest_performance_title {
 }
 @media (min-width: 768px) {
   .project_partners {
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
   }
 }
 
 .partner_img {
   margin-right: 45px;
+  margin-bottom: 45px;
   width: 180px;
   height: 90px;
 }
@@ -4606,7 +4607,7 @@ h3.nearest_performance_title {
 }
 @media (min-width: 1024px) {
   .small_project_photo {
-    width: 339px;
+    width: 384px;
     min-width: 339px;
   }
 }
