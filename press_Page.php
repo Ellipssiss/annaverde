@@ -42,7 +42,7 @@ if($isEnglish) {
                         alt=""
                       />
                       <div class="article_name_and_pointer article_name_and_pointer_press_page">
-                        <p class="article_name article_name_press_page"><? echo $itemContent['content']; ?></p>
+                        <p class="article_name article_name_press_page"><? echo $itemContent['title']; ?></p>
                         <div class="press_pointer">
                           <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
                         </div>
@@ -57,7 +57,7 @@ if($isEnglish) {
                 <!-- /.articles_container -->
               </div>
               <!-- Ещё пресса -> -->
-              <? if ($countPressPosts > 10) { ?>
+              <? if ($countPressPosts >= 10) { ?>
                 <a class="go_to_in_middle_press show" href="#">
                   <span class="go_to_text"><? echo $more; ?></span>
                   <img class="go_to_pointer pointer_down" src="<?php echo get_template_directory_uri(); ?>/assets/img/go_to_pointer_down.svg" alt="">

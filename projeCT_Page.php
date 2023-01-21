@@ -481,7 +481,7 @@ $projImageSrc = $projImageAttr[0];
           <div class="article project_page">
             <img class="press_img project_page" src="<? echo $value['image'] ?>" alt="" />
             <div class="article_name_and_pointer project_page">
-              <p class="article_name project_page"><? echo $pressInfo['content']; ?></p>
+              <p class="article_name project_page"><? echo $pressInfo['title']; ?></p>
               <div class="press_pointer show">
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
               </div>

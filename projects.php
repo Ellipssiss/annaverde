@@ -58,7 +58,7 @@ if ($isEnglish) {
     </div>
 
     <!-- Ещё проекты -> -->
-    <? if ($countPostList > 10) { ?>
+    <? if ($countPostList >= 10) { ?>
       <a class="go_to_in_middle_projects show" href="#">
         <span class="go_to_text"><? echo $more; ?></span>
         <img class="go_to_pointer pointer_down" src="<?php echo get_template_directory_uri(); ?>/assets/img/go_to_pointer_down.svg" alt="" />

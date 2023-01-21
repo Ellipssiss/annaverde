@@ -1378,7 +1378,7 @@ function func_proj_mediabox($post)
         </div>
 
         <h4>Добавить обложку на страницу всех проектов</h4>
-        <p>Обложка должна быть размером 180x120 пикселя</p>
+        <p>Обложка должна быть размером 384x256 пикселя</p>
         <img class="all_proj_labelimg" alt="" src="<? echo $allProjImageSrc; ?>" />
         <input class="all_proj_labelinput" type="hidden" name="all_proj_label" value="<? echo $allProjCoverImgId; ?>" />
         <div class="all_proj_button_box">

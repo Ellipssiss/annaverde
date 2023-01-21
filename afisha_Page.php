@@ -135,7 +135,7 @@ if ($isEnglish) {
       <!------------------------------------- Конец списка дней ------------------------------>
 
       <!-- Ещё проекты -> -->
-      <? if ($afishaPostsCount > 10) { ?>
+      <? if ($afishaPostsCount >= 10) { ?>
         <a class="go_to_in_middle_afisha show" href="#">
           <span class="go_to_text"><? echo $more; ?></span>
           <img class="go_to_pointer pointer_down" src="<?php echo get_template_directory_uri(); ?>/assets/img/go_to_pointer_down.svg" alt="" />
