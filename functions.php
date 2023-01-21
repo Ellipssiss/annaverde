@@ -259,7 +259,7 @@ function getAfishaPosts($countPosts = 10) {
 }
 
 function get_project_press($post_id) {
-    $arPressPosts = getPressPosts();
+    $arPressPosts = getPressPosts(2000);
     $arPressPostIds = [];
 
     foreach ($arPressPosts as $key => $value) {
