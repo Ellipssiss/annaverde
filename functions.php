@@ -269,6 +269,8 @@ function get_project_press($post_id) {
         if ($eventProjects == $post_id) $arPressPostIds[] = $value['id'];
     }
 
+    pr($arPressPostIds);
+
     foreach($arPressPostIds as $key => $value) {
         $arResult[] = getPressPostInfo($value);
     }
@@ -857,7 +859,7 @@ function func_press_project($post)
                         $selected = "";
                     }
                 ?>
-                <option value="<? echo $projectId; ?>" <? echo $selected; ?>><? echo get_post_title($projectId); ?></option>
+                <option value="<? echo $projectId; ?>" <? echo $selected; ?>><? echo $projectId.' - '.get_post_title($projectId); ?></option>
             <? } ?>
         </select>
     </div>
