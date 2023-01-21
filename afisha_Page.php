@@ -6,15 +6,12 @@ Template Post Type: post, page, product
 set_query_var('title', 'Afisha page');
 get_header();
 
-$arResult = getProjectPosts();
-$posts = $arResult['posts'];
-$postCount = $arResult['count'];
-
-// Afisha test content
-// Afisha step1
-// Afisha test branch check
-
 $arAfishaPosts = getAfishaPosts(MAX_AFISHA_POSTS);
+
+$afishaPostsCount = 0;
+foreach($arAfishaPosts as $key => $arEvents){
+  $afishaPostsCount += count($arEvents);
+}
 
 $arAfishaMonthes = getAfishaMonthes($arAfishaPosts);
 
@@ -138,19 +135,21 @@ if ($isEnglish) {
       <!------------------------------------- Конец списка дней ------------------------------>
 
       <!-- Ещё проекты -> -->
-      <a class="go_to_in_middle_afisha show" href="#">
-        <span class="go_to_text"><? echo $more; ?></span>
-        <img class="go_to_pointer pointer_down" src="<?php echo get_template_directory_uri(); ?>/assets/img/go_to_pointer_down.svg" alt="" />
-      </a>
-      <div class="pretty_loader_wrapper pretty_loader_wrapper_press_page">
-        <div class="pretty_loader">
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
+      <? if ($afishaPostsCount > 10) { ?>
+        <a class="go_to_in_middle_afisha show" href="#">
+          <span class="go_to_text"><? echo $more; ?></span>
+          <img class="go_to_pointer pointer_down" src="<?php echo get_template_directory_uri(); ?>/assets/img/go_to_pointer_down.svg" alt="" />
+        </a>
+        <div class="pretty_loader_wrapper pretty_loader_wrapper_press_page">
+          <div class="pretty_loader">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
         </div>
-      </div>
+      <? } ?>
       <!-- /.afisha_column -->
     </div>
     <!-- /.afisha_container -->

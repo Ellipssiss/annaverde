@@ -25,7 +25,7 @@ function getEnglishURL($string) {
     $isEnglish = $_GET['lang'] === 'en';
 
     if ($isEnglish) {
-        $arString = parse_url($string);
+        $arString = parse_url(html_entity_decode($string));
         parse_str($arString['query'], $arStringQuery);
 
         $arStringQuery['lang'] = 'en';

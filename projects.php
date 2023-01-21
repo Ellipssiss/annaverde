@@ -7,6 +7,7 @@ set_query_var('title', 'Projects page');
 get_header();
 
 $postsList = getProjectPosts(MAX_PROJECT_POSTS);
+$countPostList = count($postsList);
 
 $isEnglish = $_GET['lang'] === 'en';
 
@@ -32,7 +33,7 @@ if ($isEnglish) {
           $itemContent = $post['ru'];
         }
       ?>
-        <a class="performance_in_projects" href="<? echo $post['link']; ?>">
+        <a class="performance_in_projects" href="<? echo getEnglishURL($post['link']); ?>">
           <div class="performance_in_projects_wpapper">
             <div class="all_except_pointer">
               <img class="small_project_photo" src="<? echo $post['image'] ?>" alt="" />
@@ -57,29 +58,23 @@ if ($isEnglish) {
     </div>
 
     <!-- Ещё проекты -> -->
-
-    <a class="go_to_in_middle_projects show" href="#">
-      <span class="go_to_text"><? echo $more; ?></span>
-      <img class="go_to_pointer pointer_down" src="<?php echo get_template_directory_uri(); ?>/assets/img/go_to_pointer_down.svg" alt="" />
-    </a>
-    <div class="pretty_loader_wrapper">
-      <div class="pretty_loader">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
+    <? if ($countPostList > 10) { ?>
+      <a class="go_to_in_middle_projects show" href="#">
+        <span class="go_to_text"><? echo $more; ?></span>
+        <img class="go_to_pointer pointer_down" src="<?php echo get_template_directory_uri(); ?>/assets/img/go_to_pointer_down.svg" alt="" />
+      </a>
+      <div class="pretty_loader_wrapper">
+        <div class="pretty_loader">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
       </div>
-    </div>
+    <? } ?>
   </div>
   <!-- /.content-in-projects -->
 </div>
-<?
-echo $cur_post_id;
-global $global_test_var;
-$global_test_var = 1024;
-// echo $global_test_var;
-?>
-
 
 <? get_footer(); ?>

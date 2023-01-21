@@ -8,6 +8,7 @@ set_query_var( 'isMenuWhite', true );
 get_header();
 
 $arResult = getPressPosts(MAX_PRESS_POSTS);
+$countPressPosts = count($arResult);
 
 $isEnglish = $_GET['lang'] === 'en';
 
@@ -56,20 +57,21 @@ if($isEnglish) {
                 <!-- /.articles_container -->
               </div>
               <!-- Ещё пресса -> -->
-              <a class="go_to_in_middle_press show" href="#">
-                <span class="go_to_text"><? echo $more; ?></span>
-                <img class="go_to_pointer pointer_down" src="<?php echo get_template_directory_uri(); ?>/assets/img/go_to_pointer_down.svg" alt="">
-              </a>
-              <div class="pretty_loader_wrapper pretty_loader_wrapper_press_page">
-                <div class="pretty_loader show">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                  <span></span>
+              <? if ($countPressPosts > 10) { ?>
+                <a class="go_to_in_middle_press show" href="#">
+                  <span class="go_to_text"><? echo $more; ?></span>
+                  <img class="go_to_pointer pointer_down" src="<?php echo get_template_directory_uri(); ?>/assets/img/go_to_pointer_down.svg" alt="">
+                </a>
+                <div class="pretty_loader_wrapper pretty_loader_wrapper_press_page">
+                  <div class="pretty_loader show">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                  </div>
                 </div>
-              </div>
-            
+              <? } ?>
               <!-- /.press_container -->
             </div>
             <!-- /.press-blok -->
