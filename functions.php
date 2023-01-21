@@ -268,9 +268,7 @@ function get_project_press($post_id) {
 
         if ($eventProjects == $post_id) $arPressPostIds[] = $value['id'];
     }
-
-    pr($arPressPostIds);
-
+    
     foreach($arPressPostIds as $key => $value) {
         $arResult[] = getPressPostInfo($value);
     }
