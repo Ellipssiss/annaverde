@@ -41,15 +41,17 @@ if($isEnglish) {
                         src="<? echo $value['image']; ?>"
                         alt=""
                       />
-                      <div class="article_name_and_pointer article_name_and_pointer_press_page">
-                        <p class="article_name article_name_press_page"><? echo $itemContent['title']; ?></p>
-                        <div class="press_pointer">
-                          <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
+                      <div class="article_info_wrapper">
+                        <div class="article_name_and_pointer article_name_and_pointer_press_page">
+                          <p class="article_name article_name_press_page"><? echo $itemContent['title']; ?></p>
+                          <div class="press_pointer">
+                            <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
+                          </div>
                         </div>
-                      </div>
-                      <div class="article_date_and_source article_date_and_source_press_page">
-                        <p class="article_source article_source_press_page"><? echo $itemContent['owner']; ?></p>
-                        <p class="article_date article_date_press_page"><? echo $value['date']; ?></p>
+                        <div class="article_date_and_source article_date_and_source_press_page">
+                          <p class="article_source article_source_press_page"><? echo $itemContent['owner']; ?></p>
+                          <p class="article_date article_date_press_page"><? echo $value['date']; ?></p>
+                        </div>
                       </div>
                     </div>
                 </a>

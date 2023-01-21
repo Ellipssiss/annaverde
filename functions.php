@@ -548,7 +548,7 @@ add_action('edit_page_form', 'true_double_editor');
 function double_editor($post_id)
 {
     update_post_meta($post_id, 'en_editor_filed_name', $_POST['en_editor']);
-    update_post_meta($post_id, 'en_post_title_filed_name', $_POST['en_post_title']);
+    update_post_meta($post_id, 'en_post_title_filed_name', htmlspecialchars($_POST['en_post_title']));
 }
 
 add_action('save_post', 'double_editor');

@@ -480,15 +480,17 @@ $projImageSrc = $projImageAttr[0];
         <a class="article_wraper project_page" target="_blank" href="<? echo $value['link'] ?>">
           <div class="article project_page">
             <img class="press_img project_page" src="<? echo $value['image'] ?>" alt="" />
-            <div class="article_name_and_pointer project_page">
-              <p class="article_name project_page"><? echo $pressInfo['title']; ?></p>
-              <div class="press_pointer show">
-                <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
+            <div class="article_info_wrapper">
+              <div class="article_name_and_pointer project_page">
+                <p class="article_name project_page"><? echo $pressInfo['title']; ?></p>
+                <div class="press_pointer show">
+                  <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
+                </div>
               </div>
-            </div>
-            <div class="article_date_and_source project_page">
-              <p class="article_source project_page"><? echo $pressInfo['owner']; ?></p>
-              <p class="article_date project_page"><? echo $value['date'] ?></p>
+              <div class="article_date_and_source project_page">
+                <p class="article_source project_page"><? echo $pressInfo['owner']; ?></p>
+                <p class="article_date project_page"><? echo $value['date'] ?></p>
+              </div>
             </div>
           </div>
       </a>
