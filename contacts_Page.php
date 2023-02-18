@@ -49,10 +49,10 @@ $vk = get_option('social_vk');
               <a target="_blank" href="<? echo $youtube; ?>">
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/img/yt_black.svg" alt="" />
               </a>
-              <a target="_blank" href="<? echo $instagram; ?>">
+              <a target="_blank" class="hidden_link" href="<? echo $instagram; ?>">
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/img/inst_black.svg" alt="" />
               </a>
-              <a target="_blank" href="<? echo $facebook; ?>">
+              <a target="_blank" class="hidden_link" href="<? echo $facebook; ?>">
                 <img src="<?php echo get_template_directory_uri(); ?>/assets/img/fb_black.svg" alt="" />
               </a>
               <a target="_blank" href="<? echo $vk; ?>">

@@ -55,12 +55,12 @@ $vk = get_option('social_vk');
             <a target="_blank" href="<? echo $youtube; ?>">
               <img class="social_icon_footer" src="<?php echo get_template_directory_uri(); ?>/assets/img/youtb.svg" alt="" />
             </a>
-            <a target="_blank" href="<? echo $instagram; ?>">
+            <!-- <a target="_blank" href="<? echo $instagram; ?>">
               <img class="social_icon_footer" src="<?php echo get_template_directory_uri(); ?>/assets/img/inst.svg" alt="" />
-            </a>
-            <a target="_blank" href="<? echo $facebook; ?>">
+            </a> -->
+            <!-- <a target="_blank" href="<? echo $facebook; ?>">
               <img class="social_icon_footer" src="<?php echo get_template_directory_uri(); ?>/assets/img/fb.svg" alt="" />
-            </a>
+            </a> -->
             <a target="_blank" href="<? echo $vk; ?>">
               <img class="social_icon_footer" src="<?php echo get_template_directory_uri(); ?>/assets/img/vk.svg" alt="" />
             </a>

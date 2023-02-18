@@ -879,10 +879,10 @@ blockquote {
   top: 0;
   right: -280px;
   /* position: relative; */  
-  -o-transition: all 0.5s ease-in-out;
-  -moz-transition: all 0.5s ease-in-out;
-  -webkit-transition: all 0.5s ease-in-out;
-  transition: all 0.5s ease-in-out;
+  -o-transition: all 0.15s ease-in-out;
+  -moz-transition: all 0.15s ease-in-out;
+  -webkit-transition: all 0.15s ease-in-out;
+  transition: all 0.15s ease-in-out;
 }
 
 .burger_menu_container.show {
@@ -1116,7 +1116,7 @@ blockquote {
 
 @media (max-width: 480px) {
   .about_person_on_main_photo {
-    width: 360px;
+    width: 280px;
     font-weight: 400;
     font-size: 14px;
     line-height: 20px;
@@ -2818,18 +2818,19 @@ h3 {
   align-items: center;
   order: 1;
   align-items: stretch;
-  justify-content: space-between;
+  justify-content: flex-start;
   width: 100%;
   margin-bottom: 30px;
 }
 @media (min-width: 480px) {
   .socialLinks {
     margin-bottom: 60px;
+    justify-content: space-between;
   }
 }
 @media (min-width: 768px) {
   .socialLinks {
-    width: 200px;
+    width: 100px;
     margin-bottom: 0;
     justify-self: flex-end;
   }
@@ -3112,12 +3113,23 @@ h2.title_on_projects_page {
 } */
 
 .project_title_and_subtitle {
-  margin: 0 20px 0 20px;
-  max-width: 1200px;
+  padding: 0 20px;
+  width: 100%;
+  /* max-width: 1200px; */
+  /* text-shadow: 0px 1px #f6f6f67d; */
+  
 }
 @media (min-width: 480px) {
   .project_title_and_subtitle {
-    margin: 0 40px 0 40px;
+    padding: 0 40px 0 40px;
+    /* background-color: rgba(255,255,255, 0.2);
+    backdrop-filter: blur(8px); */
+  }
+}
+@media (min-width: 768px) {
+  .project_title_and_subtitle {
+    background-color: rgba(255,255,255, 0.2);
+    backdrop-filter: blur(8px);
   }
 }
 @media (min-width: 1280px) {
@@ -3128,6 +3140,8 @@ h2.title_on_projects_page {
 
 .title_subtitle_container {
   margin-bottom: 8px;
+  /* margin-bottom: -130px; */
+    z-index: 100;
 }
 @media (min-width: 480px) {
   .title_subtitle_container {
@@ -3136,9 +3150,20 @@ h2.title_on_projects_page {
 }
 @media (min-width: 768px) {
   .title_subtitle_container {
-    margin-bottom: 30px;
+    margin-bottom: -138px;
   }
 }
+@media (min-width: 1024px) {
+  .title_subtitle_container {
+    margin-bottom: -178px;
+  }
+}
+@media (min-width: 1280px) {
+  .title_subtitle_container {
+    margin-bottom: -228px;
+  }
+}
+
 
 .project_genre {
   font-family: "PT Sans";
@@ -3893,6 +3918,7 @@ h3.nearest_performance_title {
 
 .gallery_wrapper {
   margin-bottom: 50px;
+  overflow: hidden;
 }
 @media (min-width: 480px) {
   .gallery_wrapper {
@@ -3906,8 +3932,17 @@ h3.nearest_performance_title {
 }
 
 .gallery_container {
-  margin: 0 20px;
   max-width: 1200px;
+  margin: 0 20px;
+  display: flex;
+  max-width: 1200px;
+  justify-content: center;
+  align-items: start;
+  max-height: 510px;
+
+
+
+  /* overflow: hidden;
   /* overflow: hidden; */
   /* overflow-x: scroll; */
 }
@@ -3924,11 +3959,33 @@ h3.nearest_performance_title {
 
 .gallery {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr;
   grid-gap: 23px;
+  overflow: hidden;
 
   /* margin-bottom: 100px; */
 }
+@media (min-width: 480px) {
+  .gallery {
+    grid-template-columns: 1fr;
+  }
+}
+@media (min-width: 664px) {
+  .gallery {
+    grid-template-columns: 1fr 1fr ;
+  }
+}
+@media (min-width: 964px) {
+  .gallery {
+    grid-template-columns: 1fr 1fr 1fr ;
+  }
+}
+@media (min-width: 1280px) {
+  .gallery {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+}
+
 
 .gallery > .image_regular {
   width: 282px;
@@ -4052,6 +4109,26 @@ h3.nearest_performance_title {
     height: 576px;
   }
 } */
+
+.exit_video_bg{
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  opacity: 0.5;
+  display:block;
+  background: #000000;
+  top: 0;
+  left: 0;
+}
+/* .exit_video_bg.show{
+  display:block;
+} */
+@media (min-width: 768px) {
+  .exit_video_bg {
+    display: none;
+  }
+}
 
 .item_bg_player {
   position: fixed;
@@ -5180,6 +5257,10 @@ h3.education_title {
 /* =======================================================================================================================================================================================
 ================================================================================ CONTACTS PAGE ===========================================================================================
 ======================================================================================================================================================================================= */
+
+.hidden_link{
+  display: none;
+}
 
 .contacts_container {
   padding-bottom: 100px;

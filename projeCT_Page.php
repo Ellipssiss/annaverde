@@ -37,6 +37,7 @@ $projImageSrc = $projImageAttr[0];
 <? if (!empty($arGallery)) { ?>
   <div class="player_interface_bg">
     <div class="item_bg_player"></div>
+    <div class="exit_video_bg"></div>
     <div class="player_and_interface">
       <div class="owl-nav">
         <img class="prev_video_btn big owl-prev" src="<?php echo get_template_directory_uri(); ?>/assets/img/prev_video_btn_big.svg" alt="" />
@@ -66,8 +67,12 @@ $projImageSrc = $projImageAttr[0];
   </div>
 <?}?>
 
+<!----------------------------- Main Content --------------------------------------------------->
+
+
 
 <div class="title_subtitle_container">
+  <div class="blur_bg"></div>
   <div class="project_title_and_subtitle">
     <h2 class="project_title project_page_title">
       <!-- В объятиях минотавра Пикассо -->
@@ -82,6 +87,8 @@ $projImageSrc = $projImageAttr[0];
 </div>
 
 <img class="project_main_img" src="<? echo $projImageSrc; ?>" alt="" />
+
+
 
 <div class="description_and_authors_container">
   <div class="description_and_authors">
@@ -115,8 +122,10 @@ $projImageSrc = $projImageAttr[0];
       <?
         $creators = get_post_creators($postId);
         if (
-            $creators[0]['role'] !== 'пожалуйста введите роль' ||
-            $creators[0]['name'] !== 'пожалуйста введите имя'
+            ($creators[0]['role'] !== 'пожалуйста введите роль' &&
+            $creators[0]['name'] !== 'пожалуйста введите имя')&&
+            ($creators[0]['role'] !== 'Please insert role' &&
+            $creators[0]['name'] !== 'Please insert name')  
           ) {
       ?>
         <div class="creators">
@@ -149,8 +158,10 @@ $projImageSrc = $projImageAttr[0];
       <?
         $artists = get_post_artists($postId);
         if (
-          $artists[0]['role'] !== 'пожалуйста введите роль' ||
-          $artists[0]['name'] !== 'пожалуйста введите имя'
+          ($artists[0]['role'] !== 'пожалуйста введите роль' &&
+          $artists[0]['name'] !== 'пожалуйста введите имя')&&
+          ($artists[0]['role'] !== 'Please insert role' &&
+          $artists[0]['name'] !== 'Please insert name')  
         ) {
       ?>
         <div class="artists">
@@ -182,9 +193,12 @@ $projImageSrc = $projImageAttr[0];
       <? 
         $musicians = get_post_musicians($postId);
         if (
-          $musicians[0]['role'] !== 'пожалуйста введите роль' ||
-          $musicians[0]['name'] !== 'пожалуйста введите имя'
-        ) {
+          ($musicians[0]['role'] !== 'пожалуйста введите роль' &&
+          $musicians[0]['name'] !== 'пожалуйста введите имя')&&
+          ($musicians[0]['role'] !== 'Please insert role' &&
+          $musicians[0]['name'] !== 'Please insert name')
+        ) 
+          { 
       ?>
         <div class="musicians">
           <p class="authors_title">
@@ -210,7 +224,7 @@ $projImageSrc = $projImageAttr[0];
             </div>
           <? } ?>
         </div>
-      <? } ?>
+      <? }  ?>
     </div>
     <div class="authors_mobile">
       <div class="creators">

@@ -12,14 +12,14 @@ $(document).ready(function () {
 		$('.burger_menu_bg').addClass('show');
 		setTimeout(function(){
 			$('.burger_menu_container').addClass('show');
-		}, 500);		
+		}, 50);		
 	})
 
 	$('.exit_burger_menu_btn').click(function () {
 		$('.burger_menu_container').removeClass('show');
 		setTimeout(function(){
 			$('.burger_menu_bg').removeClass('show');
-		}, 1000);
+		}, 80);
 	});
 
 	$('.artists').click(function () {
@@ -75,6 +75,11 @@ $(document).ready(function () {
 	})
 
 	$('.exit_video_btn').click(function () {
+		$('.player_interface_bg').removeClass('show');
+		owl.trigger('destroy.owl.carousel');
+	})
+
+	$('.exit_video_bg').click(function () {
 		$('.player_interface_bg').removeClass('show');
 		owl.trigger('destroy.owl.carousel');
 	})

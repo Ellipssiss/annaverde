@@ -137,7 +137,7 @@ $args = array(
             </p>
           </div>
           <blockquote class="blockquote_on_main_photo">
-            «Мыслю образами, вкладываю многослойные смыслы, ищу новые формы»
+            «Мыслю образами. Вкладываю многослойные смыслы. Ищу новые формы»
           </blockquote>
         </div>
         <!-- /.header_container -->
