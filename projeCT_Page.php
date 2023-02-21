@@ -29,6 +29,11 @@ $projCoverImgId = get_post_meta($postId, 'proj_label', true);
 $projImageAttr = wp_get_attachment_image_src($projCoverImgId, 'full');
 $projImageSrc = $projImageAttr[0];
 
+
+$isCreatorsExists = false;
+$isArtistsExists = false;
+$isMusiciansExists = false;
+
 ?>
 
 
@@ -72,7 +77,6 @@ $projImageSrc = $projImageAttr[0];
 
 
 <div class="title_subtitle_container">
-  <div class="blur_bg"></div>
   <div class="project_title_and_subtitle">
     <h2 class="project_title project_page_title">
       <!-- В объятиях минотавра Пикассо -->
@@ -86,7 +90,9 @@ $projImageSrc = $projImageAttr[0];
   </div>
 </div>
 
+<div class = "bgPhoto">
 <img class="project_main_img" src="<? echo $projImageSrc; ?>" alt="" />
+</div>
 
 
 
@@ -126,7 +132,7 @@ $projImageSrc = $projImageAttr[0];
             $creators[0]['name'] !== 'пожалуйста введите имя')&&
             ($creators[0]['role'] !== 'Please insert role' &&
             $creators[0]['name'] !== 'Please insert name')  
-          ) {
+          ) { $isCreatorsExists = true
       ?>
         <div class="creators">
           <p class="authors_title">
@@ -162,7 +168,7 @@ $projImageSrc = $projImageAttr[0];
           $artists[0]['name'] !== 'пожалуйста введите имя')&&
           ($artists[0]['role'] !== 'Please insert role' &&
           $artists[0]['name'] !== 'Please insert name')  
-        ) {
+        ) { $isArtistsExists = true
       ?>
         <div class="artists">
           <p class="authors_title">
@@ -198,7 +204,7 @@ $projImageSrc = $projImageAttr[0];
           ($musicians[0]['role'] !== 'Please insert role' &&
           $musicians[0]['name'] !== 'Please insert name')
         ) 
-          { 
+          { $isMusiciansExists = true
       ?>
         <div class="musicians">
           <p class="authors_title">
@@ -226,7 +232,9 @@ $projImageSrc = $projImageAttr[0];
         </div>
       <? }  ?>
     </div>
+    <? if ($isAuthorsExists = $isCreatorsExists || $isArtistsExists || $isMusiciansExists){ ?>
     <div class="authors_mobile">
+    <? if ( $isCreatorsExists ) {  ?>
       <div class="creators">
         <div class="authors_title_and_sign">
           <p class="authors_title">
@@ -245,8 +253,8 @@ $projImageSrc = $projImageAttr[0];
         <div class="item_content">
           <?
           $creators = get_post_creators($postId);
-          // print_r($creators);
-          // echo gettype($creators);
+          
+    
 
           if ($creators) {
             foreach ($creators as $key => $value) {
@@ -272,6 +280,9 @@ $projImageSrc = $projImageAttr[0];
 
         </div>
       </div>
+      <? }  ?>
+      <? if ( $isArtistsExists  ) { 
+      ?>
       <div class="creators">
         <div class="authors_title_and_sign">
           <p class="authors_title">
@@ -317,6 +328,10 @@ $projImageSrc = $projImageAttr[0];
 
         </div>
       </div>
+      <? }  ?>
+      <? if ( $isMusiciansExists ) 
+          { 
+      ?>
       <div class="creators">
         <div class="authors_title_and_sign">
           <p class="authors_title">
@@ -361,8 +376,10 @@ $projImageSrc = $projImageAttr[0];
 
         </div>
       </div>
+      <? }  ?>
       <!-- authors_mobile -->
     </div>
+    <? }  ?>
   </div>
 </div>
 <!-- /.container (width) -->

@@ -3115,7 +3115,7 @@ h2.title_on_projects_page {
 .project_title_and_subtitle {
   padding: 0 20px;
   width: 100%;
-  /* max-width: 1200px; */
+  max-width: 1200px;
   /* text-shadow: 0px 1px #f6f6f67d; */
   
 }
@@ -3128,8 +3128,8 @@ h2.title_on_projects_page {
 }
 @media (min-width: 768px) {
   .project_title_and_subtitle {
-    background-color: rgba(255,255,255, 0.2);
-    backdrop-filter: blur(8px);
+    /* background-color: rgba(255,255,255, 0.2); */
+    /* backdrop-filter: blur(8px); */
   }
 }
 @media (min-width: 1280px) {
@@ -3140,29 +3140,73 @@ h2.title_on_projects_page {
 
 .title_subtitle_container {
   margin-bottom: 8px;
+  margin-top: -20px;
   /* margin-bottom: -130px; */
     z-index: 100;
 }
 @media (min-width: 480px) {
   .title_subtitle_container {
     margin-bottom: 10px;
+    margin-top: -42px;
   }
 }
 @media (min-width: 768px) {
   .title_subtitle_container {
-    margin-bottom: -138px;
+    /* margin-bottom: -138px; */
+    margin-bottom: 20px;
   }
 }
 @media (min-width: 1024px) {
   .title_subtitle_container {
-    margin-bottom: -178px;
+    /* margin-bottom: -178px; */
+    margin-bottom: 30px;
   }
 }
 @media (min-width: 1280px) {
   .title_subtitle_container {
-    margin-bottom: -228px;
+    /* margin-bottom: -228px; */
+    margin-top: -90px;
+
   }
 }
+
+
+.bgPhoto{
+    background: #222;
+    padding-top: 70px;
+    padding-bottom: 70px;
+    padding-left: 20px;
+    padding-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+}
+@media (min-width: 480px) {
+  .bgPhoto {
+    padding-left: 40px;
+    padding-right: 40px;
+    margin-bottom: 40px;
+  }
+}
+@media (min-width: 768px) {
+  .bgPhoto {
+    margin-bottom: 50px;
+  }
+}
+@media (min-width: 1024px) {
+  .bgPhoto {
+
+  }
+}
+@media (min-width: 1280px) {
+  .bgPhoto {
+
+
+  }
+}
+
+
 
 
 .project_genre {
@@ -3224,18 +3268,20 @@ h3.project_description_title {
 }
 
 .project_main_img {
+  max-width: 1200px;
   width: 100%;
   height: auto;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
+  
 }
 @media (min-width: 480px) {
   .project_main_img {
-    margin-bottom: 40px;
+    /* margin-bottom: 40px; */
   }
 }
 @media (min-width: 768px) {
   .project_main_img {
-    margin-bottom: 50px;
+    /* margin-bottom: 50px; */
   }
 }
 
@@ -4444,6 +4490,8 @@ h3.nearest_performance_title {
   align-items: center;
   flex-wrap: wrap;
   width: 100%;
+  align-items: center;
+    justify-content: center;
 }
 @media (min-width: 480px) {
   .project_partners {

@@ -200,7 +200,7 @@ if ($isEnglish) {
         <div class="article">
           <img class="press_img" src="<? echo $value['image']; ?>" alt="" />
           <div class="article_name_and_pointer">
-            <p class="article_name"><? echo $itemContent['content']; ?></p>
+            <p class="article_name"><? echo $itemContent['title']; ?></p>
             <div class="press_pointer">
               <img src="<?php echo get_template_directory_uri(); ?>/assets/img/pointer.svg" alt="" />
             </div>
