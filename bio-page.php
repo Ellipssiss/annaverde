@@ -19,7 +19,7 @@ $isEnglish = $_GET['lang'] === 'en';
               <div class="about_person">
                 <h2 class="title_on_bio_page">Anna Verde</h2>
                 <p class="bio_description">
-                Choreographer, laureate of international competitions, director of art and art projects, producer of theater projects. Founder and head of the Saverdera dance company.
+                Choreographer, laureate of international competitions, director of art and art projects, producer of theater projects. Founder and head of the Averdera dance theater.
                 </p>
               </div>
 

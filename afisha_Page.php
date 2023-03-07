@@ -19,7 +19,7 @@ $isEnglish = $_GET['lang'] === 'en';
 
 if ($isEnglish) {
   $afishaTitle = 'Afisha';
-  $allMonthes = 'All monthes';
+  $allMonthes = 'All months';
   $more = 'More projects';
 } else {
   $afishaTitle = 'Афиша';
