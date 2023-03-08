@@ -37,7 +37,14 @@ $vk = get_option('social_vk');
               <? echo $pageDescription; ?>
             </p>
             <p class="contacts_name">
-              Анна Верде:
+            <?
+          if ($isEnglish) {
+            echo 'Anna Verde:';
+          } else {
+            echo 'Анна Верде:';
+          }
+          ?>
+              
             </p>
             <a class="phone_contacts" href="tel:+<? echo $phoneLink; ?>">
               <? echo $phone; ?>
