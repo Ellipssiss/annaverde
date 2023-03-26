@@ -36,7 +36,7 @@ $vk = get_option('social_vk');
             <p class="contacts_description">
               <? echo $pageDescription; ?>
             </p>
-            <p class="contacts_name">
+            <!-- <p class="contacts_name">
             <?
           if ($isEnglish) {
             echo 'Anna Verde:';
@@ -45,7 +45,7 @@ $vk = get_option('social_vk');
           }
           ?>
               
-            </p>
+            </p> -->
             <a class="phone_contacts" href="tel:+<? echo $phoneLink; ?>">
               <? echo $phone; ?>
             </a>
